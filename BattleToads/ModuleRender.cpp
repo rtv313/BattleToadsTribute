@@ -10,6 +10,7 @@ ModuleRender::ModuleRender()
 	camera.x = camera.y = 0;
 	camera.w = SCREEN_WIDTH * SCREEN_SIZE;
 	camera.h = SCREEN_HEIGHT* SCREEN_SIZE;
+
 }
 
 // Destructor
@@ -50,7 +51,7 @@ update_status ModuleRender::PreUpdate()
 update_status ModuleRender::Update()
 {
 	// debug camera
-	int speed = 1;
+	int speed = 8;
 
 	if(App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->renderer->camera.y += speed;

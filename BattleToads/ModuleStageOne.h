@@ -17,5 +17,6 @@ public:
 public :
 	SDL_Texture* levelOne = nullptr;
 	Animation * background = nullptr; 
+	Animation  waterfall;
 };
 #endif // _MODULESCENESTAGEONE_H_
