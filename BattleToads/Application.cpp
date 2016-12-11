@@ -11,6 +11,7 @@
 #include "ModuleSceneIntro.h"
 #include "ModuleSceneSpace.h"
 #include "ModulePlayer.h"
+#include "ModuleStageOne.h"
 
 using namespace std;
 
@@ -26,6 +27,7 @@ Application::Application()
 
 	// Game Modules
 	modules.push_back(scene_intro = new ModuleSceneIntro(false));
+	modules.push_back(stageOne = new ModuleStageOne(false));
 	modules.push_back(scene_space = new ModuleSceneSpace(false));
 	modules.push_back(player = new ModulePlayer(false));
 
@@ -55,7 +57,7 @@ bool Application::Init()
 	}
 
 	// Start the first scene --
-	fade->FadeToBlack(scene_intro, nullptr, 3.0f);
+	fade->FadeToBlack(stageOne, nullptr, 3.0f);
 
 	return ret;
 }
