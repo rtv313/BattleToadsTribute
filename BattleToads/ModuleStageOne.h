@@ -16,7 +16,7 @@ public:
 	bool CleanUp();
 public :
 	SDL_Texture* levelOne = nullptr;
-	Animation * background = nullptr; 
+	Animation  background; 
 	Animation  waterfall;
 };
 #endif // _MODULESCENESTAGEONE_H_
