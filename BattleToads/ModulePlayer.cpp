@@ -18,16 +18,21 @@ ModulePlayer::ModulePlayer(bool active) : Module(active)
 	idle.frames.push_back({ 69, 23, 26, 34 });
 	idle.speed = 0.025f;
 	// move upwards
-	up.frames.push_back({100, 1, 32, 14});
-	up.frames.push_back({132, 0, 32, 14});
-	up.loop = false;
+	up.frames.push_back({598, 26, 26, 35});
+	up.frames.push_back({628, 26, 26, 35});
 	up.speed = 0.1f;
-
 	// Move down
-	down.frames.push_back({33, 1, 32, 14});
-	down.frames.push_back({0, 1, 32, 14});
-	down.loop = false;
+	down.frames.push_back({ 598, 26, 26, 35 });
+	down.frames.push_back({ 628, 26, 26, 35 });
 	down.speed = 0.1f;
+	//Move forward
+	forward.frames.push_back({ 437, 26, 29, 34 });
+	forward.frames.push_back({ 467, 26, 26, 33 });
+	forward.frames.push_back({ 500, 30, 34, 31 });
+	forward.frames.push_back({ 536, 26, 22, 37 });
+	forward.frames.push_back({ 561, 30, 34, 29 });
+	forward.speed = 0.2f;
+
 }
 
 ModulePlayer::~ModulePlayer()
@@ -68,18 +73,21 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	int speed = 1;
+	int speed = 2;
 
 	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		position.x -= speed;
 		flipHorinzontal = true;
+		current_animation = &forward;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		position.x += speed;
 		flipHorinzontal = false;
+		current_animation = &forward;
+		
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
@@ -102,6 +110,15 @@ update_status ModulePlayer::Update()
 		}
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)) {
+		current_animation = &forward;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && (( App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) ||  App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)) {
+		current_animation = &forward;
+	}
+
+
 	collider->SetPos(position.x,position.y); //update collider position
 
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
@@ -112,8 +129,7 @@ update_status ModulePlayer::Update()
 		
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE
-	   && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE)
+	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_A)==KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
 		current_animation = &idle;
 
 	// Draw everything --------------------------------------
