@@ -14,8 +14,9 @@
 ModulePlayer::ModulePlayer(bool active) : Module(active)
 {
 	// idle animation (just the ship)
-	idle.frames.push_back({66, 1, 32, 14});
-
+	idle.frames.push_back({ 36, 23, 26, 34 });
+	idle.frames.push_back({ 69, 23, 26, 34 });
+	idle.speed = 0.025f;
 	// move upwards
 	up.frames.push_back({100, 1, 32, 14});
 	up.frames.push_back({132, 0, 32, 14});
@@ -37,15 +38,15 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
-	graphics = App->textures->Load("rtype/ship.png");
+	graphics = App->textures->Load("rtype/BattletoadSprites/rash.gif");
 
 	destroyed = false;
 	position.x = 150;
 	position.y = 120;
 
 	SDL_Rect collRec;
-	collRec.x = 1;
-	collRec.y = 1;
+	collRec.x = 150;
+	collRec.y = 120;
 	collRec.h = 16;
 	collRec.w = 16;
 	collider = App->collision->AddCollider(collRec);
@@ -72,12 +73,13 @@ update_status ModulePlayer::Update()
 	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		position.x -= speed;
-		
+		flipHorinzontal = true;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		position.x += speed;
+		flipHorinzontal = false;
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
@@ -116,7 +118,7 @@ update_status ModulePlayer::Update()
 
 	// Draw everything --------------------------------------
 	if(destroyed == false)
-		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()));
+		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()),1.5f,flipHorinzontal);
 
 	return UPDATE_CONTINUE;
 }
@@ -128,13 +130,5 @@ update_status ModulePlayer::Update()
 // You will need to create, update and destroy the collider with the player
 
 void ModulePlayer::onNotify(GameEvent event) {
-	if (event == DESTROY_PARTICLE) {
-		destroyed = true;
-		App->particles->AddParticle(App->particles->explosion, position.x+5, position.y); //create explosion
-		App->particles->AddParticle(App->particles->explosion, position.x, position.y); //create explosion
-		App->particles->AddParticle(App->particles->explosion, position.x-5, position.y); //create explosion
-		destroyed = true;
-		CleanUp();
-		App->fade->FadeToBlack((Module *)App->scene_intro, (Module *)App->scene_space, 3.0f);
-	}
+	
 }

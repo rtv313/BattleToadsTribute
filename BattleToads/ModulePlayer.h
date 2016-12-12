@@ -23,12 +23,20 @@ public:
 
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
-	Animation idle;
-	Animation up;
-	Animation down;
 	iPoint position;
 	bool destroyed = false;
 	Collider *collider;
+	bool flipHorinzontal = false;
+	// Walk
+	Animation forward;
+	Animation backward;
+	Animation up;
+	Animation down;
+	//idle
+	Animation idle;
+	// jump
+	//combat
+
 };
 
 #endif

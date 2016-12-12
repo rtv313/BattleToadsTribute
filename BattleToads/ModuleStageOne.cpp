@@ -47,7 +47,7 @@ bool ModuleStageOne::Start() {
 
 update_status ModuleStageOne::Update()
 {
-	App->renderer->Blit(levelOne, 0, 0, &(background->GetCurrentFrame()),1.0f);
+	App->renderer->Blit(levelOne, 0, 0, &(background.GetCurrentFrame()),1.0f);
 	App->renderer->Blit(levelOne, 986,115, &(waterfall.GetCurrentFrame()), 1.0f);
 	App->renderer->Blit(levelOne, 986,227, &(waterfall.GetCurrentFrame()), 1.0f);
 
