@@ -8,11 +8,14 @@
 #include "ModuleFadeToBlack.h"
 #include "ModulePlayer.h"
 #include "ModuleAudio.h"
+#include "SDL/include/SDL.h"
+
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
 ModulePlayer::ModulePlayer(bool active) : Module(active)
 {
+	
 	// idle animation (just the ship)
 	idle.frames.push_back({ 36, 23, 26, 34 });
 	idle.frames.push_back({ 69, 23, 26, 34 });
@@ -32,6 +35,14 @@ ModulePlayer::ModulePlayer(bool active) : Module(active)
 	forward.frames.push_back({ 536, 26, 22, 37 });
 	forward.frames.push_back({ 561, 30, 34, 29 });
 	forward.speed = 0.2f;
+
+	// Jump 
+	startJumpTime = 0;
+	jumping = false;
+	goingUp = false;
+	jump.frames.push_back({415,167,47,26});
+	jump.speed = 0.1f;
+	secondsTarget = 300.0f;
 
 }
 
@@ -124,12 +135,16 @@ update_status ModulePlayer::Update()
 	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 	{
 		// TODO 6: Shoot a laser using the particle system
-		
 		App->particles->AddParticle(App->particles->laser , App->player->position.x + 20, App->player->position.y);
-		
+		current_animation = &jump;
+		jumping = true;
+		goingUp = true;
+		startJumpTime = SDL_GetTicks();
 	}
+	Jump(speed);
 
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_A)==KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
+
+	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_A)==KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE)
 		current_animation = &idle;
 
 	// Draw everything --------------------------------------
@@ -147,4 +162,22 @@ update_status ModulePlayer::Update()
 
 void ModulePlayer::onNotify(GameEvent event) {
 	
+}
+
+void ModulePlayer::Jump(int &speed) {
+	if (jumping == true) {
+		if (goingUp == true){
+			position.y -= speed;
+			if ((SDL_GetTicks() - startJumpTime) >= secondsTarget) {
+				goingUp = false;
+				startJumpTime = SDL_GetTicks();
+			}
+		}
+		else if(goingUp == false){
+			position.y += speed;
+			if ((SDL_GetTicks() - startJumpTime) >= secondsTarget) {
+				jumping = false;
+			}
+		}
+	}
 }

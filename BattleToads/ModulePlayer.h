@@ -19,6 +19,9 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void onNotify(GameEvent event);
+	void Jump(int &speed);
+
+	
 public:
 
 	SDL_Texture* graphics = nullptr;
@@ -35,6 +38,12 @@ public:
 	//idle
 	Animation idle;
 	// jump
+	Animation jump;
+	bool jumping;
+	bool goingUp;
+	Uint32 startJumpTime;
+	Uint32 secondsTarget;
+	float originalJumpPosition;
 	//combat
 
 };
