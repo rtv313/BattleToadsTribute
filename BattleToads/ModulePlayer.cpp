@@ -103,7 +103,14 @@ update_status ModulePlayer::Update()
 
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 	{
-		position.y += speed;
+		if (jumping == true)
+		{
+			startJumpPosition += speed / 2;
+		}
+		else
+		{
+			position.y += speed;
+		}
 		if(current_animation != &down)
 		{
 			down.Reset();
@@ -112,8 +119,16 @@ update_status ModulePlayer::Update()
 	}
 
 	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	{
-		position.y -= speed;
+	{	
+		if (jumping == true)
+		{
+			startJumpPosition -= speed/2;
+		}
+		else
+		{
+			position.y -= speed;
+		}
+
 		if(current_animation != &up)
 		{
 			up.Reset();
@@ -173,17 +188,18 @@ void ModulePlayer::Jump(int const &speed) {
 	if (jumping == true) {
 		if (goingUp == true) {
 			position.y -= speed;
-			if (position.y < startJumpPosition - jumpHeight) 
+			if (position.y <= startJumpPosition - jumpHeight) 
 				goingUp = false;
 			
 		}else{
 			position.y += speed;
-			if (startJumpPosition  < position.y)
+			if (startJumpPosition  <= position.y)
 				jumping = false;
-		}
+			}
 	}
 	else {
 		jumpHeight = 35;
+		
 	}
 }
 
