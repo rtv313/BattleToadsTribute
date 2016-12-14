@@ -19,7 +19,7 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void onNotify(GameEvent event);
-	void Jump(int &speed);
+	void Jump(int const &speed);
 
 	
 public:
@@ -41,9 +41,9 @@ public:
 	Animation jump;
 	bool jumping;
 	bool goingUp;
-	Uint32 startJumpTime;
-	Uint32 secondsTarget;
-	float originalJumpPosition;
+	int startJumpPosition;
+	int jumpHeight;
+	
 	//combat
 
 };

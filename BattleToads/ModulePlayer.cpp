@@ -37,12 +37,12 @@ ModulePlayer::ModulePlayer(bool active) : Module(active)
 	forward.speed = 0.2f;
 
 	// Jump 
-	startJumpTime = 0;
+	startJumpPosition = 0;
 	jumping = false;
 	goingUp = false;
 	jump.frames.push_back({415,167,47,26});
 	jump.speed = 0.1f;
-	secondsTarget = 300.0f;
+	jumpHeight = 40.0f;
 
 }
 
@@ -136,16 +136,21 @@ update_status ModulePlayer::Update()
 	{
 		// TODO 6: Shoot a laser using the particle system
 		App->particles->AddParticle(App->particles->laser , App->player->position.x + 20, App->player->position.y);
-		current_animation = &jump;
-		jumping = true;
-		goingUp = true;
-		startJumpTime = SDL_GetTicks();
+		if (jumping != true) {
+			current_animation = &jump;
+			jumping = true;
+			goingUp = true;
+			startJumpPosition = position.y;
+		}
 	}
 	Jump(speed);
 
 
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_A)==KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE)
 		current_animation = &idle;
+
+	if(jumping == true)
+		current_animation = &jump;
 
 	// Draw everything --------------------------------------
 	if(destroyed == false)
@@ -164,20 +169,21 @@ void ModulePlayer::onNotify(GameEvent event) {
 	
 }
 
-void ModulePlayer::Jump(int &speed) {
+void ModulePlayer::Jump(int const &speed) {
 	if (jumping == true) {
-		if (goingUp == true){
+		if (goingUp == true) {
 			position.y -= speed;
-			if ((SDL_GetTicks() - startJumpTime) >= secondsTarget) {
+			if (position.y < startJumpPosition - jumpHeight) 
 				goingUp = false;
-				startJumpTime = SDL_GetTicks();
-			}
-		}
-		else if(goingUp == false){
+			
+		}else{
 			position.y += speed;
-			if ((SDL_GetTicks() - startJumpTime) >= secondsTarget) {
+			if (startJumpPosition  < position.y)
 				jumping = false;
-			}
 		}
 	}
+	else {
+		jumpHeight = 35;
+	}
 }
+
