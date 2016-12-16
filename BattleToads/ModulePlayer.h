@@ -6,6 +6,7 @@
 #include "Point.h"
 #include "Observer.h"
 #include "ModuleCollision.h"
+#include "Temporizer.h"
 
 struct SDL_Texture;
 
@@ -43,8 +44,14 @@ public:
 	bool goingUp;
 	int startJumpPosition;
 	int jumpHeight;
-	
-	//combat
+	//Punch
+	/*Animation beforePunch;*/
+	Animation rightPunch;
+	Animation leftPunch;
+	Animation finalPunch;
+	bool punching;
+	Temporizer punchTemporizer;
+
 
 };
 

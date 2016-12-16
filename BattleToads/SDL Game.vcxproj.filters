@@ -73,6 +73,9 @@
     <ClInclude Include="ModuleStageOne.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Temporizer.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

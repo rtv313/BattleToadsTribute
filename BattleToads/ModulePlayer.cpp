@@ -8,6 +8,7 @@
 #include "ModuleFadeToBlack.h"
 #include "ModulePlayer.h"
 #include "ModuleAudio.h"
+#include <stdlib.h>  
 #include "SDL/include/SDL.h"
 
 
@@ -15,14 +16,14 @@
 
 ModulePlayer::ModulePlayer(bool active) : Module(active)
 {
-	
+
 	// idle animation (just the ship)
 	idle.frames.push_back({ 36, 23, 26, 34 });
 	idle.frames.push_back({ 69, 23, 26, 34 });
 	idle.speed = 0.025f;
 	// move upwards
-	up.frames.push_back({598, 26, 26, 35});
-	up.frames.push_back({628, 26, 26, 35});
+	up.frames.push_back({ 598, 26, 26, 35 });
+	up.frames.push_back({ 628, 26, 26, 35 });
 	up.speed = 0.1f;
 	// Move down
 	down.frames.push_back({ 598, 26, 26, 35 });
@@ -34,16 +35,34 @@ ModulePlayer::ModulePlayer(bool active) : Module(active)
 	forward.frames.push_back({ 500, 30, 34, 31 });
 	forward.frames.push_back({ 536, 26, 22, 37 });
 	forward.frames.push_back({ 561, 30, 34, 29 });
-	forward.speed = 0.2f;
+	forward.speed = 0.1f;
 
 	// Jump 
 	startJumpPosition = 0;
 	jumping = false;
 	goingUp = false;
-	jump.frames.push_back({415,167,47,26});
+	jump.frames.push_back({ 415,167,47,26 });
 	jump.speed = 0.1f;
 	jumpHeight = 40.0f;
-
+	// Punch
+	/*beforePunch.frames.push_back({99,25,27,32});
+	beforePunch.speed = 0.1f;*/
+	punching = false;
+	rightPunch.frames.push_back({ 99,25,27,32 });
+	rightPunch.frames.push_back({128,25,39,32});
+	rightPunch.loop = false;
+	rightPunch.speed = 0.05f;
+	leftPunch.frames.push_back({ 99,25,27,32 });
+	leftPunch.frames.push_back({168,26,35,32});
+	leftPunch.loop = false;
+	leftPunch.speed = 0.05f;
+	finalPunch.frames.push_back({ 209,17,35,41});
+	finalPunch.frames.push_back({ 250,19,34,39});
+	finalPunch.frames.push_back({ 285,24,52,32});
+	finalPunch.frames.push_back({ 345, 2,45,56});
+	finalPunch.speed = 0.1f;
+	punchTemporizer=(0.5);
+	
 }
 
 ModulePlayer::~ModulePlayer()
@@ -158,7 +177,8 @@ update_status ModulePlayer::Update()
 			startJumpPosition = position.y;
 		}
 	}
-	Jump(speed);
+	
+	
 
 
 	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_A)==KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE)
@@ -167,9 +187,29 @@ update_status ModulePlayer::Update()
 	if(jumping == true)
 		current_animation = &jump;
 
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT)
+	{
+		punching = true;
+		int  v2 = rand() % 3 + 1;
+		if (v2 % 2 == 0)
+			current_animation = &rightPunch;
+		else
+			current_animation = &leftPunch;
+	}
+
+
+	if (!punchTemporizer.Update() && punching == true) {
+		current_animation = &rightPunch;
+	}
+	else {
+		punching =false;
+	}
+
 	// Draw everything --------------------------------------
 	if(destroyed == false)
 		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()),1.5f,flipHorinzontal);
+
+	Jump(speed);
 
 	return UPDATE_CONTINUE;
 }
@@ -199,7 +239,6 @@ void ModulePlayer::Jump(int const &speed) {
 	}
 	else {
 		jumpHeight = 35;
-		
 	}
 }
 
