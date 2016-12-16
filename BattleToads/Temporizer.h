@@ -16,7 +16,7 @@ public:
 
 	bool Update() {
 		if (SDL_GetTicks() - startTime >= setTime) {
-			startTime = SDL_GetTicks();
+			startTime = SDL_GetTicks();		
 			return true;
 		}
 		return false;

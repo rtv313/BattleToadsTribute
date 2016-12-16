@@ -10,6 +10,9 @@
 
 struct SDL_Texture;
 
+enum AnimationState { IDLE,WALK,JUMP,RUN,ATTACK }; // Desirable have dragon , stick
+enum AnimationAttacksState { BASIC_PUNCH,SUPER_PUNCH,HEAD_PUNCH, KICK_PUNCH, TONGUE_PUNCH };
+
 class ModulePlayer : public Module ,Observer
 {
 public:
@@ -20,7 +23,11 @@ public:
 	update_status Update();
 	bool CleanUp();
 	void onNotify(GameEvent event);
-	void Jump(int const &speed);
+
+private:
+	void Jump();
+	void Walk();
+	void Idle();
 
 	
 public:
@@ -30,7 +37,7 @@ public:
 	iPoint position;
 	bool destroyed = false;
 	Collider *collider;
-	bool flipHorinzontal = false;
+	
 	// Walk
 	Animation forward;
 	Animation backward;
@@ -45,12 +52,16 @@ public:
 	int startJumpPosition;
 	int jumpHeight;
 	//Punch
-	/*Animation beforePunch;*/
 	Animation rightPunch;
 	Animation leftPunch;
 	Animation finalPunch;
 	bool punching;
+	int speed;
+private:
+	bool flipHorinzontal = false;
 	Temporizer punchTemporizer;
+	AnimationState state;
+	AnimationAttacksState attackState;
 
 
 };

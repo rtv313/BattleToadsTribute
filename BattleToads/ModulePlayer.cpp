@@ -15,7 +15,12 @@
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
 ModulePlayer::ModulePlayer(bool active) : Module(active)
-{
+{	
+	speed = 2;
+
+	//Animation states:
+	state = IDLE;
+	attackState = BASIC_PUNCH;
 
 	// idle animation (just the ship)
 	idle.frames.push_back({ 36, 23, 26, 34 });
@@ -103,128 +108,50 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	int speed = 2;
-
-	if(App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	switch (state)
 	{
-		position.x -= speed;
-		flipHorinzontal = true;
-		current_animation = &forward;
+	case IDLE:
+		Idle();
+		break;
+	case WALK:
+		Walk();
+		break;
+	case JUMP:
+		break;
+	case RUN:
+		break;
+	case ATTACK:
+		break;
+	default:
+		break;
 	}
-
-	if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
-		position.x += speed;
-		flipHorinzontal = false;
-		current_animation = &forward;
-		
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-	{
-		if (jumping == true)
-		{
-			startJumpPosition += speed / 2;
-		}
-		else
-		{
-			position.y += speed;
-		}
-		if(current_animation != &down)
-		{
-			down.Reset();
-			current_animation = &down;
-		}
-	}
-
-	if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	{	
-		if (jumping == true)
-		{
-			startJumpPosition -= speed/2;
-		}
-		else
-		{
-			position.y -= speed;
-		}
-
-		if(current_animation != &up)
-		{
-			up.Reset();
-			current_animation = &up;
-		}
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT && ((App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) || App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)) {
-		current_animation = &forward;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT && (( App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) ||  App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)) {
-		current_animation = &forward;
-	}
-
-
-	collider->SetPos(position.x,position.y); //update collider position
-
-	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-	{
-		// TODO 6: Shoot a laser using the particle system
-		App->particles->AddParticle(App->particles->laser , App->player->position.x + 20, App->player->position.y);
-		if (jumping != true) {
-			current_animation = &jump;
-			jumping = true;
-			goingUp = true;
-			startJumpPosition = position.y;
-		}
-	}
-	
 	
 
 
-	if(App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_A)==KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE)
-		current_animation = &idle;
-
-	if(jumping == true)
-		current_animation = &jump;
-
-	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT)
-	{
-		punching = true;
-		int  v2 = rand() % 3 + 1;
-		if (v2 % 2 == 0)
-			current_animation = &rightPunch;
-		else
-			current_animation = &leftPunch;
-	}
-
-
-	if (!punchTemporizer.Update() && punching == true) {
-		current_animation = &rightPunch;
-	}
-	else {
-		punching =false;
-	}
+	
 
 	// Draw everything --------------------------------------
 	if(destroyed == false)
 		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()),1.5f,flipHorinzontal);
 
-	Jump(speed);
+	Jump();
 
 	return UPDATE_CONTINUE;
 }
 
-// TODO 13: Make so is the laser collides, it is removed and create an explosion particle at its position
 
-// TODO 14: Make so if the player collides, it is removed and create few explosions at its positions
-// then fade away back to the first screen (use the "destroyed" bool already created 
-// You will need to create, update and destroy the collider with the player
 
-void ModulePlayer::onNotify(GameEvent event) {
+
+
+
+
+void ModulePlayer::onNotify(GameEvent event) 
+{
 	
 }
 
-void ModulePlayer::Jump(int const &speed) {
+void ModulePlayer::Jump() 
+{
 	if (jumping == true) {
 		if (goingUp == true) {
 			position.y -= speed;
@@ -242,3 +169,72 @@ void ModulePlayer::Jump(int const &speed) {
 	}
 }
 
+void ModulePlayer::Walk() 
+{
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE &&
+		App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE &&
+		App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_M) == KEY_IDLE) 
+	{
+		state = IDLE;
+		return;
+	}
+		
+	
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) 
+	{	
+		state = WALK;
+		position.y -= speed;
+
+		if (current_animation != &up)
+		{
+			up.Reset();
+			current_animation = &up;
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	{
+		state = WALK;
+		position.y += speed;
+		
+		if (current_animation != &down)
+		{
+			down.Reset();
+			current_animation = &down;
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		state = WALK;
+		position.x -= speed;
+		flipHorinzontal = true;
+		current_animation = &forward;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		state = WALK;
+		position.x += speed;
+		flipHorinzontal = false;
+		current_animation = &forward;
+
+	}
+	
+}
+
+void ModulePlayer::Idle() 
+{
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE &&
+		App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE &&
+		App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_M) == KEY_IDLE)
+	{
+		state = IDLE;
+		current_animation = &idle;
+		return;
+	}
+	else {
+		state = WALK;
+	}
+	
+}
