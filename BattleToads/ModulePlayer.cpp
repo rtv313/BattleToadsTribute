@@ -253,11 +253,21 @@ void ModulePlayer::Idle()
 void ModulePlayer::Run() 
 {
 	speed = 4;
-	
+	current_animation = &forward;
+
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+	{
+		position.y -= speed;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
+	{
+		position.y += speed;
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 	{
 		position.x -= speed;
-		current_animation = &forward;
 		flipHorinzontal = true;
 		
 	}
@@ -265,14 +275,13 @@ void ModulePlayer::Run()
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 	{
 		position.x += speed;
-		current_animation = &forward;
 		flipHorinzontal = false;
 		
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_UP) {
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_UP) 
+	{
 		state = WALK;
-		
 	}
 
 
