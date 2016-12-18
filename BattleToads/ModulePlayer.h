@@ -29,7 +29,7 @@ private:
 	void Walk();
 	void Idle();
 	void Run();
-
+	void Attack();
 	
 public:
 
@@ -58,10 +58,10 @@ public:
 	Animation finalPunch;
 	bool punching;
 	int speed;
+
 private:
 	bool flipHorinzontal = false;
 	Temporizer punchTemporizer;
-	Temporizer runTemporizer;
 	AnimationState state;
 	AnimationAttacksState attackState;
 

@@ -50,24 +50,13 @@ ModulePlayer::ModulePlayer(bool active) : Module(active)
 	jump.speed = 0.1f;
 	jumpHeight = 40.0f;
 	// Punch
-	/*beforePunch.frames.push_back({99,25,27,32});
-	beforePunch.speed = 0.1f;*/
 	punching = false;
 	rightPunch.frames.push_back({ 99,25,27,32 });
 	rightPunch.frames.push_back({128,25,39,32});
-	rightPunch.loop = false;
-	rightPunch.speed = 0.05f;
-	leftPunch.frames.push_back({ 99,25,27,32 });
-	leftPunch.frames.push_back({168,26,35,32});
-	leftPunch.loop = false;
-	leftPunch.speed = 0.05f;
-	finalPunch.frames.push_back({ 209,17,35,41});
-	finalPunch.frames.push_back({ 250,19,34,39});
-	finalPunch.frames.push_back({ 285,24,52,32});
-	finalPunch.frames.push_back({ 345, 2,45,56});
-	finalPunch.speed = 0.1f;
-	punchTemporizer=(0.5);
-	runTemporizer = (1.5);
+	rightPunch.speed = 0.01f;
+	
+	punchTemporizer=(5);
+
 	
 }
 
@@ -118,11 +107,13 @@ update_status ModulePlayer::Update()
 		Walk();
 		break;
 	case JUMP:
+		Jump();
 		break;
 	case RUN:
 		Run();
 		break;
 	case ATTACK:
+		Attack();
 		break;
 	default:
 		break;
@@ -134,41 +125,15 @@ update_status ModulePlayer::Update()
 
 	// Draw everything --------------------------------------
 	if(destroyed == false)
-		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()),1.5f,flipHorinzontal);
+		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()),0.1f,flipHorinzontal);
 
-	Jump();
 
 	return UPDATE_CONTINUE;
 }
 
-
-
-
-
-
-
 void ModulePlayer::onNotify(GameEvent event) 
 {
 	
-}
-
-void ModulePlayer::Jump() 
-{
-	if (jumping == true) {
-		if (goingUp == true) {
-			position.y -= speed;
-			if (position.y <= startJumpPosition - jumpHeight) 
-				goingUp = false;
-			
-		}else{
-			position.y += speed;
-			if (startJumpPosition  <= position.y)
-				jumping = false;
-			}
-	}
-	else {
-		jumpHeight = 35;
-	}
 }
 
 void ModulePlayer::Walk() 
@@ -229,9 +194,18 @@ void ModulePlayer::Walk()
 		state = RUN;
 	}
 
-	
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) {
+		goingUp = true;
+		startJumpPosition = position.y;
+		state = JUMP;
+	}
 
-	
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT) {
+		punchTemporizer.Start();
+		punching = true;
+		rightPunch.Reset();
+		state = ATTACK;
+	}
 }
 
 void ModulePlayer::Idle() 
@@ -243,8 +217,10 @@ void ModulePlayer::Idle()
 		state = IDLE;
 		current_animation = &idle;
 		return;
+	}else if(App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT) {
+		state = ATTACK;
 	}
-	else {
+	else{
 		state = WALK;
 	}
 	
@@ -284,8 +260,54 @@ void ModulePlayer::Run()
 		state = WALK;
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT) 
+	{
+		goingUp = true;
+		startJumpPosition = position.y;
+		state = JUMP;
+	}
+}
 
-	//state = IDLE;
-	
+void ModulePlayer :: Jump() 
+{	
+	current_animation = &jump;
+	if (goingUp == true) 
+	{
+		position.y -= 2;
+		if (position.y <= startJumpPosition - jumpHeight)
+			goingUp = false;
+
+	}
+	else {
+		position.y += 2;
+		if (startJumpPosition <= position.y)
+		{
+			state = IDLE;
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		position.x -= speed;
+		flipHorinzontal = true;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		position.x += speed;
+		flipHorinzontal = false;
+	}
+}
+
+void ModulePlayer::Attack() 
+{
+	state = ATTACK;
+	if (punching == true) {
+		current_animation = &rightPunch;
+	}
+	if (punchTemporizer.Update()) {
+		state = IDLE;
+		punching = false;
+	}
 	
 }
