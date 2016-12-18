@@ -58,7 +58,7 @@ ModulePlayer::ModulePlayer(bool active) : Module(active)
 	leftPunch.frames.push_back({ 168,26,35,32 });
 	leftPunch.speed = 0.1f;
 	
-	punchTemporizer=(0.25);
+
 
 	
 }
@@ -304,20 +304,20 @@ void ModulePlayer::Attack()
 {
 	state = ATTACK;
 	if (punching == true && current_animation->Finished()) {
-		int  randomPunch = rand() % 3 + 1;
 		
-		if (randomPunch % 2 == 0)
+		
+	if (punchCounter % 2 == 0)
 			current_animation = &rightPunch;
 		else
 			current_animation = &leftPunch;
 		
 	}
 	if (current_animation->Finished()) {
-		
 			state = IDLE;
 			punching = false;
 			rightPunch.Reset();
 			leftPunch.Reset();
+			++punchCounter;
 		
 	}
 	

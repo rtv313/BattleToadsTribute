@@ -60,8 +60,8 @@ public:
 	int speed;
 
 private:
+	int punchCounter = 0;
 	bool flipHorinzontal = false;
-	Temporizer punchTemporizer;
 	AnimationState state;
 	AnimationAttacksState attackState;
 
