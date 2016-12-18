@@ -127,8 +127,9 @@ update_status ModulePlayer::Update()
 	
 
 	// Draw everything --------------------------------------
-	if(destroyed == false)
-		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()),0.1f,flipHorinzontal);
+
+	//App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
+	
 
 
 	return UPDATE_CONTINUE;
@@ -206,7 +207,10 @@ void ModulePlayer::Walk()
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT) {
 		punching = true;
 		state = ATTACK;
+		return;
 	}
+
+	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
 }
 
 void ModulePlayer::Idle() 
@@ -217,14 +221,15 @@ void ModulePlayer::Idle()
 	{
 		state = IDLE;
 		current_animation = &idle;
-		return;
+		
 	}else if(App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT) {
 		state = ATTACK;
+		return;
 	}
 	else{
 		state = WALK;
 	}
-	
+	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
 }
 
 void ModulePlayer::Run() 
@@ -267,6 +272,8 @@ void ModulePlayer::Run()
 		startJumpPosition = position.y;
 		state = JUMP;
 	}
+
+	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
 }
 
 void ModulePlayer :: Jump() 
@@ -298,17 +305,18 @@ void ModulePlayer :: Jump()
 		position.x += speed;
 		flipHorinzontal = false;
 	}
+
+	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
 }
 
 void ModulePlayer::Attack() 
 {
 	state = ATTACK;
 	if (punching == true && current_animation->Finished()) {
-		
-		
-	if (punchCounter % 2 == 0)
+
+	/*	if (punchCounter % 2 == 0)
 			current_animation = &rightPunch;
-		else
+		else*/
 			current_animation = &leftPunch;
 		
 	}
@@ -319,6 +327,12 @@ void ModulePlayer::Attack()
 			leftPunch.Reset();
 			++punchCounter;
 		
+	}
+	if (flipHorinzontal == true) {
+		App->renderer->Blit(graphics, position.x-9, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
+	}
+	else {
+		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
 	}
 	
 }
