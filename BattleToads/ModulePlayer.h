@@ -28,6 +28,7 @@ private:
 	void Jump();
 	void Walk();
 	void Idle();
+	void Run();
 
 	
 public:
@@ -60,6 +61,7 @@ public:
 private:
 	bool flipHorinzontal = false;
 	Temporizer punchTemporizer;
+	Temporizer runTemporizer;
 	AnimationState state;
 	AnimationAttacksState attackState;
 

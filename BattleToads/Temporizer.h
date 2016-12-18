@@ -6,6 +6,7 @@ public:
 
 	float  startTime;
 	float  setTime;
+	bool  start;
 
 	Temporizer():setTime(1000) {}
 	Temporizer(float setTime) :setTime(setTime*1000) {}
@@ -14,10 +15,25 @@ public:
 		startTime = SDL_GetTicks();
 	}
 
+	void Start() 
+	{
+		start = true;
+		startTime = SDL_GetTicks();
+	}
+
+	void Stop()
+	{
+		start = false;
+	}
+
 	bool Update() {
-		if (SDL_GetTicks() - startTime >= setTime) {
-			startTime = SDL_GetTicks();		
-			return true;
+		if (start == true) 
+		{
+			if (SDL_GetTicks() - startTime >= setTime) 
+			{
+				startTime = SDL_GetTicks();
+				return true;
+			}
 		}
 		return false;
 	}

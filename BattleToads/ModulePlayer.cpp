@@ -67,6 +67,7 @@ ModulePlayer::ModulePlayer(bool active) : Module(active)
 	finalPunch.frames.push_back({ 345, 2,45,56});
 	finalPunch.speed = 0.1f;
 	punchTemporizer=(0.5);
+	runTemporizer = (1.5);
 	
 }
 
@@ -119,6 +120,7 @@ update_status ModulePlayer::Update()
 	case JUMP:
 		break;
 	case RUN:
+		Run();
 		break;
 	case ATTACK:
 		break;
@@ -170,7 +172,9 @@ void ModulePlayer::Jump()
 }
 
 void ModulePlayer::Walk() 
-{
+{	
+	speed = 2;
+
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE &&
 		App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE &&
 		App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_M) == KEY_IDLE) 
@@ -205,7 +209,8 @@ void ModulePlayer::Walk()
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-	{
+	{	
+		
 		state = WALK;
 		position.x -= speed;
 		flipHorinzontal = true;
@@ -213,13 +218,19 @@ void ModulePlayer::Walk()
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	{
+	{	
 		state = WALK;
 		position.x += speed;
 		flipHorinzontal = false;
 		current_animation = &forward;
-
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_REPEAT) {
+		state = RUN;
+	}
+
+	
+
 	
 }
 
@@ -236,5 +247,36 @@ void ModulePlayer::Idle()
 	else {
 		state = WALK;
 	}
+	
+}
+
+void ModulePlayer::Run() 
+{
+	speed = 4;
+	
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+	{
+		position.x -= speed;
+		current_animation = &forward;
+		flipHorinzontal = true;
+		
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	{
+		position.x += speed;
+		current_animation = &forward;
+		flipHorinzontal = false;
+		
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_UP) {
+		state = WALK;
+		
+	}
+
+
+	//state = IDLE;
+	
 	
 }
