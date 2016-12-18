@@ -53,9 +53,12 @@ ModulePlayer::ModulePlayer(bool active) : Module(active)
 	punching = false;
 	rightPunch.frames.push_back({ 99,25,27,32 });
 	rightPunch.frames.push_back({128,25,39,32});
-	rightPunch.speed = 0.01f;
+	rightPunch.speed = 0.1f;
+	leftPunch.frames.push_back({ 99,25,27,32 });
+	leftPunch.frames.push_back({ 168,26,35,32 });
+	leftPunch.speed = 0.1f;
 	
-	punchTemporizer=(5);
+	punchTemporizer=(0.25);
 
 	
 }
@@ -201,9 +204,7 @@ void ModulePlayer::Walk()
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT) {
-		punchTemporizer.Start();
 		punching = true;
-		rightPunch.Reset();
 		state = ATTACK;
 	}
 }
@@ -302,12 +303,22 @@ void ModulePlayer :: Jump()
 void ModulePlayer::Attack() 
 {
 	state = ATTACK;
-	if (punching == true) {
-		current_animation = &rightPunch;
+	if (punching == true && current_animation->Finished()) {
+		int  randomPunch = rand() % 3 + 1;
+		
+		if (randomPunch % 2 == 0)
+			current_animation = &rightPunch;
+		else
+			current_animation = &leftPunch;
+		
 	}
-	if (punchTemporizer.Update()) {
-		state = IDLE;
-		punching = false;
+	if (current_animation->Finished()) {
+		
+			state = IDLE;
+			punching = false;
+			rightPunch.Reset();
+			leftPunch.Reset();
+		
 	}
 	
 }
