@@ -10,7 +10,7 @@
 
 struct SDL_Texture;
 
-enum AnimationState { IDLE,WALK,JUMP,RUN,ATTACK }; // Desirable have dragon , stick
+enum AnimationState { IDLE,WALK,JUMP,RUN,ATTACK,SUPER_ATTACK,KICK_ATTACK }; // Desirable have dragon , stick
 enum AnimationAttacksState { BASIC_PUNCH,SUPER_PUNCH,HEAD_PUNCH, KICK_PUNCH, TONGUE_PUNCH };
 
 class ModulePlayer : public Module ,Observer
@@ -30,9 +30,11 @@ private:
 	void Idle();
 	void Run();
 	void Attack();
+	void SuperAttack();
+	void  KickAttack();
 	
 public:
-
+	int speed;
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
 	iPoint position;
@@ -52,12 +54,14 @@ public:
 	bool goingUp;
 	int startJumpPosition;
 	int jumpHeight;
-	//Punch
+	//Attack
 	Animation rightPunch;
 	Animation leftPunch;
-	Animation finalPunch;
 	bool punching;
-	int speed;
+	//Kick Attack
+	Animation kickAttack;
+	//Super Attack
+	Animation finalPunch;
 
 private:
 

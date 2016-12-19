@@ -15,7 +15,7 @@
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
 ModulePlayer::ModulePlayer(bool active) : Module(active)
-{	
+{
 	speed = 2;
 
 	//Animation states:
@@ -49,18 +49,24 @@ ModulePlayer::ModulePlayer(bool active) : Module(active)
 	jump.frames.push_back({ 415,167,47,26 });
 	jump.speed = 0.1f;
 	jumpHeight = 40.0f;
-	// Punch
+	// Attack
 	punching = false;
 	rightPunch.frames.push_back({ 99,25,27,32 });
-	rightPunch.frames.push_back({128,25,39,32});
+	rightPunch.frames.push_back({ 128,25,39,32 });
 	rightPunch.speed = 0.1f;
 	leftPunch.frames.push_back({ 99,25,27,32 });
 	leftPunch.frames.push_back({ 168,26,35,32 });
 	leftPunch.speed = 0.1f;
-	
-
-
-	
+	// KickAttack
+	kickAttack.frames.push_back({ 167,165,41,35 });
+	kickAttack.frames.push_back({ 212,154,43,48 });
+	kickAttack.speed = 0.1f;
+	// Final punch
+	finalPunch.frames.push_back({208,17,35,42});
+	finalPunch.frames.push_back({250,19,34,39});
+	finalPunch.frames.push_back({285,24,52,32});
+	//finalPunch.frames.push_back({});
+	finalPunch.speed = 0.1f;
 }
 
 ModulePlayer::~ModulePlayer()
@@ -119,19 +125,16 @@ update_status ModulePlayer::Update()
 	case ATTACK:
 		Attack();
 		break;
+	case SUPER_ATTACK:
+		SuperAttack();
+		break;
+	case KICK_ATTACK:
+		KickAttack();
+		break;
 	default:
+		Idle();
 		break;
 	}
-	
-
-
-	
-
-	// Draw everything --------------------------------------
-
-	//App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
-	
-
 
 	return UPDATE_CONTINUE;
 }
@@ -153,7 +156,6 @@ void ModulePlayer::Walk()
 		return;
 	}
 		
-	
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) 
 	{	
 		state = WALK;
@@ -218,12 +220,22 @@ void ModulePlayer::Idle()
 {
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE &&
 		App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE &&
-		App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_M) == KEY_IDLE)
+		App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_M) == KEY_IDLE&&
+		App->input->GetKey(SDL_SCANCODE_N)==KEY_IDLE && App->input->GetKey(SDL_SCANCODE_B) == KEY_IDLE)
 	{
 		state = IDLE;
 		current_animation = &idle;
 		
-	}else{
+	}
+	
+	else if (App->input->GetKey(SDL_SCANCODE_B) == KEY_REPEAT) {
+		state = SUPER_ATTACK;
+	}
+	
+	else if (App->input->GetKey(SDL_SCANCODE_N) == KEY_REPEAT) {
+		state = KICK_ATTACK;
+	}
+	else {
 		state = WALK;
 	}
 	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
@@ -314,8 +326,7 @@ void ModulePlayer :: Jump()
 
 void ModulePlayer::Attack() 
 {
-	//state = ATTACK;
-	//flipCompensation = 0;
+	
 	if (punching == true && current_animation->Finished()) {
 		
 		animationCounter = 0;
@@ -340,16 +351,16 @@ void ModulePlayer::Attack()
 		
 	}
 
-	if (!current_animation->Finished() && flipHorinzontal) {
-		if (animationCounter >= 9 && animationCounter <= 20) {
+	if (!current_animation->Finished() && flipHorinzontal) { 
+		
+		if (animationCounter >= 9 && animationCounter <= 20) {// frames where we need to adjust
 			if(animationCounter <=18)
-			App->renderer->Blit(graphics, position.x - flipCompensation, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
-			
+			App->renderer->Blit(graphics, position.x - flipCompensation, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal); // punche sprite
 		}
 		else {
-			App->renderer->Blit(graphics, position.x , position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
+			App->renderer->Blit(graphics, position.x , position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);// pre punch sprite
 		}
-		++animationCounter;
+		++animationCounter; // count the actual frame
 	}
 	else {
 		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
@@ -357,3 +368,24 @@ void ModulePlayer::Attack()
 	
 	
 }
+
+
+void ModulePlayer::SuperAttack() {
+	current_animation = &finalPunch;
+	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
+	if (current_animation->Finished()) {
+		finalPunch.Reset();
+		state = IDLE;
+	}
+}
+
+
+void ModulePlayer::KickAttack() {
+	current_animation = &kickAttack;
+	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
+	if (current_animation->Finished()) {
+		kickAttack.Reset();
+		state = IDLE;
+	}
+}
+
