@@ -60,6 +60,8 @@ public:
 	int speed;
 
 private:
+
+	int animationCounter = 0;
 	int punchCounter = 0;
 	bool flipHorinzontal = false;
 	int flipCompensation = 0;

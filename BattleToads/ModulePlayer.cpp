@@ -223,7 +223,7 @@ void ModulePlayer::Idle()
 		state = IDLE;
 		current_animation = &idle;
 		
-	}else if(App->input->GetKey(SDL_SCANCODE_M) == KEY_REPEAT) {
+	}else if(App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
 		state = ATTACK;
 		return;
 	}
@@ -315,14 +315,15 @@ void ModulePlayer::Attack()
 	state = ATTACK;
 	//flipCompensation = 0;
 	if (punching == true && current_animation->Finished()) {
-		punchCounter = 0;
-		if (0 == 0) {
+		
+		animationCounter = 0;
+		if (punchCounter%2== 0) {
 			current_animation = &rightPunch;
-			flipCompensation = 14;
+			flipCompensation = 16;
 		}
 		else {
 			current_animation = &leftPunch;
-			flipCompensation = 9;
+			flipCompensation = 11;
 		}
 	}
 	
@@ -331,23 +332,21 @@ void ModulePlayer::Attack()
 			punching = false;
 			rightPunch.Reset();
 			leftPunch.Reset();
+			++animationCounter;
 			++punchCounter;
-		
-			
-			
 			return;
 		
 	}
 
 	if (!current_animation->Finished() && flipHorinzontal) {
-		if (punchCounter >= 9 && punchCounter <= 20) {
-			App->renderer->Blit(graphics, position.x - 10, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
+		if (animationCounter >= 9 && animationCounter <= 20) {
+			App->renderer->Blit(graphics, position.x - flipCompensation, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
 			
 		}
 		else {
 			App->renderer->Blit(graphics, position.x , position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
 		}
-		++punchCounter;
+		++animationCounter;
 	}
 	else {
 		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
