@@ -62,6 +62,8 @@ public:
 private:
 	int punchCounter = 0;
 	bool flipHorinzontal = false;
+	int flipCompensation = 0;
+	
 	AnimationState state;
 	AnimationAttacksState attackState;
 

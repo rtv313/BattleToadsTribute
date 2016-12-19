@@ -101,6 +101,7 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
+	
 	switch (state)
 	{
 	case IDLE:
@@ -312,14 +313,19 @@ void ModulePlayer :: Jump()
 void ModulePlayer::Attack() 
 {
 	state = ATTACK;
+	//flipCompensation = 0;
 	if (punching == true && current_animation->Finished()) {
-
-	/*	if (punchCounter % 2 == 0)
+		punchCounter = 0;
+		if (0 == 0) {
 			current_animation = &rightPunch;
-		else*/
+			flipCompensation = 14;
+		}
+		else {
 			current_animation = &leftPunch;
-		
+			flipCompensation = 9;
+		}
 	}
+	
 	if (current_animation->Finished()) {
 			state = IDLE;
 			punching = false;
@@ -327,12 +333,25 @@ void ModulePlayer::Attack()
 			leftPunch.Reset();
 			++punchCounter;
 		
+			
+			
+			return;
+		
 	}
-	if (flipHorinzontal == true) {
-		App->renderer->Blit(graphics, position.x-9, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
+
+	if (!current_animation->Finished() && flipHorinzontal) {
+		if (punchCounter >= 9 && punchCounter <= 20) {
+			App->renderer->Blit(graphics, position.x - 10, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
+			
+		}
+		else {
+			App->renderer->Blit(graphics, position.x , position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
+		}
+		++punchCounter;
 	}
 	else {
 		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
 	}
+	
 	
 }
