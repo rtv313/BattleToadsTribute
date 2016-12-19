@@ -223,11 +223,7 @@ void ModulePlayer::Idle()
 		state = IDLE;
 		current_animation = &idle;
 		
-	}else if(App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN) {
-		state = ATTACK;
-		return;
-	}
-	else{
+	}else{
 		state = WALK;
 	}
 	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
@@ -312,7 +308,7 @@ void ModulePlayer :: Jump()
 
 void ModulePlayer::Attack() 
 {
-	state = ATTACK;
+	//state = ATTACK;
 	//flipCompensation = 0;
 	if (punching == true && current_animation->Finished()) {
 		
@@ -340,6 +336,7 @@ void ModulePlayer::Attack()
 
 	if (!current_animation->Finished() && flipHorinzontal) {
 		if (animationCounter >= 9 && animationCounter <= 20) {
+			if(animationCounter <=18)
 			App->renderer->Blit(graphics, position.x - flipCompensation, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
 			
 		}
