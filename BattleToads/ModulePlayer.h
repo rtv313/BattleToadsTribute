@@ -31,7 +31,7 @@ private:
 	void Run();
 	void Attack();
 	void SuperAttack();
-	void  KickAttack();
+	void KickAttack();
 	
 public:
 	int speed;
@@ -57,6 +57,10 @@ public:
 	//Attack
 	Animation rightPunch;
 	Animation leftPunch;
+	vector<iPoint> offsetLeftAttackLeft;
+	vector<iPoint> offsetRightAttackLeft;
+	vector<iPoint> offsetLeftAttackRight;
+	vector<iPoint> offsetRightAttackRight;
 	bool punching;
 	//Kick Attack
 	vector<iPoint> offsetLeftKick;
@@ -68,11 +72,9 @@ public:
 
 private:
 
-	int animationCounter = 0;
+
 	int punchCounter = 0;
 	bool flipHorinzontal = false;
-	int flipCompensation = 0;
-	
 	AnimationState state;
 	AnimationAttacksState attackState;
 
