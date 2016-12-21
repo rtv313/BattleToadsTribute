@@ -58,19 +58,24 @@ ModulePlayer::ModulePlayer(bool active) : Module(active)
 	leftPunch.frames.push_back({ 168,26,35,32 });
 	leftPunch.speed = 0.1f;
 	// KickAttack
+	renderKick = AnimationRender({ {0,0},{ 0,0 }}, {{0,0},{ 0,14}});
+	
 	kickAttack.frames.push_back({ 167,165,41,35 });
 	kickAttack.frames.push_back({ 212,154,43,48 });
 	kickAttack.speed = 0.1f;
 	// Final punch
 	finalPunch.frames.push_back({208,17,35,42});
 	finalPunch.frames.push_back({250,19,34,39});
-	finalPunch.frames.push_back({285,24,52,32});
+	finalPunch.frames.push_back({285,24,52,32}); 
+	finalPunch.frames.push_back({ 345, 3,45,56 });
 	//finalPunch.frames.push_back({});
 	finalPunch.speed = 0.1f;
 }
 
 ModulePlayer::~ModulePlayer()
-{}
+{
+	
+}
 
 // Load assets
 bool ModulePlayer::Start()
@@ -355,7 +360,7 @@ void ModulePlayer::Attack()
 		
 		if (animationCounter >= 9 && animationCounter <= 20) {// frames where we need to adjust
 			if(animationCounter <=18)
-			App->renderer->Blit(graphics, position.x - flipCompensation, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal); // punche sprite
+				App->renderer->Blit(graphics, position.x - flipCompensation, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal); // punche sprite
 		}
 		else {
 			App->renderer->Blit(graphics, position.x , position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);// pre punch sprite
@@ -365,8 +370,6 @@ void ModulePlayer::Attack()
 	else {
 		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
 	}
-	
-	
 }
 
 
@@ -382,7 +385,9 @@ void ModulePlayer::SuperAttack() {
 
 void ModulePlayer::KickAttack() {
 	current_animation = &kickAttack;
-	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
+	
+	renderKick.Play(App,graphics,current_animation,flipHorinzontal,position);
+	//App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
 	if (current_animation->Finished()) {
 		kickAttack.Reset();
 		state = IDLE;

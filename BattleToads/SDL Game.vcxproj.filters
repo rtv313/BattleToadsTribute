@@ -76,6 +76,9 @@
     <ClInclude Include="Temporizer.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="AnimationRender.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

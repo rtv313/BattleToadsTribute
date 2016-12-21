@@ -7,7 +7,7 @@
 #include "Observer.h"
 #include "ModuleCollision.h"
 #include "Temporizer.h"
-
+#include "AnimationRender.h"
 struct SDL_Texture;
 
 enum AnimationState { IDLE,WALK,JUMP,RUN,ATTACK,SUPER_ATTACK,KICK_ATTACK }; // Desirable have dragon , stick
@@ -59,6 +59,7 @@ public:
 	Animation leftPunch;
 	bool punching;
 	//Kick Attack
+	AnimationRender renderKick;
 	Animation kickAttack;
 	//Super Attack
 	Animation finalPunch;
