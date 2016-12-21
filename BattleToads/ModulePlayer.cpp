@@ -58,8 +58,9 @@ ModulePlayer::ModulePlayer(bool active) : Module(active)
 	leftPunch.frames.push_back({ 168,26,35,32 });
 	leftPunch.speed = 0.1f;
 	// KickAttack
-	renderKick = AnimationRender({ {12,0},{ 18,14 }}, {{0,0},{ 0,14}});
-	
+	renderWithOffset = AnimationRender();
+	offsetLeftKick = { { 12, 0 },{ 18,14 } };
+	offsetRighKick = { { 0,0 },{ 0,14 } };
 	kickAttack.frames.push_back({ 167,165,41,35 });
 	kickAttack.frames.push_back({ 212,154,43,48 });
 	kickAttack.speed = 0.1f;
@@ -384,11 +385,13 @@ void ModulePlayer::SuperAttack() {
 
 
 void ModulePlayer::KickAttack() {
+
 	current_animation = &kickAttack;
 	
-	renderKick.Play(App,graphics,current_animation,flipHorinzontal,position);
-	//App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
+	renderWithOffset.Update(App,graphics,current_animation,flipHorinzontal,position, offsetLeftKick, offsetRighKick);
+
 	if (current_animation->Finished()) {
+		
 		kickAttack.Reset();
 		state = IDLE;
 	}

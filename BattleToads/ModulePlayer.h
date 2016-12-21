@@ -59,7 +59,9 @@ public:
 	Animation leftPunch;
 	bool punching;
 	//Kick Attack
-	AnimationRender renderKick;
+	vector<iPoint> offsetLeftKick;
+	vector<iPoint> offsetRighKick;
+	AnimationRender renderWithOffset;
 	Animation kickAttack;
 	//Super Attack
 	Animation finalPunch;
