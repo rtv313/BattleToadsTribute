@@ -74,7 +74,7 @@ ModulePlayer::ModulePlayer(bool active) : Module(active)
 	kickAttack.frames.push_back({ 212,154,43,48 });
 	kickAttack.speed = 0.1f;
 	// Final punch
-	offsetLeftFinalPunch = { {0,0},{ 0,0 },{ 0,0 },{ 0,0 } }; //positivo sube ,negativo baja
+	offsetLeftFinalPunch = { {8,6},{ 8,4 },{ 23,-2 },{ 23,21 } }; //positivo sube ,negativo baja
 	offsetRighFinalPunch = { {0,6},{ 0,4 },{ 0,-2 },{ 0,21 } };
 
 	finalPunch.frames.push_back({208,17,35,42});
