@@ -68,6 +68,8 @@ public:
 	AnimationRender renderWithOffset;
 	Animation kickAttack;
 	//Super Attack
+	vector<iPoint> offsetLeftFinalPunch;
+	vector<iPoint> offsetRighFinalPunch;
 	Animation finalPunch;
 
 private:
