@@ -5,57 +5,36 @@
 #include "Application.h"
 #include "ModuleRender.h"
 
-#define NUMBER_FRAMES_PER_SPRITE  9
-#define VALID_RENDER_FRAMES 10
 
 class AnimationRender {
 
 public:
-	vector<iPoint> offsetLeft;
-	vector<iPoint> offsetRight;
+	
 	AnimationRender() {}
-	AnimationRender(vector<iPoint> offsetLeft, vector<iPoint> offsetRight):
-		offsetLeft(offsetLeft), 
-		offsetRight(offsetRight)
-	{}
-
 	~AnimationRender(){}
 
-	void Play(Application* const App, SDL_Texture* const graphics, Animation* const animation,bool const flipHorizontal,iPoint const position)
+	void Update(Application* const App, SDL_Texture* const graphics, Animation* const animation, bool const flipHorizontal, iPoint const position, vector<iPoint> &offsetLeft, vector<iPoint> &offsetRight)
 	{
-		
-		if (animationCounter >= NUMBER_FRAMES_PER_SPRITE && actualOffset + 1 < animation->frames.size()) {
-			++actualOffset;
-			animationCounter = 0;
-		}
-		
 
-		if (flipHorizontal) { // when looks left
-			if (animationCounter < VALID_RENDER_FRAMES) // clean ghost
-				App->renderer->Blit(graphics, position.x - offsetLeft[actualOffset].x, position.y - offsetLeft[actualOffset].y, &(animation->GetCurrentFrame()), 0.1f, flipHorizontal); // punche sprite
-			else
-				&(animation->GetCurrentFrame()); // move frames to finish but we not render to clean ghost
-		}
-		else { // if looks right
-			if (animationCounter < VALID_RENDER_FRAMES) // clean ghost
-				App->renderer->Blit(graphics, position.x, position.y - offsetRight[actualOffset].y, &(animation->GetCurrentFrame()), 0.1f, flipHorizontal);
-			else
-				&(animation->GetCurrentFrame()); // move frames to finish but we not render to clean ghost
-		}
-		
-		++animationCounter; 
-
-		if (animation->Finished()) {
-			animationCounter = 0;
-			actualOffset = 0;
-			return;
-		}
+		if (flipHorizontal)  // when looks left
+			Render(App, graphics, animation, flipHorizontal, position, offsetLeft, offsetRight);
+		else  // if looks right
+			Render(App, graphics, animation, flipHorizontal, position, offsetLeft, offsetRight);
 	}
 	
 private:
-	int animationCounter = 0; 
+
+	
 	int actualOffset = 0;
 
+	void Render(Application* const App, SDL_Texture* const graphics, Animation* const animation, bool const flipHorizontal, iPoint const position, vector<iPoint> &offsetLeft, vector<iPoint> &offsetRight) {
+		SDL_Rect * sprite = &(animation->GetCurrentFrame());
+		actualOffset = (int)(animation->current_frame);
+		if (flipHorizontal == true)
+			App->renderer->Blit(graphics, position.x - offsetLeft[actualOffset].x, position.y - offsetLeft[actualOffset].y, sprite, 0.1f, flipHorizontal);
+		else
+			App->renderer->Blit(graphics, position.x - offsetRight[actualOffset].x, position.y - offsetRight[actualOffset].y,sprite, 0.1f, flipHorizontal);
+		}
 };
 
 

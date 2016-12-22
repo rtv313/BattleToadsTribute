@@ -18,6 +18,9 @@ ModulePlayer::ModulePlayer(bool active) : Module(active)
 {
 	speed = 2;
 
+	//Offset Renderer
+	renderWithOffset = AnimationRender();
+
 	//Animation states:
 	state = IDLE;
 	attackState = BASIC_PUNCH;
@@ -51,6 +54,13 @@ ModulePlayer::ModulePlayer(bool active) : Module(active)
 	jumpHeight = 40.0f;
 	// Attack
 	punching = false;
+
+	offsetLeftAttackLeft = { {0,0},{9,0} }; 
+	offsetRightAttackLeft = { {0,0},{0,0} }; 
+
+	offsetLeftAttackRight = { { 0,0 },{ 13,0 } };
+	offsetRightAttackRight = { { 0,0 },{ 0,0 } };
+
 	rightPunch.frames.push_back({ 99,25,27,32 });
 	rightPunch.frames.push_back({ 128,25,39,32 });
 	rightPunch.speed = 0.1f;
@@ -58,18 +68,19 @@ ModulePlayer::ModulePlayer(bool active) : Module(active)
 	leftPunch.frames.push_back({ 168,26,35,32 });
 	leftPunch.speed = 0.1f;
 	// KickAttack
-	renderWithOffset = AnimationRender();
 	offsetLeftKick = { { 12, 0 },{ 18,14 } };
 	offsetRighKick = { { 0,0 },{ 0,14 } };
 	kickAttack.frames.push_back({ 167,165,41,35 });
 	kickAttack.frames.push_back({ 212,154,43,48 });
 	kickAttack.speed = 0.1f;
 	// Final punch
+	offsetLeftFinalPunch = { {0,0},{ 0,0 },{ 0,0 },{ 0,0 } }; //positivo sube ,negativo baja
+	offsetRighFinalPunch = { {0,6},{ 0,4 },{ 0,-2 },{ 0,21 } };
+
 	finalPunch.frames.push_back({208,17,35,42});
 	finalPunch.frames.push_back({250,19,34,39});
 	finalPunch.frames.push_back({285,24,52,32}); 
 	finalPunch.frames.push_back({ 345, 3,45,56 });
-	//finalPunch.frames.push_back({});
 	finalPunch.speed = 0.1f;
 }
 
@@ -334,49 +345,36 @@ void ModulePlayer::Attack()
 {
 	
 	if (punching == true && current_animation->Finished()) {
-		
-		animationCounter = 0;
 		if (punchCounter%2== 0) {
 			current_animation = &rightPunch;
-			flipCompensation = 16;
 		}
 		else {
 			current_animation = &leftPunch;
-			flipCompensation = 11;
 		}
 	}
+
+	if(current_animation == &rightPunch)
+		renderWithOffset.Update(App, graphics, current_animation, flipHorinzontal, position, offsetLeftAttackRight, offsetRightAttackRight);
+	else
+		renderWithOffset.Update(App, graphics, current_animation, flipHorinzontal, position, offsetLeftAttackLeft, offsetRightAttackLeft);
+
 	
 	if (current_animation->Finished()) {
 			state = IDLE;
 			punching = false;
 			rightPunch.Reset();
 			leftPunch.Reset();
-			++animationCounter;
 			++punchCounter;
 			return;
 		
-	}
-
-	if (!current_animation->Finished() && flipHorinzontal) { 
-		
-		if (animationCounter >= 9 && animationCounter <= 20) {// frames where we need to adjust
-			if(animationCounter <=18)
-				App->renderer->Blit(graphics, position.x - flipCompensation, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal); // punche sprite
-		}
-		else {
-			App->renderer->Blit(graphics, position.x , position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);// pre punch sprite
-		}
-		++animationCounter; // count the actual frame
-	}
-	else {
-		App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
 	}
 }
 
 
 void ModulePlayer::SuperAttack() {
 	current_animation = &finalPunch;
-	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
+	offsetLeftFinalPunch; 
+	renderWithOffset.Update(App, graphics, current_animation, flipHorinzontal, position, offsetLeftFinalPunch, offsetRighFinalPunch);
 	if (current_animation->Finished()) {
 		finalPunch.Reset();
 		state = IDLE;
@@ -387,11 +385,9 @@ void ModulePlayer::SuperAttack() {
 void ModulePlayer::KickAttack() {
 
 	current_animation = &kickAttack;
-	
 	renderWithOffset.Update(App,graphics,current_animation,flipHorinzontal,position, offsetLeftKick, offsetRighKick);
-
+	
 	if (current_animation->Finished()) {
-		
 		kickAttack.Reset();
 		state = IDLE;
 	}
