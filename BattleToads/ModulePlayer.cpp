@@ -55,11 +55,11 @@ ModulePlayer::ModulePlayer(bool active) : Module(active)
 	// Attack
 	punching = false;
 
-	offsetLeftAttackLeft = { {0,0},{9,0} }; 
-	offsetRightAttackLeft = { {0,0},{0,0} }; 
+	offsetLeftAttackLeft = { {0,-2},{9,-2} }; 
+	offsetRightAttackLeft = { {0,-2},{0,-2} }; 
 
-	offsetLeftAttackRight = { { 0,0 },{ 13,0 } };
-	offsetRightAttackRight = { { 0,0 },{ 0,0 } };
+	offsetLeftAttackRight = { { 0,-2 },{ 13,-2 } };
+	offsetRightAttackRight = { { 0,-2 },{ 0,-2 } };
 
 	rightPunch.frames.push_back({ 99,25,27,32 });
 	rightPunch.frames.push_back({ 128,25,39,32 });
@@ -82,6 +82,15 @@ ModulePlayer::ModulePlayer(bool active) : Module(active)
 	finalPunch.frames.push_back({285,24,52,32}); 
 	finalPunch.frames.push_back({ 345, 3,45,56 });
 	finalPunch.speed = 0.1f;
+
+	// Receive heavy attack
+	offsetLeftReceiveHeavyAttack = { {0,0},{0,- 13 } };
+	offsetRighReceiveHeavyAttack = { { 0,0 },{ 0,-13 } };
+	receiveHeavyAttack.frames.push_back({84,165,34,35});
+	receiveHeavyAttack.frames.push_back({120,175,42,21});
+	receiveHeavyAttack.speed = 0.1f;
+	receiveHeavyAttack.loop = false;
+	timeDown = Temporizer(1);
 }
 
 ModulePlayer::~ModulePlayer()
@@ -147,6 +156,9 @@ update_status ModulePlayer::Update()
 		break;
 	case KICK_ATTACK:
 		KickAttack();
+		break;
+	case RECEIVE_HEAVY_ATTACK:
+		ReceiveHeavyAttack();
 		break;
 	default:
 		Idle();
@@ -238,7 +250,8 @@ void ModulePlayer::Idle()
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE &&
 		App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE &&
 		App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_M) == KEY_IDLE&&
-		App->input->GetKey(SDL_SCANCODE_N)==KEY_IDLE && App->input->GetKey(SDL_SCANCODE_B) == KEY_IDLE)
+		App->input->GetKey(SDL_SCANCODE_N)==KEY_IDLE && App->input->GetKey(SDL_SCANCODE_B) == KEY_IDLE&&
+		App->input->GetKey(SDL_SCANCODE_U)==KEY_IDLE)
 	{
 		state = IDLE;
 		current_animation = &idle;
@@ -251,6 +264,10 @@ void ModulePlayer::Idle()
 	
 	else if (App->input->GetKey(SDL_SCANCODE_N) == KEY_REPEAT) {
 		state = KICK_ATTACK;
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_U) == KEY_REPEAT) {
+		timeDown.Start();
+		state = RECEIVE_HEAVY_ATTACK;
 	}
 	else {
 		state = WALK;
@@ -391,5 +408,17 @@ void ModulePlayer::KickAttack() {
 		kickAttack.Reset();
 		state = IDLE;
 	}
+}
+
+void ModulePlayer::ReceiveHeavyAttack() {
+	current_animation = &receiveHeavyAttack;
+	renderWithOffset.Update(App, graphics, current_animation, flipHorinzontal, position, offsetLeftReceiveHeavyAttack, offsetRighReceiveHeavyAttack);
+	
+	if (current_animation->Finished() && timeDown.Update()) {
+		receiveHeavyAttack.Reset();
+		state = IDLE;
+		timeDown.Reset();
+	}
+
 }
 

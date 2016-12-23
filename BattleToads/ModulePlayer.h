@@ -10,7 +10,7 @@
 #include "AnimationRender.h"
 struct SDL_Texture;
 
-enum AnimationState { IDLE,WALK,JUMP,RUN,ATTACK,SUPER_ATTACK,KICK_ATTACK }; // Desirable have dragon , stick
+enum AnimationState { IDLE,WALK,JUMP,RUN,ATTACK,SUPER_ATTACK,KICK_ATTACK,RECEIVE_HEAVY_ATTACK }; // Desirable have dragon , stick
 enum AnimationAttacksState { BASIC_PUNCH,SUPER_PUNCH,HEAD_PUNCH, KICK_PUNCH, TONGUE_PUNCH };
 
 class ModulePlayer : public Module ,Observer
@@ -32,6 +32,7 @@ private:
 	void Attack();
 	void SuperAttack();
 	void KickAttack();
+	void ReceiveHeavyAttack();
 	
 public:
 	int speed;
@@ -71,7 +72,11 @@ public:
 	vector<iPoint> offsetLeftFinalPunch;
 	vector<iPoint> offsetRighFinalPunch;
 	Animation finalPunch;
-
+	//Receive heavy attack
+	vector<iPoint> offsetLeftReceiveHeavyAttack;
+	vector<iPoint> offsetRighReceiveHeavyAttack;
+	Animation receiveHeavyAttack;
+	Temporizer timeDown;
 private:
 
 

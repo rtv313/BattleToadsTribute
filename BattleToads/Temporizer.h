@@ -9,7 +9,9 @@ public:
 	bool  start;
 
 	Temporizer():setTime(1000) {}
-	Temporizer(float setTime) :setTime(setTime*1000) {}
+	Temporizer(float setTime) :setTime(setTime*1000) {
+		
+	}
 	
 	void Reset() {
 		startTime = SDL_GetTicks();
