@@ -109,7 +109,7 @@ bool ModulePlayer::Start()
 	destroyed = false;
 	position.x = 150;
 	position.y = 120;
-
+	
 	SDL_Rect collRec;
 	collRec.x = 150;
 	collRec.y = 120;
@@ -190,7 +190,6 @@ void ModulePlayer::Walk()
 	{	
 		state = WALK;
 		position.y -= speed;
-		App->renderer->camera.y += speed * CAMERA_SPEED_WALK;
 
 		if (current_animation != &up)
 		{
@@ -203,7 +202,6 @@ void ModulePlayer::Walk()
 	{
 		state = WALK;
 		position.y += speed;
-		App->renderer->camera.y -= speed * CAMERA_SPEED_WALK;
 		if (current_animation != &down)
 		{
 			down.Reset();
@@ -217,7 +215,6 @@ void ModulePlayer::Walk()
 		state = WALK;
 		position.x -= speed;
 		flipHorinzontal = true;
-		App->renderer->camera.x += speed * CAMERA_SPEED_WALK;
 		current_animation = &forward;
 	}
 
@@ -225,7 +222,6 @@ void ModulePlayer::Walk()
 	{	
 		state = WALK;
 		position.x += speed;
-		App->renderer->camera.x -= speed * CAMERA_SPEED_WALK;
 		flipHorinzontal = false;
 		current_animation = &forward;
 	}
@@ -288,7 +284,7 @@ void ModulePlayer::Run()
 	{
 		current_animation = &down;
 		position.y -= speed;
-		App->renderer->camera.y += speed * CAMERA_SPEED_RUN;
+		App->renderer->camera.y = -position.y;
 		
 	}
 
@@ -296,7 +292,6 @@ void ModulePlayer::Run()
 	{
 		current_animation = &down;
 		position.y += speed;
-		App->renderer->camera.y -= speed * CAMERA_SPEED_RUN;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
@@ -304,7 +299,6 @@ void ModulePlayer::Run()
 		current_animation = &forward;
 		position.x -= speed;
 		flipHorinzontal = true;
-		App->renderer->camera.x += speed * CAMERA_SPEED_RUN;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
@@ -312,7 +306,6 @@ void ModulePlayer::Run()
 		current_animation = &forward;
 		position.x += speed;
 		flipHorinzontal = false;
-		App->renderer->camera.x -= speed * CAMERA_SPEED_RUN;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_UP) 
@@ -341,7 +334,7 @@ void ModulePlayer :: Jump()
 
 	}
 	else {
-		position.y += 2;
+		position.y+= 2;
 		if (startJumpPosition <= position.y)
 		{
 			state = IDLE;
