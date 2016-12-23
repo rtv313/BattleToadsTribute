@@ -242,7 +242,7 @@ void ModulePlayer::Walk()
 		return;
 	}
 
-	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
+	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()),1.0f, flipHorinzontal);
 }
 
 void ModulePlayer::Idle() 
@@ -272,7 +272,7 @@ void ModulePlayer::Idle()
 	else {
 		state = WALK;
 	}
-	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
+	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()),1.0f, flipHorinzontal);
 }
 
 void ModulePlayer::Run() 
@@ -320,7 +320,7 @@ void ModulePlayer::Run()
 		state = JUMP;
 	}
 
-	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
+	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 1.0f, flipHorinzontal);
 }
 
 void ModulePlayer :: Jump() 
@@ -353,7 +353,7 @@ void ModulePlayer :: Jump()
 		flipHorinzontal = false;
 	}
 
-	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 0.1f, flipHorinzontal);
+	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()),1.0f, flipHorinzontal);
 }
 
 void ModulePlayer::Attack() 

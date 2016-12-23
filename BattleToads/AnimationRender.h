@@ -31,9 +31,9 @@ private:
 		SDL_Rect * sprite = &(animation->GetCurrentFrame());
 		actualOffset = (int)(animation->current_frame);
 		if (flipHorizontal == true)
-			App->renderer->Blit(graphics, position.x - offsetLeft[actualOffset].x, position.y - offsetLeft[actualOffset].y, sprite, 0.1f, flipHorizontal);
+			App->renderer->Blit(graphics, position.x - offsetLeft[actualOffset].x, position.y - offsetLeft[actualOffset].y, sprite,1.0f, flipHorizontal);
 		else
-			App->renderer->Blit(graphics, position.x - offsetRight[actualOffset].x, position.y - offsetRight[actualOffset].y,sprite, 0.1f, flipHorizontal);
+			App->renderer->Blit(graphics, position.x - offsetRight[actualOffset].x, position.y - offsetRight[actualOffset].y,sprite,1.0f, flipHorizontal);
 		}
 };
 
