@@ -166,6 +166,8 @@ update_status ModulePlayer::Update()
 		break;
 	}
 
+	App->renderer->camera.x = -(position.x *3 - 500)  ;
+	App->renderer->camera.y = -position.y ; 
 	return UPDATE_CONTINUE;
 }
 
