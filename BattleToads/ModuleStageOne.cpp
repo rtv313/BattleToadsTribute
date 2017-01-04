@@ -42,6 +42,15 @@ bool ModuleStageOne::Start() {
 	waterfall.frames.push_back({1835,380,32,112});
 	waterfall.speed = 0.1f;
 
+
+	SDL_Rect floorOneRect;
+	floorOneRect.x = 0;
+	floorOneRect.y = 310;
+	floorOneRect.h = 47;
+	floorOneRect.w = 632;
+	floorOne = App->collision->AddCollider(floorOneRect);
+	floorOne->colliderType = WALL;
+
 	return true;
 }
 

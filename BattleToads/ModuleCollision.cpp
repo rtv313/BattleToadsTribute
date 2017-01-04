@@ -62,7 +62,7 @@ update_status ModuleCollision::Update()
 void ModuleCollision::DebugDraw()
 {
 	for (list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it)
-		App->renderer->DrawQuad((*it)->rect, 255, 0, 0, 80);
+		App->renderer->DrawQuad((*it)->rect, 0, 255, 0, 80);
 }
 
 // Called before quitting
@@ -130,13 +130,18 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 
 void Collider::ValidCollision(Collider * collider) {
 	
- 	if (CollisionMatrix[colliderType][collider->colliderType]) {
-		if(colliderType!=WALL)
-			to_delete = true;
-
+ 	if (CollisionMatrix[colliderType][collider->colliderType])
+	{
+		/*if(colliderType!=WALL)
+			to_delete = true;*/
 
 		for (list<Observer*>::iterator observer = observers_.begin(); observer != observers_.end(); ++observer)
-			(*observer)->onNotify(DESTROY_PARTICLE);
+		{	
+			if (colliderType == PLAYER && collider->colliderType == WALL)
+			{
+				(*observer)->onNotify(WALL_COLLISION);
+			}
+		}
 	}
 }
 

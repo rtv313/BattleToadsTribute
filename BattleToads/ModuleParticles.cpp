@@ -43,9 +43,9 @@ bool ModuleParticles::Start()
 	collRec.h = 16;
 	collRec.w = 16;
 	laser.collider = App->collision->AddCollider(collRec);
-	laser.collider->colliderType = PLAYER_LASER;
+	laser.collider->colliderType = PLAYER_HIT;
 	laser.optionalCollider = App->collision->AddCollider(collRec);
-	laser.optionalCollider->colliderType = PLAYER_LASER;
+	laser.optionalCollider->colliderType = PLAYER_HIT;
 
 	// TODO 12: Create a new "Explosion" particle 
 	// audio: rtype/explosion.wav

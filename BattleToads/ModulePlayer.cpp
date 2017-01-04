@@ -126,11 +126,12 @@ bool ModulePlayer::Start()
 	attackRect.y = 120;
 	attackRect.h = 15;
 	attackRect.w = 20;
-	collider->active = false;
+	
 
 	colliderAttack = App->collision->AddCollider(attackRect);
-	colliderAttack->colliderType = PLAYER;
+	colliderAttack->colliderType = PLAYER_HIT;
 	colliderAttack->addObserver(this);
+	colliderAttack->active = false;
 
 	return true;
 }
@@ -188,7 +189,11 @@ update_status ModulePlayer::Update()
 
 void ModulePlayer::onNotify(GameEvent event) 
 {
-	// aqui acciones con colliders 
+	if (WALL_COLLISION)
+	{
+		//position.x -= speed;
+		position.y -= speed;
+	}
 }
 
 void ModulePlayer::Walk() 

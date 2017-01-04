@@ -10,8 +10,8 @@
 
 enum ColliderType {
 	PLAYER,
-	PLAYER_LASER,
-	ENEMY_LASER,
+	PLAYER_HIT,
+	ENEMY_HIT,
 	WALL,
 	ENEMY,
 };
@@ -35,7 +35,7 @@ public:
 	void ValidCollision(Collider * collider);
 	void addObserver(Observer* observer);
 	void removeObserver(Observer* observer);
-	bool CollisionMatrix[5][5] = { { false,false,true,true,true },
+	bool CollisionMatrix[5][5] = {	{ false,false,true,true,true },
 									{ false,false,false,true,true },
 									{ true,false,false,true,false },
 									{ true,true,true,false,false },
