@@ -133,21 +133,28 @@ void Collider::ValidCollision(Collider * collider) {
  	if (CollisionMatrix[colliderType][collider->colliderType]) {
 		if(colliderType!=WALL)
 			to_delete = true;
-		for (int i = 0; i < numObservers_; i++) {
-			observers_[0]->onNotify(DESTROY_PARTICLE);
-		}
+
+
+		for (list<Observer*>::iterator observer = observers_.begin(); observer != observers_.end(); ++observer)
+			(*observer)->onNotify(DESTROY_PARTICLE);
 	}
 }
 
 void Collider::addObserver(Observer* observer)
 {
-	observers_[numObservers_] = observer;
-	++numObservers_;
+	observers_.push_back(observer);
+	
 }
 
 void Collider::removeObserver(Observer* observer) 
 {
-	for (int i = 0; i < numObservers_; i++) {
-		observers_[i] = nullptr;
+	for (list<Observer*>::iterator it = observers_.begin(); it != observers_.end(); ++it) {
+
+		if ((*it) == observer)
+		{
+			RELEASE(*it);
+			it = observers_.erase(it);
+			return;
+		}
 	}
 }

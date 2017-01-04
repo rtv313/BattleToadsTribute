@@ -21,8 +21,8 @@ enum ColliderType {
 class Collider
 {
 private:
-	Observer* observers_[2]; //use array just for educational puropose use list in production
-	int numObservers_;
+	std::list<Observer*> observers_; //use array just for educational puropose use list in production
+	
 
 	
 
@@ -31,7 +31,7 @@ public:
 	bool to_delete = false;
 	ColliderType colliderType;
 	// TODO 10: Add a way to notify other classes that a collision happened
-	
+	bool active;
 	void ValidCollision(Collider * collider);
 	void addObserver(Observer* observer);
 	void removeObserver(Observer* observer);
@@ -44,10 +44,11 @@ public:
 	Collider(SDL_Rect rectangle) : // expand this call if you need to
 		rect(rectangle)
 	{
-		numObservers_ = 0;
+		
 	}
 
 	Collider() {
+		active = false;
 	}
 
 	void SetPos(int x, int y)
@@ -78,7 +79,7 @@ public:
 
 private:
 	std::list<Collider*> colliders;
-	bool debug = false;
+	bool debug = true;
 };
 
 #endif // __ModuleCollision_H__

@@ -113,11 +113,25 @@ bool ModulePlayer::Start()
 	SDL_Rect collRec;
 	collRec.x = 150;
 	collRec.y = 120;
-	collRec.h = 16;
-	collRec.w = 16;
+	collRec.h = 33;
+	collRec.w = 20;
+
 	collider = App->collision->AddCollider(collRec);
 	collider->colliderType = PLAYER;
 	collider->addObserver(this);
+	collider->active = true;
+
+	SDL_Rect attackRect;
+	attackRect.x = 150;
+	attackRect.y = 120;
+	attackRect.h = 15;
+	attackRect.w = 20;
+	collider->active = false;
+
+	colliderAttack = App->collision->AddCollider(attackRect);
+	colliderAttack->colliderType = PLAYER;
+	colliderAttack->addObserver(this);
+
 	return true;
 }
 
@@ -168,12 +182,13 @@ update_status ModulePlayer::Update()
 
 	App->renderer->camera.x = -(position.x *3 - 500)  ;
 	App->renderer->camera.y = -position.y ; 
+	SetCollidersPosition();
 	return UPDATE_CONTINUE;
 }
 
 void ModulePlayer::onNotify(GameEvent event) 
 {
-	
+	// aqui acciones con colliders 
 }
 
 void ModulePlayer::Walk() 
@@ -422,3 +437,13 @@ void ModulePlayer::ReceiveHeavyAttack() {
 
 }
 
+void ModulePlayer::SetCollidersPosition() {
+	if (flipHorinzontal) {
+		collider->SetPos(position.x + 3, position.y);
+		colliderAttack->SetPos(position.x - 15, position.y);
+	}
+	else {
+		collider->SetPos(position.x + 5, position.y);
+		colliderAttack->SetPos(position.x + 20, position.y);
+	}
+}

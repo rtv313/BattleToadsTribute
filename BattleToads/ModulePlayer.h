@@ -18,7 +18,6 @@ class ModulePlayer : public Module ,Observer
 public:
 	ModulePlayer(bool active = true);
 	~ModulePlayer();
-
 	bool Start();
 	update_status Update();
 	bool CleanUp();
@@ -33,6 +32,7 @@ private:
 	void SuperAttack();
 	void KickAttack();
 	void ReceiveHeavyAttack();
+	void SetCollidersPosition();
 	
 public:
 	int speed;
@@ -41,6 +41,7 @@ public:
 	iPoint position;
 	bool destroyed = false;
 	Collider *collider;
+	Collider *colliderAttack;
 	
 	// Walk
 	Animation forward;
@@ -84,6 +85,7 @@ private:
 	bool flipHorinzontal = false;
 	AnimationState state;
 	AnimationAttacksState attackState;
+	
 
 
 };
