@@ -191,8 +191,6 @@ void ModulePlayer::onNotify(GameEvent event)
 {
 	if (WALL_COLLISION)
 	{
-		
-
 			if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 				position.x -= speed;
 
@@ -203,13 +201,6 @@ void ModulePlayer::onNotify(GameEvent event)
 		
 			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 				position.x += speed;
-			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT) {
-				position.y += speed;
-			}
-			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT) {
-				position.y -= speed;
-			}
-		
 	}
 }
 
