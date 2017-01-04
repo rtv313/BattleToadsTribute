@@ -14,12 +14,13 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
+	Collider* CreateCollider(int x, int y, int w, int h);
 public :
 	SDL_Texture* levelOne = nullptr;
 	Animation  background; 
 	Animation  waterfall;
 private:
-	Collider* floorOne;
-	Collider* wallOne;
+	list<Collider *> colliders;
+	
 };
 #endif // _MODULESCENESTAGEONE_H_

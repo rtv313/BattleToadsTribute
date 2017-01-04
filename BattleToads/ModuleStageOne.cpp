@@ -43,22 +43,10 @@ bool ModuleStageOne::Start() {
 	waterfall.speed = 0.1f;
 
 
-	SDL_Rect floorOneRect;
-	floorOneRect.x = 0;
-	floorOneRect.y = 310;
-	floorOneRect.h = 47;
-	floorOneRect.w = 632;
-	floorOne = App->collision->AddCollider(floorOneRect);
-	floorOne->colliderType = WALL;
 
-
-	SDL_Rect wallOneRect;
-	wallOneRect.x = 119;
-	wallOneRect.y = 180;
-	wallOneRect.h = 33;
-	wallOneRect.w = 29;
-	wallOne = App->collision->AddCollider(wallOneRect);
-	wallOne->colliderType = WALL;
+	colliders.push_back(CreateCollider(0,310,47,632));
+	colliders.push_back(CreateCollider(119, 180, 33, 29));
+	
 
 
 	return true;
@@ -81,4 +69,17 @@ bool ModuleStageOne::CleanUp()
 
 
 	return true;
+}
+
+Collider* ModuleStageOne::CreateCollider(int x, int y , int w, int h)
+{
+	Collider* collider;
+	SDL_Rect rect;
+	rect.x = x;
+	rect.y = y;
+	rect.h = w;
+	rect.w = h;
+	collider = App->collision->AddCollider(rect);
+	collider->colliderType = WALL;
+	return collider;
 }
