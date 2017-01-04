@@ -51,6 +51,16 @@ bool ModuleStageOne::Start() {
 	floorOne = App->collision->AddCollider(floorOneRect);
 	floorOne->colliderType = WALL;
 
+
+	SDL_Rect wallOneRect;
+	wallOneRect.x = 119;
+	wallOneRect.y = 180;
+	wallOneRect.h = 33;
+	wallOneRect.w = 29;
+	wallOne = App->collision->AddCollider(wallOneRect);
+	wallOne->colliderType = WALL;
+
+
 	return true;
 }
 

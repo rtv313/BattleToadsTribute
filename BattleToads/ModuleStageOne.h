@@ -20,5 +20,6 @@ public :
 	Animation  waterfall;
 private:
 	Collider* floorOne;
+	Collider* wallOne;
 };
 #endif // _MODULESCENESTAGEONE_H_
