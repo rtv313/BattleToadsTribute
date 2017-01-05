@@ -108,7 +108,7 @@ bool ModulePlayer::Start()
 
 	destroyed = false;
 	position.x = 150;
-	position.y = 120;
+	position.y = 200;
 	
 	SDL_Rect collRec;
 	collRec.x = 150;
@@ -180,8 +180,9 @@ update_status ModulePlayer::Update()
 		Idle();
 		break;
 	}
-
-	App->renderer->camera.x = -(position.x *3 - 500)  ;
+	//178
+	if(position.x > 178)
+		App->renderer->camera.x = -(position.x *3 - 500)  ;
 	App->renderer->camera.y = -position.y ; 
 	SetCollidersPosition();
 	return UPDATE_CONTINUE;
@@ -189,19 +190,24 @@ update_status ModulePlayer::Update()
 
 void ModulePlayer::onNotify(GameEvent event) 
 {
-	if (WALL_COLLISION)
-	{
-			if(App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+	switch (event) {
+		case WALL_COLLISION:
+
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 				position.x -= speed;
 
-			if(App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 				position.y += speed;
+
 			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 				position.y -= speed;
-		
+
 			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 				position.x += speed;
+
+			break;
 	}
+	
 }
 
 void ModulePlayer::Walk() 

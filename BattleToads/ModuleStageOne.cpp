@@ -43,11 +43,20 @@ bool ModuleStageOne::Start() {
 	waterfall.speed = 0.1f;
 
 
-
+	colliders.push_back(CreateCollider(-20, 80, 240, 35));
 	colliders.push_back(CreateCollider(0,310,47,632));
+	colliders.push_back(CreateCollider(0, 150, 32, 92));
+	colliders.push_back(CreateCollider(90, 160, 33, 29));
 	colliders.push_back(CreateCollider(119, 180, 33, 29));
-	
-
+	colliders.push_back(CreateCollider(150, 160, 33, 29));
+	colliders.push_back(CreateCollider(185, 150, 32, 72));
+	colliders.push_back(CreateCollider(255, 160, 33, 29));
+	colliders.push_back(CreateCollider(281, 180, 33, 29));
+	colliders.push_back(CreateCollider(310, 160, 33, 29));
+	colliders.push_back(CreateCollider(350, 150, 32, 100));
+	colliders.push_back(CreateCollider(450, 160, 33, 29));
+	colliders.push_back(CreateCollider(480, 180, 33, 29));
+	colliders.push_back(CreateCollider(510, 200, 33, 29));
 
 	return true;
 }
