@@ -62,7 +62,21 @@ update_status ModuleCollision::Update()
 void ModuleCollision::DebugDraw()
 {
 	for (list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it)
-		App->renderer->DrawQuad((*it)->rect, 0, 255, 0, 80);
+	{
+		switch ((*it)->colliderType)
+		{
+		case SPAWN_BASIC_ENEMY:
+			App->renderer->DrawQuad((*it)->rect, 0, 0,255, 80);
+			break;
+		case ENEMY:
+			App->renderer->DrawQuad((*it)->rect, 255, 0, 0, 80);
+			break;
+		default:
+			App->renderer->DrawQuad((*it)->rect, 0, 255, 0, 80);
+			break;
+		}
+		
+	}
 }
 
 // Called before quitting
@@ -91,7 +105,6 @@ Collider* ModuleCollision::AddCollider(const SDL_Rect& rect)
 
 bool Collider::CheckCollision(const SDL_Rect& r) const
 {
-	// TODO 7: Create by hand (avoid consulting the internet) a simple collision test
 	// Return true if the argument and the own rectangle are intersecting
 	int leftA, leftB;
 	int rightA, rightB;
@@ -135,12 +148,26 @@ void Collider::ValidCollision(Collider * collider) {
 		/*if(colliderType!=WALL)
 			to_delete = true;*/
 
+		if (colliderType == SPAWN_BASIC_ENEMY && collider->colliderType == PLAYER)
+		{ // SPAWN ENEMIES 
+			Collider* collider;
+			SDL_Rect rect;
+			rect.x = 180;
+			rect.y = 230;
+			rect.h = 30;
+			rect.w = 30;
+			collider = App->collision->AddCollider(rect);
+			collider->colliderType = ENEMY;
+			to_delete = true;
+		}
+
 		for (list<Observer*>::iterator observer = observers_.begin(); observer != observers_.end(); ++observer)
 		{	
 			if (colliderType == PLAYER && collider->colliderType == WALL)
 			{
 				(*observer)->onNotify(WALL_COLLISION);
 			}
+
 		}
 	}
 }

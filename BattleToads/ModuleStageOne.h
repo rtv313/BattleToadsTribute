@@ -14,7 +14,8 @@ public:
 	bool Start();
 	update_status Update();
 	bool CleanUp();
-	Collider* CreateCollider(int x, int y, int w, int h);
+	Collider* CreateCollider(int x, int y, int w, int h, ColliderType colliderType);
+	
 public :
 	SDL_Texture* levelOne = nullptr;
 	Animation  background; 
