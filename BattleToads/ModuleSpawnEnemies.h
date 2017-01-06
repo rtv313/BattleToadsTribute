@@ -4,6 +4,7 @@
 #include<list>
 #include "Globals.h"
 #include "Module.h"
+#include "ModuleTextures.h"
 
 class SpawnZone
 {
@@ -25,6 +26,7 @@ class SpawnTrigger
 		SpawnTrigger(const SDL_Rect& rectangle);
 		bool CheckCollision(const SDL_Rect& r) const;
 		void CreateEnemies();
+		void AddSpawnZone(const int  x, const int  y, const int  h, const int  w);
 		//add method for add spawnzones
 };
 
@@ -37,7 +39,7 @@ public:
 	~ModuleSpawnTriggers();
 	update_status PreUpdate();
 	update_status Update();
-	SpawnTrigger* AddSpawnTrigger(const SDL_Rect& rect);
+	SpawnTrigger* AddSpawnTrigger(const int  x, const int  y, const int  h, const int  w);
 	bool CleanUp();
 	void DebugDraw();
 };
@@ -45,15 +47,18 @@ public:
 class ModuleSpawnZones : public Module 
 {	
 public:
-	bool debug = false;
+	bool debug = true;
+	SDL_Texture* spawnSprite = nullptr;
+	/*Animation  spawnAnimationOne;*/
 	std::list<SpawnZone*> spawnZones;
 	ModuleSpawnZones();
 	~ModuleSpawnZones();
 	update_status PreUpdate();
 	update_status Update();
-	SpawnZone* AddSpawnZone(const SDL_Rect& rect);
+	SpawnZone* AddSpawnZone(const int  x, const int  y, const int  h, const int  w);
 	bool CleanUp();
 	void DebugDraw();
+	bool Start();
 	//add graphics and animations
 };
 #endif

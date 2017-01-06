@@ -30,6 +30,8 @@ bool ModuleStageOne::Start() {
 	App->player->Enable();
 	App->particles->Enable();
 	App->collision->Enable();
+	App->spawnTriggers->Enable();
+	App->spawnZones->Enable();
 	//App->audio->PlayMusic("rtype/stage1.ogg", 1.0f);
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
@@ -61,18 +63,15 @@ bool ModuleStageOne::Start() {
 	colliders.push_back(CreateCollider(540, 200, 100, 29, WALL));
 
 	////////////////////////////////////////
-	SDL_Rect triggerRec;
-	triggerRec.h = 30;
-	triggerRec.w = 30;
-	triggerRec.x = 180;
-	triggerRec.y = 180;
+	
 	SpawnTrigger *trigger;
-	trigger= App->spawnTriggers->AddSpawnTrigger(triggerRec);
+	trigger= App->spawnTriggers->AddSpawnTrigger(180,180,30,30);
 	App->spawnTriggers->debug = true;
 	///////////////////////////////////////////
-	triggerRec.x += 30;
-	trigger->spawnZones.push_back(App->spawnZones->AddSpawnZone(triggerRec));
+	
 	App->spawnZones->debug = true;
+	trigger->AddSpawnZone(210, 180, 30, 30);
+	trigger->AddSpawnZone(260, 180, 30, 30);
 
 	return true;
 }

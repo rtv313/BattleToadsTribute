@@ -1,8 +1,8 @@
 #include "ModuleSpawnEnemies.h"
-
+#include "Animation.h"
 #include "Application.h"
 #include "ModulePlayer.h"
-#include "Animation.h"
+
 
 ModuleSpawnTriggers::ModuleSpawnTriggers(){}
 ModuleSpawnTriggers::~ModuleSpawnTriggers(){}
@@ -48,9 +48,15 @@ void ModuleSpawnTriggers::DebugDraw()
 	}
 }
 
-SpawnTrigger* ModuleSpawnTriggers::AddSpawnTrigger(const SDL_Rect& rect)
+SpawnTrigger* ModuleSpawnTriggers::AddSpawnTrigger(const int  x, const int  y , const int  h, const int  w)
 {
-	SpawnTrigger *trigger = new SpawnTrigger(rect);
+	SDL_Rect triggerRec;
+	triggerRec.h = h;
+	triggerRec.w = w;
+	triggerRec.x = x;
+	triggerRec.y = y;
+
+	SpawnTrigger *trigger = new SpawnTrigger(triggerRec);
 	spawnTriggers.push_back(trigger);
 	return trigger;
 }
@@ -91,7 +97,7 @@ update_status ModuleSpawnZones::Update()
 {
 	for (std::list<SpawnZone*>::iterator it = spawnZones.begin(); it != spawnZones.end(); ++it)
 	{
-		//App->renderer->Blit(levelOne, 0, 0, &(background.GetCurrentFrame()), 1.0f);
+		//App->renderer->Blit(spawnSprite, (*it)->rect.x, (*it)->rect.y, &(spawnAnimationOne.GetCurrentFrame()), 1.0f);
 	}
 
 	if (debug == true)
@@ -100,8 +106,13 @@ update_status ModuleSpawnZones::Update()
 	return UPDATE_CONTINUE;
 }
 
-SpawnZone * ModuleSpawnZones::AddSpawnZone(const SDL_Rect& rect)
+SpawnZone * ModuleSpawnZones::AddSpawnZone(const int  x, const int  y, const int  h, const int  w)
 {
+	SDL_Rect rect;
+	rect.x = x;
+	rect.y = y;
+	rect.h = h;
+	rect.w = w;
 	SpawnZone *spawnZone = new SpawnZone(rect);
 	spawnZones.push_back(spawnZone);
 	return spawnZone;
@@ -118,6 +129,16 @@ void ModuleSpawnZones::DebugDraw()
 
 bool ModuleSpawnZones::CleanUp() 
 {
+	return true;
+}
+
+bool ModuleSpawnZones::Start() 
+{
+//	spawnSprite = App->textures->Load("rtype/BattletoadSprites/PsykoPig.png");
+//	spawnAnimationOne;
+//	spawnAnimationOne.frames.push_back({ 290,173, 30, 53 });
+//	spawnAnimationOne.speed = 0.1;
+//	spawnAnimationOne.loop = false;
 	return true;
 }
 // SPAWNTRIGGER
@@ -170,5 +191,10 @@ void SpawnTrigger::CreateEnemies()
 	{
 		(*it)->activate = true;
 	}
+}
+
+void SpawnTrigger::AddSpawnZone(const int  x, const int  y, const int  h, const int  w)
+{
+	spawnZones.push_back(App->spawnZones->AddSpawnZone(x,y,h,w));
 }
 
