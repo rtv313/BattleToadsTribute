@@ -3,10 +3,11 @@
 
 #include<list>
 #include "Globals.h"
+#include "Point.h"
 #include "Animation.h"
 #include "Module.h"
 #include "ModuleTextures.h"
-
+#include "AnimationRender.h"
 class SpawnZone
 {
 public:
@@ -51,6 +52,9 @@ public:
 	bool debug = true;
 	SDL_Texture* spawnSprite = nullptr;
 	Animation  spawnAnimationOne;
+	vector<iPoint> offsetSpawnOneLeft;
+	vector<iPoint> offsetSpawnOneRight;
+	AnimationRender renderWithOffset;
 	std::list<SpawnZone*> spawnZones;
 	ModuleSpawnZones();
 	~ModuleSpawnZones();
