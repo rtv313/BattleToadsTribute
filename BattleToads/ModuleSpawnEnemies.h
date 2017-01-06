@@ -3,6 +3,7 @@
 
 #include<list>
 #include "Globals.h"
+#include "Animation.h"
 #include "Module.h"
 #include "ModuleTextures.h"
 
@@ -49,7 +50,7 @@ class ModuleSpawnZones : public Module
 public:
 	bool debug = true;
 	SDL_Texture* spawnSprite = nullptr;
-	/*Animation  spawnAnimationOne;*/
+	Animation  spawnAnimationOne;
 	std::list<SpawnZone*> spawnZones;
 	ModuleSpawnZones();
 	~ModuleSpawnZones();

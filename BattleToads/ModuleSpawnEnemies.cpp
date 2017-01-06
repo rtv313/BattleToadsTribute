@@ -1,5 +1,4 @@
 #include "ModuleSpawnEnemies.h"
-#include "Animation.h"
 #include "Application.h"
 #include "ModulePlayer.h"
 
@@ -97,7 +96,8 @@ update_status ModuleSpawnZones::Update()
 {
 	for (std::list<SpawnZone*>::iterator it = spawnZones.begin(); it != spawnZones.end(); ++it)
 	{
-		//App->renderer->Blit(spawnSprite, (*it)->rect.x, (*it)->rect.y, &(spawnAnimationOne.GetCurrentFrame()), 1.0f);
+		if((*it)->activate)
+			App->renderer->Blit(spawnSprite, (*it)->rect.x, (*it)->rect.y, &(spawnAnimationOne.GetCurrentFrame()), 1.0f);
 	}
 
 	if (debug == true)
@@ -134,11 +134,11 @@ bool ModuleSpawnZones::CleanUp()
 
 bool ModuleSpawnZones::Start() 
 {
-//	spawnSprite = App->textures->Load("rtype/BattletoadSprites/PsykoPig.png");
-//	spawnAnimationOne;
-//	spawnAnimationOne.frames.push_back({ 290,173, 30, 53 });
-//	spawnAnimationOne.speed = 0.1;
-//	spawnAnimationOne.loop = false;
+	spawnSprite = App->textures->Load("rtype/BattletoadSprites/PsykoPig.png");
+	spawnAnimationOne;
+	spawnAnimationOne.frames.push_back({ 290,173, 30, 53 });
+	spawnAnimationOne.speed = 0.1;
+	spawnAnimationOne.loop = false;
 	return true;
 }
 // SPAWNTRIGGER
