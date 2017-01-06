@@ -63,16 +63,18 @@ bool ModuleStageOne::Start() {
 	colliders.push_back(CreateCollider(540, 200, 100, 29, WALL));
 
 	////////////////////////////////////////
-	
-	SpawnTrigger *trigger;
-	trigger= App->spawnTriggers->AddSpawnTrigger(180,180,30,30);
 	App->spawnTriggers->debug = true;
+	SpawnTrigger *trigger = App->spawnTriggers->AddSpawnTrigger(180,180,30,30);
+	SpawnTrigger *triggerTwo = App->spawnTriggers->AddSpawnTrigger(230, 220, 30, 30);
+	
 	///////////////////////////////////////////
 	
-	App->spawnZones->debug = true;
+	//App->spawnZones->debug = true;
 	trigger->AddSpawnZone(210, 180, 30, 30);
 	trigger->AddSpawnZone(260, 180, 30, 30);
 
+	triggerTwo->AddSpawnZone(280, 180, 30, 30);
+	triggerTwo->AddSpawnZone(310, 180, 30, 30);
 	return true;
 }
 

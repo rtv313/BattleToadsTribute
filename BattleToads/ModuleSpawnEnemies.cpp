@@ -106,9 +106,9 @@ update_status ModuleSpawnZones::Update()
 			iPoint position;
 			position.x = (*it)->rect.x;
 			position.y = (*it)->rect.y;
-			renderWithOffset.Update(App, spawnSprite, &spawnAnimationOne, false, position, offsetSpawnOneRight, offsetSpawnOneLeft);
+			renderWithOffset.Update(App, spawnSprite, &((*it)->spawnAnimationOne), false, position, offsetSpawnOneLeft, offsetSpawnOneLeft);
 		}
-			//App->renderer->Blit(spawnSprite, (*it)->rect.x, (*it)->rect.y, &(spawnAnimationOne.GetCurrentFrame()), 1.0f);
+			
 	}
 
 	if (debug == true)
@@ -145,42 +145,12 @@ bool ModuleSpawnZones::CleanUp()
 
 bool ModuleSpawnZones::Start() 
 {
-
 	spawnSprite = App->textures->Load("rtype/BattletoadSprites/PsykoPig.png");
-
-	//up
-	spawnAnimationOne.frames.push_back({ 18,160, 20, 9 }); //8
-	spawnAnimationOne.frames.push_back({ 39,158,  24, 12 });
-	spawnAnimationOne.frames.push_back({ 120,152, 28, 18 });
-	spawnAnimationOne.frames.push_back({ 180,148, 28, 22 });
-	spawnAnimationOne.frames.push_back({ 180,148, 28, 24 });
-	spawnAnimationOne.frames.push_back({   1,194, 28, 30 });
-	spawnAnimationOne.frames.push_back({  59,190, 28, 34 });
-	spawnAnimationOne.frames.push_back({  117,186, 28,38 });
-	spawnAnimationOne.frames.push_back({  175,182, 28,42 });
-	spawnAnimationOne.frames.push_back({ 233,178, 28,46 });
-	spawnAnimationOne.frames.push_back({ 291,174, 28,50 });
-
-	// down 
-	spawnAnimationOne.frames.push_back({ 291,174, 28,50 }); 
-	spawnAnimationOne.frames.push_back({ 233,178, 28,46 });
-	spawnAnimationOne.frames.push_back({ 175,182, 28,42 });
-	spawnAnimationOne.frames.push_back({ 117,186, 28,38 });
-	spawnAnimationOne.frames.push_back({ 59,190, 28, 34 });
-	spawnAnimationOne.frames.push_back({ 1,194, 28, 30 });
-	spawnAnimationOne.frames.push_back({ 180,148, 28, 24 });
-	spawnAnimationOne.frames.push_back({ 180,148, 28, 22 });
-	spawnAnimationOne.frames.push_back({ 120,152, 28, 18 });
-	spawnAnimationOne.frames.push_back({ 39,158,  24, 12 });
-	spawnAnimationOne.frames.push_back({ 18,160, 20, 9 });
 
 	offsetSpawnOneLeft = { 
 		{ 0,-42 },{ 0,-38 },{ 0,-34 },{ 0,-30 },{ 0,-26 },{ 0,-22 },{ 0,-18 },{ 0,-14 } ,{ 0,-10 },{ 0,-6 },{ 0,0 }
 		,{ 0,0 },{ 0,-6 },{ 0,-10 },{ 0,-14 },{ 0,-18 },{ 0,-22 },{ 0,-26 },{ 0,-30 } ,{ 0,-34 },{ 0,-38 },{ 0,-42 } };
-	//offsetSpawnOneRight = { { 0,-42 },{ 0,-38 },{ 0,-34 },{ 0,-30 },{ 0,-26 },{ 0,-22 },{ 0,-18 },{ 0,-14 } ,{ 0,-10 },{ 0,-6 },{ 0,0 } };
 	
-	spawnAnimationOne.speed = 0.1;
-	spawnAnimationOne.loop = false;
 	return true;
 }
 // SPAWNTRIGGER
