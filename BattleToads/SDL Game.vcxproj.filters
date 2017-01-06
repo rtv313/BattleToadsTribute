@@ -79,6 +79,9 @@
     <ClInclude Include="AnimationRender.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="ModuleSpawnEnemies.h">
+      <Filter>Core Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -125,6 +128,9 @@
     </ClCompile>
     <ClCompile Include="ModuleStageOne.cpp">
       <Filter>Game Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleSpawnEnemies.cpp">
+      <Filter>Core Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

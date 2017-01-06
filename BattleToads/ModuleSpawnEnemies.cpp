@@ -1,18 +1,14 @@
 #include "ModuleSpawnEnemies.h"
-#include "Globals.h"
+
 #include "Application.h"
 #include "ModulePlayer.h"
-ModuleSpawnEnemies::ModuleSpawnEnemies()
-{
-}
+#include "Animation.h"
+
+ModuleSpawnTriggers::ModuleSpawnTriggers(){}
+ModuleSpawnTriggers::~ModuleSpawnTriggers(){}
 
 
-ModuleSpawnEnemies::~ModuleSpawnEnemies()
-{
-}
-
-
-update_status ModuleSpawnEnemies::PreUpdate() 
+update_status ModuleSpawnTriggers::PreUpdate() 
 {
 	for (std::list<SpawnTrigger*>::iterator it = spawnTriggers.begin(); it != spawnTriggers.end();) 
 	{
@@ -24,9 +20,11 @@ update_status ModuleSpawnEnemies::PreUpdate()
 		else
 			++it;
 	}
+
+	return UPDATE_CONTINUE;
 }
 
-update_status ModuleSpawnEnemies::Update() 
+update_status ModuleSpawnTriggers::Update() 
 {
 	for (std::list<SpawnTrigger*>::iterator it = spawnTriggers.begin(); it != spawnTriggers.end();++it)
 	{
@@ -38,10 +36,10 @@ update_status ModuleSpawnEnemies::Update()
 
 	if (debug == true)
 		DebugDraw();
-
+	return UPDATE_CONTINUE;
 }
 
-void ModuleSpawnEnemies::DebugDraw() 
+void ModuleSpawnTriggers::DebugDraw() 
 {
 	for (std::list<SpawnTrigger*>::iterator it = spawnTriggers.begin(); it != spawnTriggers.end(); ++it)
 	{
@@ -49,9 +47,123 @@ void ModuleSpawnEnemies::DebugDraw()
 	}
 }
 
-SpawnTrigger* ModuleSpawnEnemies::AddSpawnTrigger(const SDL_Rect& rect)
+SpawnTrigger* ModuleSpawnTriggers::AddSpawnTrigger(const SDL_Rect& rect)
 {
 	SpawnTrigger *trigger = new SpawnTrigger(rect);
 	spawnTriggers.push_back(trigger);
 	return trigger;
 }
+
+bool ModuleSpawnTriggers::CleanUp() 
+{
+	for (list<SpawnTrigger*>::iterator it = spawnTriggers.begin(); it != spawnTriggers.end(); ++it)
+		RELEASE(*it);
+
+	spawnTriggers.clear();
+
+	return true;
+}
+
+
+
+
+ModuleSpawnZones::ModuleSpawnZones() {}
+ModuleSpawnZones::~ModuleSpawnZones() {}
+
+update_status ModuleSpawnZones::PreUpdate()
+{
+	for (std::list<SpawnZone*>::iterator it = spawnZones.begin(); it != spawnZones.end();)
+	{
+		if ((*it)->to_delete == true)
+		{
+			RELEASE(*it);
+			it = spawnZones.erase(it);
+		}
+		else
+			++it;
+	}
+
+	return UPDATE_CONTINUE;
+}
+
+update_status ModuleSpawnZones::Update()
+{
+	for (std::list<SpawnZone*>::iterator it = spawnZones.begin(); it != spawnZones.end(); ++it)
+	{
+		//App->renderer->Blit(levelOne, 0, 0, &(background.GetCurrentFrame()), 1.0f);
+	}
+
+	if (debug == true)
+		DebugDraw();
+
+	return UPDATE_CONTINUE;
+}
+
+SpawnZone * ModuleSpawnZones::AddSpawnZone() 
+{
+	SpawnZone *spawnZone = new SpawnZone();
+	spawnZones.push_back(spawnZone);
+	return spawnZone;
+}
+
+void ModuleSpawnZones::DebugDraw()
+{
+	for (std::list<SpawnZone*>::iterator it = spawnZones.begin(); it != spawnZones.end(); ++it)
+	{
+		//App->renderer->DrawQuad((*it)->rect, 0, 0, 255, 80);
+	}
+}
+
+
+bool ModuleSpawnZones::CleanUp() 
+{
+	return true;
+}
+// SPAWNTRIGGER
+
+SpawnTrigger::SpawnTrigger(const SDL_Rect& rectangle):rect(rectangle)
+{
+
+}
+
+bool SpawnTrigger::CheckCollision(const SDL_Rect& r)const
+{
+	int leftA, leftB;
+	int rightA, rightB;
+	int topA, topB;
+	int bottomA, bottomB;
+
+	leftA = rect.x;
+	rightA = rect.x + rect.w;
+	topA = rect.y;
+	bottomA = rect.y + rect.h;
+
+	leftB = r.x;
+	rightB = r.x + r.w;
+	topB = r.y;
+	bottomB = r.y + r.h;
+
+	if (bottomA <= topB) {
+		return false;
+	}
+
+	if (topA >= bottomB) {
+		return false;
+	}
+
+	if (rightA <= leftB) {
+		return false;
+	}
+
+	if (leftA >= rightB) {
+		return false;
+	}
+
+	return true;
+}
+
+void SpawnTrigger::CreateEnemies() 
+{
+
+}
+
