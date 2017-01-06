@@ -12,6 +12,7 @@ class ModuleInput;
 class ModuleAudio;
 class ModuleFadeToBlack;
 class ModuleCollision;
+class ModuleSpawnTriggers;
 class ModuleParticles;
 
 // Game modules ---
@@ -39,6 +40,7 @@ public:
 	ModuleAudio* audio;
 	ModuleFadeToBlack* fade;
 	ModuleCollision* collision;
+	ModuleSpawnTriggers* spawnTriggers;
 	ModuleParticles* particles;
 
 	// Game modules ---

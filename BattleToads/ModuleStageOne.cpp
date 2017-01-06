@@ -5,6 +5,7 @@
 #include "ModuleRender.h"
 #include "ModulePlayer.h"
 #include "ModuleCollision.h"
+#include "ModuleSpawnEnemies.h"
 #include "ModuleParticles.h"
 #include "ModuleStageOne.h"
 
@@ -59,8 +60,15 @@ bool ModuleStageOne::Start() {
 	colliders.push_back(CreateCollider(510, 200, 33, 29, WALL));
 	colliders.push_back(CreateCollider(540, 200, 100, 29, WALL));
 
-	colliders.push_back(CreateCollider(150, 230, 60, 30, SPAWN_BASIC_ENEMY));
-
+	////////////////////////////////////////
+	SDL_Rect trigger;
+	trigger.h = 30;
+	trigger.w = 30;
+	trigger.x = 180;
+	trigger.y = 180;
+	App->spawnTriggers->AddSpawnTrigger(trigger);
+	App->spawnTriggers->debug = true;
+	///////////////////////////////////////////
 	return true;
 }
 

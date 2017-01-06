@@ -22,13 +22,13 @@ class SpawnTrigger
 		void CreateEnemies();
 };
 
-class ModuleSpawnEnemies : public Module
+class ModuleSpawnTriggers : public Module
 {
 public:
-	bool debug = false;
+	bool debug = true;
 	std::list<SpawnTrigger*> spawnTriggers;
-	ModuleSpawnEnemies();
-	~ModuleSpawnEnemies();
+	ModuleSpawnTriggers();
+	~ModuleSpawnTriggers();
 	update_status PreUpdate();
 	update_status Update();
 	SpawnTrigger* AddSpawnTrigger(const SDL_Rect& rect);
