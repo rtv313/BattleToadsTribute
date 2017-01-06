@@ -34,6 +34,7 @@ Application::Application()
 	// Modules to draw on top of game logic
 	modules.push_back(collision = new ModuleCollision());
 	modules.push_back(spawnTriggers = new ModuleSpawnTriggers());
+	modules.push_back(spawnZones = new ModuleSpawnZones());
 	modules.push_back(particles = new ModuleParticles());
 	modules.push_back(fade = new ModuleFadeToBlack());
 }

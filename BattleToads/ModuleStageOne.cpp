@@ -61,14 +61,19 @@ bool ModuleStageOne::Start() {
 	colliders.push_back(CreateCollider(540, 200, 100, 29, WALL));
 
 	////////////////////////////////////////
-	SDL_Rect trigger;
-	trigger.h = 30;
-	trigger.w = 30;
-	trigger.x = 180;
-	trigger.y = 180;
-	App->spawnTriggers->AddSpawnTrigger(trigger);
+	SDL_Rect triggerRec;
+	triggerRec.h = 30;
+	triggerRec.w = 30;
+	triggerRec.x = 180;
+	triggerRec.y = 180;
+	SpawnTrigger *trigger;
+	trigger= App->spawnTriggers->AddSpawnTrigger(triggerRec);
 	App->spawnTriggers->debug = true;
 	///////////////////////////////////////////
+	triggerRec.x += 30;
+	trigger->spawnZones.push_back(App->spawnZones->AddSpawnZone(triggerRec));
+	App->spawnZones->debug = true;
+
 	return true;
 }
 

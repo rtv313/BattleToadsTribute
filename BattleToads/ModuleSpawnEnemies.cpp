@@ -31,6 +31,7 @@ update_status ModuleSpawnTriggers::Update()
 		if ((*it)->CheckCollision(App->player->collider->rect)) 
 		{
 			(*it)->CreateEnemies(); // start animations for spawn points
+			(*it)->to_delete = true;
 		}
 	}
 
@@ -99,18 +100,18 @@ update_status ModuleSpawnZones::Update()
 	return UPDATE_CONTINUE;
 }
 
-SpawnZone * ModuleSpawnZones::AddSpawnZone() 
+SpawnZone * ModuleSpawnZones::AddSpawnZone(const SDL_Rect& rect)
 {
-	SpawnZone *spawnZone = new SpawnZone();
+	SpawnZone *spawnZone = new SpawnZone(rect);
 	spawnZones.push_back(spawnZone);
 	return spawnZone;
 }
 
 void ModuleSpawnZones::DebugDraw()
-{
+{	
 	for (std::list<SpawnZone*>::iterator it = spawnZones.begin(); it != spawnZones.end(); ++it)
-	{
-		//App->renderer->DrawQuad((*it)->rect, 0, 0, 255, 80);
+	{	if((*it)->activate)
+			App->renderer->DrawQuad((*it)->rect, 255, 0, 0, 80);
 	}
 }
 
@@ -164,6 +165,10 @@ bool SpawnTrigger::CheckCollision(const SDL_Rect& r)const
 
 void SpawnTrigger::CreateEnemies() 
 {
-
+	//send signal to activate animations for spawn
+	for (std::list<SpawnZone*>::iterator it = spawnZones.begin(); it != spawnZones.end(); ++it)
+	{
+		(*it)->activate = true;
+	}
 }
 

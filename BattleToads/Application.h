@@ -13,6 +13,7 @@ class ModuleAudio;
 class ModuleFadeToBlack;
 class ModuleCollision;
 class ModuleSpawnTriggers;
+class ModuleSpawnZones;
 class ModuleParticles;
 
 // Game modules ---
@@ -41,6 +42,7 @@ public:
 	ModuleFadeToBlack* fade;
 	ModuleCollision* collision;
 	ModuleSpawnTriggers* spawnTriggers;
+	ModuleSpawnZones* spawnZones;
 	ModuleParticles* particles;
 
 	// Game modules ---
