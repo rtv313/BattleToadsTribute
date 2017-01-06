@@ -106,6 +106,12 @@ update_status ModuleSpawnZones::Update()
 			iPoint position;
 			position.x = (*it)->rect.x;
 			position.y = (*it)->rect.y;
+			if ((int)(*it)->spawnAnimationOne.current_frame == 11 && (*it)->createdEnemy==false)
+			{
+				int x = 0;
+				//call module for create enemie
+				(*it)->createdEnemy = true;
+			}
 			renderWithOffset.Update(App, spawnSprite, &((*it)->spawnAnimationOne), false, position, offsetSpawnOneLeft, offsetSpawnOneLeft);
 		}
 			

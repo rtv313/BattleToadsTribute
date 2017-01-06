@@ -13,6 +13,7 @@ class SpawnZone
 public:
 	bool to_delete = false;
 	bool activate = false;
+	bool createdEnemy = false;
 	SDL_Rect rect = { 0,0,0,0 };
 	Animation  spawnAnimationOne;
 	SpawnZone(const SDL_Rect& rect) :rect(rect)

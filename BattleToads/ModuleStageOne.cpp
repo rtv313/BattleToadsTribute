@@ -69,12 +69,14 @@ bool ModuleStageOne::Start() {
 	
 	///////////////////////////////////////////
 	
-	//App->spawnZones->debug = true;
+	
 	trigger->AddSpawnZone(210, 180, 30, 30);
-	trigger->AddSpawnZone(260, 180, 30, 30);
+	trigger->AddSpawnZone(260, 230, 30, 30);
 
-	triggerTwo->AddSpawnZone(280, 180, 30, 30);
-	triggerTwo->AddSpawnZone(310, 180, 30, 30);
+	triggerTwo->AddSpawnZone(300, 230, 30, 30);
+	triggerTwo->AddSpawnZone(400, 180, 30, 30);
+
+
 	return true;
 }
 
