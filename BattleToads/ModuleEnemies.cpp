@@ -35,21 +35,24 @@ void Enemy::Update() {
 	case WALK_ENEMY:
 		Walk();
 		break;
+
+	default:
+		break;
 	}
-	
+	UpdateCollidersPosition();
 }
 
 void Enemy::Walk() {
 	iPoint playerPosition = App->player->position;
 
-	if (position.x >= playerPosition.x) 
+	if (position.x > playerPosition.x) 
 	{
 		position.x -= speed;
 	}
-	else 
+	/*else 
 	{
 		position.x += speed;
-	}
+	}*/
 	
 }
 
@@ -69,6 +72,13 @@ void Enemy::CheckLife() {
 }
 
 void Enemy::UpdateCollidersPosition() {
+
+	body->rect.x = position.x;
+	body->rect.y = position.y;
+	sensorLeft->rect.x = position.x-30;
+	sensorLeft->rect.y = position.y;
+	sensorRight->rect.x = position.x+30;
+	sensorRight->rect.y = position.y;
 }
 
 void Enemy::onNotify(GameEvent event) {
