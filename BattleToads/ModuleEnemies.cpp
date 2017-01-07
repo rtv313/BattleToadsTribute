@@ -1,6 +1,28 @@
 #include "ModuleEnemies.h"
 
+Enemy::Enemy() {}
 
+Enemy::~Enemy() {}
+
+update_status Enemy::Update() {
+	return UPDATE_CONTINUE;
+}
+
+void Enemy::Walk() {
+	
+}
+
+void Enemy::Attack() {
+
+}
+
+void Enemy::UnderAttack() {
+
+}
+
+void Enemy::Die() {
+
+}
 
 ModuleEnemies::ModuleEnemies()
 {

@@ -15,13 +15,14 @@ class Enemy
 public:
 	int life;
 	int attack;
+	Animation animation;
 	SDL_Rect rect = { 0,0,0,0 };
-	void Update();
+	AnimationRender animationRender;
+	update_status Update();
 	Enemy();
 	~Enemy();
 private:
 	void Walk();
-	void Run();
 	void Attack();
 	void UnderAttack();
 	void Die();
@@ -31,7 +32,7 @@ class ModuleEnemies :
 	public Module
 {
 public:
-	
+	SDL_Texture* graphics;
 	bool to_delete = false;
 	ModuleEnemies();
 	~ModuleEnemies();
