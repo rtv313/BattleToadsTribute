@@ -74,7 +74,7 @@ bool ModuleSpawnTriggers::CleanUp()
 
 
 
-ModuleSpawnZones::ModuleSpawnZones() 
+ModuleSpawnZones::ModuleSpawnZones(bool active):Module(active)
 {
 	
 }
@@ -146,6 +146,11 @@ void ModuleSpawnZones::DebugDraw()
 
 bool ModuleSpawnZones::CleanUp() 
 {
+	for (list<SpawnZone*>::iterator it = spawnZones.begin(); it != spawnZones.end(); ++it)
+		RELEASE(*it);
+
+	spawnZones.clear();
+
 	return true;
 }
 

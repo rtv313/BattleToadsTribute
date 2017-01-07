@@ -15,7 +15,7 @@ class ModuleCollision;
 class ModuleSpawnTriggers;
 class ModuleSpawnZones;
 class ModuleParticles;
-
+class ModuleEnemies;
 // Game modules ---
 class ModulePlayer;
 class ModuleSceneIntro;
@@ -44,7 +44,7 @@ public:
 	ModuleSpawnTriggers* spawnTriggers;
 	ModuleSpawnZones* spawnZones;
 	ModuleParticles* particles;
-
+	ModuleEnemies * enemies;
 	// Game modules ---
 	ModulePlayer* player;
 	ModuleSceneIntro* scene_intro;

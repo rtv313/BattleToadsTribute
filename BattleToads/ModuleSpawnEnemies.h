@@ -86,7 +86,7 @@ public:
 	vector<iPoint> offsetSpawnOneLeft;
 	AnimationRender renderWithOffset;
 	std::list<SpawnZone*> spawnZones;
-	ModuleSpawnZones();
+	ModuleSpawnZones(bool active);
 	~ModuleSpawnZones();
 	update_status PreUpdate();
 	update_status Update();
