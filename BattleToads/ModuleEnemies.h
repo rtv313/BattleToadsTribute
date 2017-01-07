@@ -23,6 +23,7 @@ public:
 	AnimationRender animationRender;
 	update_status Update();
 	Enemy();
+	Enemy(int x, int y);
 	~Enemy();
 private:
 	void Walk();
@@ -36,13 +37,14 @@ class ModuleEnemies :
 	public Module
 {
 public:
+	bool debug = true;
 	list<Enemy *> enemies;
 	SDL_Texture* graphics;
 	ModuleEnemies(bool active);
 	~ModuleEnemies();
 	update_status PreUpdate();
 	update_status Update();
-	Enemy* AddEnemy();
+	Enemy* AddEnemy(int x , int y);
 	bool CleanUp();
 	void DebugDraw();
 	bool Start();

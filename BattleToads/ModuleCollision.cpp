@@ -11,6 +11,11 @@ ModuleCollision::ModuleCollision()
 
 }
 
+ModuleCollision::ModuleCollision(bool active):Module(active)
+{
+
+}
+
 // Destructor
 ModuleCollision::~ModuleCollision()
 {}

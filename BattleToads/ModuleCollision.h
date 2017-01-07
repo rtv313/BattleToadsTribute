@@ -66,6 +66,7 @@ class ModuleCollision : public Module
 public:
 
 	ModuleCollision();
+	ModuleCollision(bool active);
 	~ModuleCollision();
 
 	update_status PreUpdate();

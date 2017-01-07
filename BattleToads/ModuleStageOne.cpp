@@ -8,7 +8,7 @@
 #include "ModuleSpawnEnemies.h"
 #include "ModuleParticles.h"
 #include "ModuleStageOne.h"
-
+#include "ModuleEnemies.h"
 
 
 ModuleStageOne::ModuleStageOne(bool active):Module(active)
@@ -30,8 +30,10 @@ bool ModuleStageOne::Start() {
 	App->player->Enable();
 	App->particles->Enable();
 	App->collision->Enable();
+	App->enemies->Enable();
 	App->spawnTriggers->Enable();
 	App->spawnZones->Enable();
+	
 	//App->audio->PlayMusic("rtype/stage1.ogg", 1.0f);
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 

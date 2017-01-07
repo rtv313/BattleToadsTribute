@@ -70,6 +70,7 @@ public:
 	bool debug = true;
 	std::list<SpawnTrigger*> spawnTriggers;
 	ModuleSpawnTriggers();
+	ModuleSpawnTriggers(bool active);
 	~ModuleSpawnTriggers();
 	update_status PreUpdate();
 	update_status Update();

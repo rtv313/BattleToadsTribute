@@ -5,6 +5,14 @@ Enemy::Enemy()
 	
 }
 
+Enemy::Enemy(int x, int y)
+{
+	rect.x = x;
+	rect.y = y;
+	rect.w = 30;
+	rect.h = 30;
+}
+
 Enemy::~Enemy() {}
 
 update_status Enemy::Update() {
@@ -59,6 +67,11 @@ update_status ModuleEnemies::Update()
 		(*it)->Update();
 	}
 
+	if (debug == true) 
+	{
+		DebugDraw();
+	}
+
 	return UPDATE_CONTINUE;
 }
 
@@ -86,9 +99,9 @@ bool ModuleEnemies::Start()
 	return true;
 }
 
-Enemy* ModuleEnemies::AddEnemy() 
+Enemy* ModuleEnemies::AddEnemy(int x , int y) 
 {
-	Enemy *enemie = new Enemy();
+	Enemy *enemie = new Enemy(x,y);
 	enemies.push_back(enemie);
 	return enemie;
 }

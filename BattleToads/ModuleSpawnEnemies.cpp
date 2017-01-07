@@ -1,10 +1,12 @@
+#define  MID_FRAME 11
 #include "ModuleSpawnEnemies.h"
 #include "Application.h"
 #include "ModulePlayer.h"
-
+#include "ModuleEnemies.h"
 
 
 ModuleSpawnTriggers::ModuleSpawnTriggers(){}
+ModuleSpawnTriggers::ModuleSpawnTriggers(bool active):Module(active){}
 ModuleSpawnTriggers::~ModuleSpawnTriggers(){}
 
 
@@ -106,10 +108,9 @@ update_status ModuleSpawnZones::Update()
 			iPoint position;
 			position.x = (*it)->rect.x;
 			position.y = (*it)->rect.y;
-			if ((int)(*it)->spawnAnimationOne.current_frame == 11 && (*it)->createdEnemy==false)
+			if ((int)(*it)->spawnAnimationOne.current_frame == MID_FRAME && (*it)->createdEnemy==false)
 			{
-				int x = 0;
-				//call module for create enemie
+				App->enemies->AddEnemy((*it)->rect.x,(*it)->rect.y);
 				(*it)->createdEnemy = true;
 			}
 			renderWithOffset.Update(App, spawnSprite, &((*it)->spawnAnimationOne), false, position, offsetSpawnOneLeft, offsetSpawnOneLeft);

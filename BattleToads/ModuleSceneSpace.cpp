@@ -7,6 +7,8 @@
 #include "ModuleCollision.h"
 #include "ModuleParticles.h"
 #include "ModuleSceneSpace.h"
+#include "ModuleEnemies.h"
+#include "ModuleSpawnEnemies.h"
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
@@ -26,6 +28,7 @@ bool ModuleSceneSpace::Start()
 	App->player->Enable();
 	App->particles->Enable();
 	App->collision->Enable();
+	
 
 	App->audio->PlayMusic("rtype/stage1.ogg", 1.0f);
 	
