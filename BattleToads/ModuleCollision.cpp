@@ -74,6 +74,9 @@ void ModuleCollision::DebugDraw()
 		case ENEMY:
 			App->renderer->DrawQuad((*it)->rect, 255, 0, 0, 80);
 			break;
+		case SENSOR:
+			App->renderer->DrawQuad((*it)->rect, 255, 204, 51, 80);
+			break;
 		default:
 			App->renderer->DrawQuad((*it)->rect, 0, 255, 0, 80);
 			break;

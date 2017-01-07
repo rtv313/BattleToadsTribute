@@ -1,5 +1,5 @@
 #include "ModuleEnemies.h"
-
+#include "ModulePlayer.h"
 Enemy::Enemy() 
 {
 	
@@ -7,11 +7,10 @@ Enemy::Enemy()
 
 Enemy::Enemy(int x, int y)
 {
-	rect.x = x;
-	rect.y = y;
-	rect.w = 30;
-	rect.h = 30;
-
+	position.x = x;
+	position.y = y;
+	
+	state = WALK_ENEMY;
 	animation.frames.push_back({ 13, 55, 36, 31 });
 
 	SDL_Rect bodyRect = { x,y,30,30 };
@@ -30,10 +29,27 @@ Enemy::Enemy(int x, int y)
 Enemy::~Enemy() {}
 
 void Enemy::Update() {
+
+	switch (state) {
+		
+	case WALK_ENEMY:
+		Walk();
+		break;
+	}
 	
 }
 
 void Enemy::Walk() {
+	iPoint playerPosition = App->player->position;
+
+	if (position.x >= playerPosition.x) 
+	{
+		position.x -= speed;
+	}
+	else 
+	{
+		position.x += speed;
+	}
 	
 }
 
@@ -53,6 +69,10 @@ void Enemy::CheckLife() {
 }
 
 void Enemy::UpdateCollidersPosition() {
+}
+
+void Enemy::onNotify(GameEvent event) {
+
 }
 
 ModuleEnemies::ModuleEnemies(bool active):Module(active) {}
@@ -83,7 +103,7 @@ update_status ModuleEnemies::Update()
 	{
 		(*it)->Update();
 		
-		App->renderer->Blit(graphics,(*it)->rect.x, (*it)->rect.y, &((*it)->animation.GetCurrentFrame()), 1.0f, (*it)->flipHorizontal);
+		App->renderer->Blit(graphics,(*it)->position.x, (*it)->position.y, &((*it)->animation.GetCurrentFrame()), 1.0f, (*it)->flipHorizontal);
 
 	}
 
@@ -109,7 +129,7 @@ void ModuleEnemies::DebugDraw()
 {
 	for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); ++it)
 	{
-		App->renderer->DrawQuad((*it)->rect, 255, 0, 0, 80);
+		//App->renderer->DrawQuad((*it)->rect, 255, 0, 0, 80);
 	}
 }
 
