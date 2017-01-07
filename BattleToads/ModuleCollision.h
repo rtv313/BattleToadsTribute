@@ -14,7 +14,8 @@ enum ColliderType {
 	ENEMY_HIT,
 	WALL,
 	ENEMY,
-	SPAWN_BASIC_ENEMY
+	SPAWN_BASIC_ENEMY,
+	SENSOR
 };
 
 

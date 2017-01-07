@@ -11,12 +11,26 @@ Enemy::Enemy(int x, int y)
 	rect.y = y;
 	rect.w = 30;
 	rect.h = 30;
+
+	animation.frames.push_back({ 13, 55, 36, 31 });
+
+	SDL_Rect bodyRect = { x,y,30,30 };
+	body = App->collision->AddCollider(bodyRect);
+	body->colliderType = ENEMY;
+
+	bodyRect = {x-30,y,30,30};
+	sensorLeft = App->collision->AddCollider(bodyRect);
+	sensorLeft->colliderType = SENSOR;
+
+	bodyRect = { x+30,y,30,30 };
+	sensorRight = App->collision->AddCollider(bodyRect);
+	sensorRight->colliderType = SENSOR;
 }
 
 Enemy::~Enemy() {}
 
-update_status Enemy::Update() {
-	return UPDATE_CONTINUE;
+void Enemy::Update() {
+	
 }
 
 void Enemy::Walk() {
@@ -36,6 +50,9 @@ void Enemy::Die() {
 }
 
 void Enemy::CheckLife() {
+}
+
+void Enemy::UpdateCollidersPosition() {
 }
 
 ModuleEnemies::ModuleEnemies(bool active):Module(active) {}
@@ -65,6 +82,9 @@ update_status ModuleEnemies::Update()
 	for (list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); ++it) 
 	{
 		(*it)->Update();
+		
+		App->renderer->Blit(graphics,(*it)->rect.x, (*it)->rect.y, &((*it)->animation.GetCurrentFrame()), 1.0f, (*it)->flipHorizontal);
+
 	}
 
 	if (debug == true) 
@@ -95,7 +115,7 @@ void ModuleEnemies::DebugDraw()
 
 bool ModuleEnemies::Start() 
 {	
-	graphics = App->textures->Load("rtype/BattletoadSprites/PsykoPig.png");
+	graphics = App->textures->Load("rtype/BattletoadSprites/BT_PsykoPig.gif");
 	return true;
 }
 

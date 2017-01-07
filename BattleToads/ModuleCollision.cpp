@@ -70,9 +70,7 @@ void ModuleCollision::DebugDraw()
 	{
 		switch ((*it)->colliderType)
 		{
-		case SPAWN_BASIC_ENEMY:
-			App->renderer->DrawQuad((*it)->rect, 0, 0,255, 80);
-			break;
+		
 		case ENEMY:
 			App->renderer->DrawQuad((*it)->rect, 255, 0, 0, 80);
 			break;
