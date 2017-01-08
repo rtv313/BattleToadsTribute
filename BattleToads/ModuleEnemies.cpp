@@ -52,7 +52,7 @@ void Enemy :: MoveOtherSide()
 	{
 		position.x -= speed;
 
-		if (position.x >= targetPositionAttack) {
+		if (position.x <= targetPositionAttack) {
 			state = WALK_ENEMY;
 			return;
 		}
@@ -61,7 +61,7 @@ void Enemy :: MoveOtherSide()
 	else if(flipHorizontal == false && position.x < targetPositionAttack)
 	{
 		position.x += speed;
-		if (position.x <= targetPositionAttack) {
+		if (position.x >= targetPositionAttack) {
 			state = WALK_ENEMY;
 			return;
 		}
@@ -139,7 +139,7 @@ void Enemy::UpdateCollidersPosition() {
 }
 
 void Enemy::onNotify(GameEvent event) {
-	if (state == MOVE_OTHER_SIDE && event != PLAYER_COLLISION) { 
+	if (state == MOVE_OTHER_SIDE) { 
 		return; 
 	}
 	switch (event) {
@@ -160,7 +160,7 @@ void Enemy::onNotify(GameEvent event) {
 
 void Enemy::onNotify(GameEvent event,int position) {
 
-	if (state == MOVE_OTHER_SIDE && event != PLAYER_COLLISION) {
+	if (state == MOVE_OTHER_SIDE) {
 		return;
 	}
 
@@ -175,9 +175,9 @@ void Enemy::onNotify(GameEvent event,int position) {
 		if (state != ATTACK_ENEMY) {
 			state = MOVE_OTHER_SIDE;
 			if(flipHorizontal==true)
-				targetPositionAttack = position - 40;
+				targetPositionAttack = position - 60;
 			else
-				targetPositionAttack = position + 40;
+				targetPositionAttack = position + 60;
 		}	
 		break;
 	default:
