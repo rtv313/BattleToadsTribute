@@ -3,6 +3,7 @@
 #include "ModuleInput.h"
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
+#include "ModuleEnemies.h"
 
 using namespace std;
 
@@ -169,7 +170,7 @@ void Collider::ValidCollision(Collider * collider) {
 
 			if (colliderType == SENSOR && collider->colliderType == WALL) 
 			{
-				(*observer)->onNotify(WALL_COLLISION);
+				(*observer)->onNotify(WALL_COLLISION,collider->rect.y + collider->rect.h);
 			}
 		}
 

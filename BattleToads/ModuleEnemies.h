@@ -21,6 +21,7 @@ public:
 	int life = 100;
 	int attack = 10;
 	bool go_down = false;
+	int go_down_offset = 0;
 	int speed = 1;
 	bool flipHorizontal = false;
 	iPoint position;
@@ -32,6 +33,7 @@ public:
 /*	Collider * sensorRight*/;
 	void Update();
 	void onNotify(GameEvent event);
+	void onNotify(GameEvent event, int downPosition);
 	Enemy();
 	Enemy(int x, int y);
 	~Enemy();

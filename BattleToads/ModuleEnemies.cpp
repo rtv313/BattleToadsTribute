@@ -48,6 +48,10 @@ void Enemy::Update() {
 
 void Enemy::Walk() {
 	iPoint playerPosition = App->player->position;
+	
+	if (position.x == playerPosition.x) {
+		return;
+	}
 
 	if (position.x > playerPosition.x) 
 	{
@@ -68,7 +72,7 @@ void Enemy::Walk() {
 		}
 	}
 	else {
-		position.y += speed;
+		//position.y += speed + go_down_offset;
 	}
 }
 
@@ -100,13 +104,25 @@ void Enemy::UpdateCollidersPosition() {
 void Enemy::onNotify(GameEvent event) {
 	switch (event) {
 		case WALL_COLLISION:
-			go_down = true;
+			//go_down = true;
 			break;
 		case NO_COLLISION:
 			go_down = false;
+			go_down_offset = 0;
 			break;
 		default:
 			break;
+	}
+}
+
+void Enemy::onNotify(GameEvent event,int downPosition) {
+	switch (event) {
+	case WALL_COLLISION:
+		//go_down = true;
+		position.y = downPosition;
+		break;
+	default:
+		break;
 	}
 }
 
