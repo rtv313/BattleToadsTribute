@@ -75,7 +75,7 @@ bool ModuleStageOne::Start() {
 	/*trigger->AddSpawnZone(210, 180, 30, 30);
 	trigger->AddSpawnZone(260, 230, 30, 30);
 */
-	/*triggerTwo->AddSpawnZone(300, 230, 30, 30);*/
+	triggerTwo->AddSpawnZone(300, 230, 30, 30);
 	triggerTwo->AddSpawnZone(400, 230, 30, 30);
 
 

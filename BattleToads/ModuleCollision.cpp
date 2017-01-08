@@ -57,6 +57,9 @@ update_status ModuleCollision::Update()
 				else if((*a)->colliderType== SENSOR && (*b)->colliderType == PLAYER) {
 					collisionWall = true;
 				}
+				else if ((*a)->colliderType == ENEMY && (*b)->colliderType == PLAYER) {
+					collisionWall = true;
+				}
 			}
 			
 			++indexB;
@@ -177,6 +180,10 @@ void Collider::ValidCollision(Collider * collider) {
 			}
 
 			if (colliderType == SENSOR && collider->colliderType == PLAYER) {
+				(*observer)->onNotify(PLAYER_COLLISION);
+			}
+
+			if (colliderType == ENEMY && collider->colliderType == PLAYER) {
 				(*observer)->onNotify(PLAYER_COLLISION);
 			}
 		}
