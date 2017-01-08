@@ -18,7 +18,7 @@ Enemy::Enemy(int x, int y)
 	body->colliderType = ENEMY;
 	body->addObserver(this);
 
-	bodyRect = {x-30,y,30,30};
+	bodyRect = {x-5,y,5,5};
 	sensor = App->collision->AddCollider(bodyRect);
 	sensor->colliderType = SENSOR;
 	sensor->addObserver(this);
@@ -32,6 +32,9 @@ void Enemy::Update() {
 		
 	case WALK_ENEMY:
 		Walk();
+		break;
+	case ATTACK_ENEMY:
+		Attack();
 		break;
 
 	default:
@@ -101,7 +104,7 @@ void Enemy::UpdateCollidersPosition() {
 	body->rect.x = position.x;
 	body->rect.y = position.y;
 	if(flipHorizontal == true)
-		sensor->rect.x = position.x-30;
+		sensor->rect.x = position.x-5;
 	else
 		sensor->rect.x = position.x+30;
 	sensor->rect.y = position.y;
@@ -113,8 +116,13 @@ void Enemy::onNotify(GameEvent event) {
 	
 		case NO_COLLISION:
 			go_down = false;
-		
+			state = WALK_ENEMY;
 			break;
+
+		case PLAYER_COLLISION:
+			state = ATTACK_ENEMY;
+			break;
+
 		default:
 			break;
 	}
@@ -125,6 +133,9 @@ void Enemy::onNotify(GameEvent event,int downPosition) {
 	case WALL_COLLISION:
 		go_down = true;
 		wallPositionTarget= downPosition-1;
+		break;
+	
+		
 		break;
 	default:
 		break;
