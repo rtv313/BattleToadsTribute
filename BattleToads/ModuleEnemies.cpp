@@ -19,15 +19,9 @@ Enemy::Enemy(int x, int y)
 	body->addObserver(this);
 
 	bodyRect = {x-30,y,30,30};
-	sensorLeft = App->collision->AddCollider(bodyRect);
-	sensorLeft->colliderType = SENSOR;
-	sensorLeft->addObserver(this);
-	
-
-	/*bodyRect = { x+30,y,30,30 };
-	sensorRight = App->collision->AddCollider(bodyRect);
-	sensorRight->colliderType = SENSOR;
-	sensorRight->addObserver(this);*/
+	sensor = App->collision->AddCollider(bodyRect);
+	sensor->colliderType = SENSOR;
+	sensor->addObserver(this);
 }
 
 Enemy::~Enemy() {}
@@ -56,10 +50,12 @@ void Enemy::Walk() {
 	if (position.x > playerPosition.x) 
 	{
 		position.x -= speed;
+		flipHorizontal = true;
 	}
 	else if(position.x < playerPosition.x)
 	{
 		position.x += speed;
+		flipHorizontal = false;
 	}
 
 
@@ -104,17 +100,17 @@ void Enemy::UpdateCollidersPosition() {
 
 	body->rect.x = position.x;
 	body->rect.y = position.y;
-	sensorLeft->rect.x = position.x-30;
-	sensorLeft->rect.y = position.y;
-	//sensorRight->rect.x = position.x+30;
-	//sensorRight->rect.y = position.y;
+	if(flipHorizontal == true)
+		sensor->rect.x = position.x-30;
+	else
+		sensor->rect.x = position.x+30;
+	sensor->rect.y = position.y;
+	
 }
 
 void Enemy::onNotify(GameEvent event) {
 	switch (event) {
-		case WALL_COLLISION:
-			//go_down = true;
-			break;
+	
 		case NO_COLLISION:
 			go_down = false;
 		

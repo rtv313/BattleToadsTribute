@@ -29,8 +29,8 @@ public:
 	int wallPositionTarget = 0;
 	
 	Collider * body;
-	Collider * sensorLeft;
-/*	Collider * sensorRight*/;
+	Collider * sensor;
+
 	void Update();
 	void onNotify(GameEvent event);
 	void onNotify(GameEvent event, int downPosition);
