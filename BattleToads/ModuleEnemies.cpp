@@ -61,6 +61,8 @@ void Enemy::Walk() {
 	{
 		position.x += speed;
 	}
+
+
 	if (go_down == false) {
 		if (position.y > playerPosition.y)
 		{
@@ -72,7 +74,14 @@ void Enemy::Walk() {
 		}
 	}
 	else {
-		//position.y += speed + go_down_offset;
+		if (position.y <= wallPositionTarget) {
+			position.y += speed;
+			if (position.y >= wallPositionTarget) {
+				position.y = wallPositionTarget;
+			}
+		}
+		
+		
 	}
 }
 
@@ -108,7 +117,7 @@ void Enemy::onNotify(GameEvent event) {
 			break;
 		case NO_COLLISION:
 			go_down = false;
-			go_down_offset = 0;
+		
 			break;
 		default:
 			break;
@@ -118,8 +127,8 @@ void Enemy::onNotify(GameEvent event) {
 void Enemy::onNotify(GameEvent event,int downPosition) {
 	switch (event) {
 	case WALL_COLLISION:
-		//go_down = true;
-		position.y = downPosition;
+		go_down = true;
+		wallPositionTarget= downPosition-1;
 		break;
 	default:
 		break;

@@ -26,7 +26,7 @@ public:
 	bool flipHorizontal = false;
 	iPoint position;
 	Animation animation;
-	
+	int wallPositionTarget = 0;
 	
 	Collider * body;
 	Collider * sensorLeft;
