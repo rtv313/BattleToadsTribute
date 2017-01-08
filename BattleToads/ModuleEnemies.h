@@ -20,6 +20,7 @@ public:
 	bool to_delete;
 	int life = 100;
 	int attack = 10;
+	bool go_down = false;
 	int speed = 1;
 	bool flipHorizontal = false;
 	iPoint position;
@@ -28,7 +29,7 @@ public:
 	
 	Collider * body;
 	Collider * sensorLeft;
-	Collider * sensorRight;
+/*	Collider * sensorRight*/;
 	void Update();
 	void onNotify(GameEvent event);
 	Enemy();

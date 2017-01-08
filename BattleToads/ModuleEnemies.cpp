@@ -16,14 +16,18 @@ Enemy::Enemy(int x, int y)
 	SDL_Rect bodyRect = { x,y,30,30 };
 	body = App->collision->AddCollider(bodyRect);
 	body->colliderType = ENEMY;
+	body->addObserver(this);
 
 	bodyRect = {x-30,y,30,30};
 	sensorLeft = App->collision->AddCollider(bodyRect);
 	sensorLeft->colliderType = SENSOR;
+	sensorLeft->addObserver(this);
+	
 
-	bodyRect = { x+30,y,30,30 };
+	/*bodyRect = { x+30,y,30,30 };
 	sensorRight = App->collision->AddCollider(bodyRect);
 	sensorRight->colliderType = SENSOR;
+	sensorRight->addObserver(this);*/
 }
 
 Enemy::~Enemy() {}
@@ -49,11 +53,23 @@ void Enemy::Walk() {
 	{
 		position.x -= speed;
 	}
-	/*else 
+	else if(position.x < playerPosition.x)
 	{
 		position.x += speed;
-	}*/
-	
+	}
+	if (go_down == false) {
+		if (position.y > playerPosition.y)
+		{
+			position.y -= speed;
+		}
+		else if (position.y < playerPosition.y)
+		{
+			position.y += speed;
+		}
+	}
+	else {
+		position.y += speed;
+	}
 }
 
 void Enemy::Attack() {
@@ -77,12 +93,21 @@ void Enemy::UpdateCollidersPosition() {
 	body->rect.y = position.y;
 	sensorLeft->rect.x = position.x-30;
 	sensorLeft->rect.y = position.y;
-	sensorRight->rect.x = position.x+30;
-	sensorRight->rect.y = position.y;
+	//sensorRight->rect.x = position.x+30;
+	//sensorRight->rect.y = position.y;
 }
 
 void Enemy::onNotify(GameEvent event) {
-
+	switch (event) {
+		case WALL_COLLISION:
+			go_down = true;
+			break;
+		case NO_COLLISION:
+			go_down = false;
+			break;
+		default:
+			break;
+	}
 }
 
 ModuleEnemies::ModuleEnemies(bool active):Module(active) {}

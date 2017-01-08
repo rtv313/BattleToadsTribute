@@ -45,12 +45,22 @@ update_status ModuleCollision::Update()
 	int indexB = 0;
 	for (list<Collider*>::iterator a = colliders.begin(); a != colliders.end(); ++a)
 	{
+		bool collisionWall = false;
 		for (list<Collider*>::iterator b = colliders.begin(); b != colliders.end();++b)
 		{
-			if (indexA != indexB && (*b)->CheckCollision((*a)->rect)) { // if collide what we do ?
-				(*a)->ValidCollision((*b));
+			if (indexA != indexB && (*a)->CheckCollision((*b)->rect)) { // if collide what we do ?
+				(*b)->ValidCollision((*a));
+				if ((*a)->colliderType == SENSOR && (*b)->colliderType == WALL) {
+					collisionWall = true;
+				}
 			}
+			
 			++indexB;
+		} 
+
+		if (collisionWall == false && (*a)->colliderType == SENSOR)
+		{
+			(*a)->NoCollision();
 		}
 		++indexA;
 	}
@@ -149,34 +159,23 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 
 void Collider::ValidCollision(Collider * collider) {
 	
- 	if (CollisionMatrix[colliderType][collider->colliderType])
-	{
-		/*if(colliderType!=WALL)
-			to_delete = true;*/
-
-		if (colliderType == SPAWN_BASIC_ENEMY && collider->colliderType == PLAYER)
-		{ // SPAWN ENEMIES 
-			Collider* collider;
-			SDL_Rect rect;
-			rect.x = 180;
-			rect.y = 230;
-			rect.h = 30;
-			rect.w = 30;
-			collider = App->collision->AddCollider(rect);
-			collider->colliderType = ENEMY;
-			to_delete = true;
-		}
-
+		
 		for (list<Observer*>::iterator observer = observers_.begin(); observer != observers_.end(); ++observer)
-		{	
+		{
 			if (colliderType == PLAYER && collider->colliderType == WALL)
 			{
 				(*observer)->onNotify(WALL_COLLISION);
 			}
 
+			if (colliderType == SENSOR && collider->colliderType == WALL) 
+			{
+				(*observer)->onNotify(WALL_COLLISION);
+			}
 		}
-	}
-}
+
+	
+ }
+
 
 void Collider::addObserver(Observer* observer)
 {
@@ -194,5 +193,13 @@ void Collider::removeObserver(Observer* observer)
 			it = observers_.erase(it);
 			return;
 		}
+	}
+}
+
+void Collider::NoCollision()
+{
+	for (list<Observer*>::iterator it = observers_.begin(); it != observers_.end(); ++it) 
+	{
+		(*it)->onNotify(NO_COLLISION);
 	}
 }

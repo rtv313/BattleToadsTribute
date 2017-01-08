@@ -14,7 +14,6 @@ enum ColliderType {
 	ENEMY_HIT,
 	WALL,
 	ENEMY,
-	SPAWN_BASIC_ENEMY,
 	SENSOR
 };
 
@@ -34,6 +33,7 @@ public:
 	ColliderType colliderType;
 	// TODO 10: Add a way to notify other classes that a collision happened
 	bool active;
+	
 	void ValidCollision(Collider * collider);
 	void addObserver(Observer* observer);
 	void removeObserver(Observer* observer);
@@ -60,6 +60,7 @@ public:
 	}
 
 	bool CheckCollision(const SDL_Rect& r) const;
+	void NoCollision();
 };
 
 class ModuleCollision : public Module

@@ -19,7 +19,7 @@ enum update_status
 };
 
 
-enum GameEvent { DESTROY_PARTICLE,WALL_COLLISION };
+enum GameEvent { DESTROY_PARTICLE,WALL_COLLISION,NO_COLLISION };
 
 
 // Useful typedefs ---------
