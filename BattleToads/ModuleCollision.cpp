@@ -45,8 +45,9 @@ update_status ModuleCollision::Update()
 	int indexA = 0;
 	int indexB = 0;
 	for (list<Collider*>::iterator a = colliders.begin(); a != colliders.end(); ++a)
-	{
+	{	
 		bool collisionWall = false;
+		indexB = 0;
 		for (list<Collider*>::iterator b = colliders.begin(); b != colliders.end();++b)
 		{
 			if (indexA != indexB && (*a)->CheckCollision((*b)->rect)) { // if collide what we do ?
@@ -58,6 +59,9 @@ update_status ModuleCollision::Update()
 					collisionWall = true;
 				}
 				else if ((*a)->colliderType == ENEMY && (*b)->colliderType == PLAYER) {
+					collisionWall = true;
+				}
+				else if ((*a)->colliderType == ENEMY && (*b)->colliderType == ENEMY) {
 					collisionWall = true;
 				}
 			}
@@ -185,6 +189,10 @@ void Collider::ValidCollision(Collider * collider) {
 
 			if (colliderType == ENEMY && collider->colliderType == PLAYER) {
 				(*observer)->onNotify(PLAYER_COLLISION);
+			}
+
+			if (colliderType == ENEMY && collider->colliderType == ENEMY) {
+				(*observer)->onNotify(ENEMY_COLLISION, collider->rect.x);
 			}
 		}
 

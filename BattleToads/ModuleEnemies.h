@@ -12,7 +12,7 @@
 #include "ModuleTextures.h"
 #include "AnimationRender.h"
 #include "ModuleCollision.h"
-enum EnemyState { WALK_ENEMY, ATTACK_ENEMY, UNDER_ATTACK, DIE ,ENEMY_IDLE};
+enum EnemyState { WALK_ENEMY, ATTACK_ENEMY, UNDER_ATTACK, DIE ,ENEMY_IDLE,MOVE_OTHER_SIDE};
 
 class Enemy :Observer
 {
@@ -27,14 +27,14 @@ public:
 	iPoint position;
 	Animation animation;
 	int wallPositionTarget = 0;
-	
+	int targetPositionAttack = 0;
 	
 	Collider * body;
 	Collider * sensor;
 
 	void Update();
 	void onNotify(GameEvent event);
-	void onNotify(GameEvent event, int downPosition);
+	void onNotify(GameEvent event, int position);
 	Enemy();
 	Enemy(int x, int y);
 	~Enemy();
@@ -42,6 +42,7 @@ private:
 	EnemyState state;
 	void Walk();
 	void Idle();
+	void MoveOtherSide();
 	void Attack();
 	void UnderAttack();
 	void Die();

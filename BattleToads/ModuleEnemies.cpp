@@ -36,6 +36,9 @@ void Enemy::Update() {
 	case ATTACK_ENEMY:
 		Attack();
 		break;
+	case MOVE_OTHER_SIDE:
+		MoveOtherSide();
+		break;
 
 	default:
 		break;
@@ -43,7 +46,31 @@ void Enemy::Update() {
 	UpdateCollidersPosition();
 }
 
-void Enemy::Walk() {
+void Enemy :: MoveOtherSide() 
+{
+	if (flipHorizontal == true && position.x > targetPositionAttack)
+	{
+		position.x -= speed;
+
+		if (position.x >= targetPositionAttack) {
+			state = WALK_ENEMY;
+			return;
+		}
+	
+	}
+	else if(flipHorizontal == false && position.x < targetPositionAttack)
+	{
+		position.x += speed;
+		if (position.x <= targetPositionAttack) {
+			state = WALK_ENEMY;
+			return;
+		}
+	}
+	
+}
+
+void Enemy::Walk() 
+{
 	iPoint playerPosition = App->player->position;
 	
 	if (position.x == playerPosition.x) {
@@ -112,6 +139,9 @@ void Enemy::UpdateCollidersPosition() {
 }
 
 void Enemy::onNotify(GameEvent event) {
+	if (state == MOVE_OTHER_SIDE && event != PLAYER_COLLISION) { 
+		return; 
+	}
 	switch (event) {
 	
 		case NO_COLLISION:
@@ -128,14 +158,27 @@ void Enemy::onNotify(GameEvent event) {
 	}
 }
 
-void Enemy::onNotify(GameEvent event,int downPosition) {
+void Enemy::onNotify(GameEvent event,int position) {
+
+	if (state == MOVE_OTHER_SIDE && event != PLAYER_COLLISION) {
+		return;
+	}
+
 	switch (event) {
+
 	case WALL_COLLISION:
 		go_down = true;
-		wallPositionTarget= downPosition-1;
+		wallPositionTarget= position-1;
 		break;
 	
-		
+	case ENEMY_COLLISION:
+		if (state != ATTACK_ENEMY) {
+			state = MOVE_OTHER_SIDE;
+			if(flipHorizontal==true)
+				targetPositionAttack = position - 40;
+			else
+				targetPositionAttack = position + 40;
+		}	
 		break;
 	default:
 		break;
