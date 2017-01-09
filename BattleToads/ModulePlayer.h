@@ -34,8 +34,11 @@ private:
 	void ReceiveHeavyAttack();
 	void SetCollidersPosition();
 	
+	
 public:
 	int speed;
+	int life = 2000;
+	int totalLife = 10;
 	SDL_Texture* graphics = nullptr;
 	Animation* current_animation = nullptr;
 	iPoint position;
@@ -78,12 +81,12 @@ public:
 	vector<iPoint> offsetRighReceiveHeavyAttack;
 	Animation receiveHeavyAttack;
 	Temporizer timeDown;
+	AnimationState state;
 private:
 
 
 	int punchCounter = 0;
 	bool flipHorinzontal = false;
-	AnimationState state;
 	AnimationAttacksState attackState;
 	
 

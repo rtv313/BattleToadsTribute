@@ -22,6 +22,11 @@ Enemy::Enemy(int x, int y)
 	animationAttack.frames.push_back({ 50, 15, 41, 28 });
 	animationAttack.speed = 0.1;
 
+	animationDead.frames.push_back({145,64,33,35});
+	animationDead.frames.push_back({ 14,100,33,25 });
+	animationDead.speed = 0.1;
+	animationDead.loop = false;
+
 	SDL_Rect bodyRect = { x,y,30,30 };
 	body = App->collision->AddCollider(bodyRect);
 	body->colliderType = ENEMY;
@@ -131,6 +136,7 @@ void Enemy::Attack() {
 
 	if (currentAnimation->Finished()) {
 		state = WALK_ENEMY;
+		App->player->life-=10;
 	}
 }
 

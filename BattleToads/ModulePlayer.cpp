@@ -149,7 +149,10 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update()
 {
-	
+	if (life <= 0 && state != RECEIVE_HEAVY_ATTACK) {
+		timeDown.Start();
+		state = RECEIVE_HEAVY_ATTACK;
+	}
 	switch (state)
 	{
 	case IDLE:
@@ -446,12 +449,14 @@ void ModulePlayer::KickAttack() {
 
 void ModulePlayer::ReceiveHeavyAttack() {
 	current_animation = &receiveHeavyAttack;
+	
 	renderWithOffset.Update(App, graphics, current_animation, flipHorinzontal, position, offsetLeftReceiveHeavyAttack, offsetRighReceiveHeavyAttack);
 	
 	if (current_animation->Finished() && timeDown.Update()) {
 		receiveHeavyAttack.Reset();
 		state = IDLE;
 		timeDown.Reset();
+		life = 2000;
 	}
 
 }

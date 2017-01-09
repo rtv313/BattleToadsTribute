@@ -28,6 +28,7 @@ public:
 	Animation* currentAnimation;
 	Animation animationWalk;
 	Animation animationAttack;
+	Animation animationDead;
 	int wallPositionTarget = 0;
 	int targetPositionAttack = 0;
 	int tiempoatacando = 0; // for testing
