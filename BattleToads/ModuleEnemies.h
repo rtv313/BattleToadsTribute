@@ -28,7 +28,8 @@ public:
 	Animation animation;
 	int wallPositionTarget = 0;
 	int targetPositionAttack = 0;
-	
+	int tiempoatacando = 0; // for testing
+	int tiempoIdle = 0;
 	Collider * body;
 	Collider * sensor;
 
@@ -38,8 +39,9 @@ public:
 	Enemy();
 	Enemy(int x, int y);
 	~Enemy();
-private:
 	EnemyState state;
+private:
+	bool  PlayerInYourDirection();
 	void Walk();
 	void Idle();
 	void MoveOtherSide();
@@ -66,6 +68,7 @@ public:
 	bool CleanUp();
 	void DebugDraw();
 	bool Start();
+
 
 };
 

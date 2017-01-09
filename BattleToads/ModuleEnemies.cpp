@@ -39,6 +39,9 @@ void Enemy::Update() {
 	case MOVE_OTHER_SIDE:
 		MoveOtherSide();
 		break;
+	case ENEMY_IDLE:
+		Idle();
+		break;
 
 	default:
 		break;
@@ -48,6 +51,8 @@ void Enemy::Update() {
 
 void Enemy :: MoveOtherSide() 
 {
+	
+
 	if (flipHorizontal == true && position.x > targetPositionAttack)
 	{
 		position.x -= speed;
@@ -113,6 +118,25 @@ void Enemy::Walk()
 
 void Enemy::Attack() {
 
+	if (tiempoatacando < 90) { // for testing
+		tiempoatacando++;
+	}
+
+	if (tiempoatacando >= 90) {
+		state = WALK_ENEMY;
+		tiempoatacando = 0;
+	}
+}
+
+void Enemy::Idle() {
+	if (tiempoIdle < 90) { // for testing
+		tiempoIdle++;
+	}
+
+	if (tiempoIdle >= 90) {
+		state = WALK_ENEMY;
+		tiempoIdle = 0;
+	}
 }
 
 void Enemy::UnderAttack() {
@@ -139,7 +163,7 @@ void Enemy::UpdateCollidersPosition() {
 }
 
 void Enemy::onNotify(GameEvent event) {
-	if (state == MOVE_OTHER_SIDE) { 
+	if ((state == MOVE_OTHER_SIDE || state == ATTACK_ENEMY))  { //||  state == ATTACK_ENEMY
 		return; 
 	}
 	switch (event) {
@@ -160,7 +184,7 @@ void Enemy::onNotify(GameEvent event) {
 
 void Enemy::onNotify(GameEvent event,int position) {
 
-	if (state == MOVE_OTHER_SIDE) {
+	if (state == MOVE_OTHER_SIDE || state == ATTACK_ENEMY ) { // || state == ATTACK_ENEMY
 		return;
 	}
 
@@ -172,7 +196,7 @@ void Enemy::onNotify(GameEvent event,int position) {
 		break;
 	
 	case ENEMY_COLLISION:
-		if (state != ATTACK_ENEMY) {
+		if (state != ATTACK_ENEMY && PlayerInYourDirection()) {
 			state = MOVE_OTHER_SIDE;
 			if(flipHorizontal==true)
 				targetPositionAttack = position - 60;
@@ -183,6 +207,19 @@ void Enemy::onNotify(GameEvent event,int position) {
 	default:
 		break;
 	}
+}
+
+bool Enemy::PlayerInYourDirection() {
+	if (flipHorizontal == false && App->player->position.x > position.x)
+	{
+		return true;
+	}
+
+	if (flipHorizontal == true && App->player->position.x < position.x) {
+		return true;
+	}
+
+	return false;
 }
 
 ModuleEnemies::ModuleEnemies(bool active):Module(active) {}
@@ -209,14 +246,24 @@ update_status ModuleEnemies::PreUpdate()
 
 update_status ModuleEnemies::Update() 
 {
+	bool twoMovingSides = false;
+
 	for (list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); ++it) 
 	{
 		(*it)->Update();
-		
+		/*if ((*it)->state == MOVE_OTHER_SIDE) {
+			twoMovingSides = true;
+		}
+		else {
+			twoMovingSides = false;
+		}*/
 		App->renderer->Blit(graphics,(*it)->position.x, (*it)->position.y, &((*it)->animation.GetCurrentFrame()), 1.0f, (*it)->flipHorizontal);
 
 	}
 
+	//if(twoMovingSides==true)
+	//	enemies.front()->state =  ENEMY_IDLE;
+	
 	if (debug == true) 
 	{
 		DebugDraw();
