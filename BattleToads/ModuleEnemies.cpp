@@ -42,6 +42,10 @@ Enemy::~Enemy() {}
 
 void Enemy::Update() {
 
+	if (life <= 0) {
+		state = DIE_ENEMY;
+	}
+
 	switch (state) {
 		
 	case WALK_ENEMY:
@@ -55,6 +59,9 @@ void Enemy::Update() {
 		break;
 	case ENEMY_IDLE:
 		Idle();
+		break;
+	case DIE_ENEMY:
+		Die();
 		break;
 
 	default:
@@ -156,7 +163,7 @@ void Enemy::UnderAttack() {
 }
 
 void Enemy::Die() {
-
+	currentAnimation = &animationDead;
 }
 
 void Enemy::CheckLife() {
@@ -175,7 +182,7 @@ void Enemy::UpdateCollidersPosition() {
 }
 
 void Enemy::onNotify(GameEvent event) {
-	if ((state == MOVE_OTHER_SIDE || state == ATTACK_ENEMY))  { //||  state == ATTACK_ENEMY
+	if ((state == MOVE_OTHER_SIDE || state == ATTACK_ENEMY) &&  event != ENEMY_DAMAGE)  { //||  state == ATTACK_ENEMY
 		return; 
 	}
 	switch (event) {
@@ -187,6 +194,10 @@ void Enemy::onNotify(GameEvent event) {
 
 		case PLAYER_COLLISION:
 			state = ATTACK_ENEMY;
+			break;
+
+		case ENEMY_DAMAGE:
+			life -= 50;
 			break;
 
 		default:

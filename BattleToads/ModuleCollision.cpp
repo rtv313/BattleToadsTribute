@@ -4,7 +4,7 @@
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
 #include "ModuleEnemies.h"
-
+#include "ModulePlayer.h"
 using namespace std;
 
 ModuleCollision::ModuleCollision()
@@ -62,6 +62,9 @@ update_status ModuleCollision::Update()
 					collisionWall = true;
 				}
 				else if ((*a)->colliderType == ENEMY && (*b)->colliderType == ENEMY) {
+					collisionWall = true;
+				}
+				else if ((*a)->colliderType == ENEMY && (*b)->colliderType == PLAYER_HIT) {
 					collisionWall = true;
 				}
 			}
@@ -193,6 +196,10 @@ void Collider::ValidCollision(Collider * collider) {
 
 			if (colliderType == ENEMY && collider->colliderType == ENEMY) {
 				(*observer)->onNotify(ENEMY_COLLISION, collider->rect.x);
+			}
+
+			if (colliderType == ENEMY && collider->colliderType == PLAYER_HIT && App->player->state ==ATTACK) {
+				(*observer)->onNotify(ENEMY_DAMAGE);
 			}
 		}
 

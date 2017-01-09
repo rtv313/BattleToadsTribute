@@ -12,7 +12,7 @@
 #include "ModuleTextures.h"
 #include "AnimationRender.h"
 #include "ModuleCollision.h"
-enum EnemyState { WALK_ENEMY, ATTACK_ENEMY, UNDER_ATTACK, DIE ,ENEMY_IDLE,MOVE_OTHER_SIDE};
+enum EnemyState { WALK_ENEMY, ATTACK_ENEMY, UNDER_ATTACK, DIE_ENEMY ,ENEMY_IDLE,MOVE_OTHER_SIDE};
 
 class Enemy :Observer
 {
