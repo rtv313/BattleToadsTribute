@@ -11,7 +11,16 @@ Enemy::Enemy(int x, int y)
 	position.y = y;
 	
 	state = WALK_ENEMY;
-	animation.frames.push_back({ 13, 55, 36, 31 });
+
+	animationWalk.frames.push_back({ 13, 55, 36, 31 });
+	animationWalk.frames.push_back({ 54, 56, 36, 31 });
+	animationWalk.frames.push_back({ 94, 60, 36, 31 });
+	animationWalk.speed = 0.1;
+
+	animationAttack.frames.push_back({ 50, 15, 36, 31 });
+	animationAttack.frames.push_back({ 90, 17, 41, 28 });
+	animationAttack.frames.push_back({ 50, 15, 41, 28 });
+	animationAttack.speed = 0.1;
 
 	SDL_Rect bodyRect = { x,y,30,30 };
 	body = App->collision->AddCollider(bodyRect);
@@ -52,7 +61,7 @@ void Enemy::Update() {
 void Enemy :: MoveOtherSide() 
 {
 	
-
+	currentAnimation = &animationWalk;
 	if (flipHorizontal == true && position.x > targetPositionAttack)
 	{
 		position.x -= speed;
@@ -77,7 +86,7 @@ void Enemy :: MoveOtherSide()
 void Enemy::Walk() 
 {
 	iPoint playerPosition = App->player->position;
-	
+	currentAnimation = &animationWalk;
 	if (position.x == playerPosition.x) {
 		return;
 	}
@@ -118,13 +127,10 @@ void Enemy::Walk()
 
 void Enemy::Attack() {
 
-	if (tiempoatacando < 90) { // for testing
-		tiempoatacando++;
-	}
+	currentAnimation = &animationAttack;
 
-	if (tiempoatacando >= 90) {
+	if (currentAnimation->Finished()) {
 		state = WALK_ENEMY;
-		tiempoatacando = 0;
 	}
 }
 
@@ -251,18 +257,12 @@ update_status ModuleEnemies::Update()
 	for (list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); ++it) 
 	{
 		(*it)->Update();
-		/*if ((*it)->state == MOVE_OTHER_SIDE) {
-			twoMovingSides = true;
-		}
-		else {
-			twoMovingSides = false;
-		}*/
-		App->renderer->Blit(graphics,(*it)->position.x, (*it)->position.y, &((*it)->animation.GetCurrentFrame()), 1.0f, (*it)->flipHorizontal);
+	
+		App->renderer->Blit(graphics,(*it)->position.x, (*it)->position.y, &((*it)->currentAnimation->GetCurrentFrame()), 1.0f, (*it)->flipHorizontal);
 
 	}
 
-	//if(twoMovingSides==true)
-	//	enemies.front()->state =  ENEMY_IDLE;
+
 	
 	if (debug == true) 
 	{

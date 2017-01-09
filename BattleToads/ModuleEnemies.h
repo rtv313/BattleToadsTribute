@@ -25,7 +25,9 @@ public:
 	int speed = 1;
 	bool flipHorizontal = false;
 	iPoint position;
-	Animation animation;
+	Animation* currentAnimation;
+	Animation animationWalk;
+	Animation animationAttack;
 	int wallPositionTarget = 0;
 	int targetPositionAttack = 0;
 	int tiempoatacando = 0; // for testing
