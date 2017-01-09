@@ -198,7 +198,7 @@ void Collider::ValidCollision(Collider * collider) {
 				(*observer)->onNotify(ENEMY_COLLISION, collider->rect.x);
 			}
 
-			if (colliderType == ENEMY && collider->colliderType == PLAYER_HIT && App->player->state ==ATTACK) {
+			if (colliderType == ENEMY && collider->colliderType == PLAYER_HIT &&( App->player->state ==ATTACK || App->player->state==KICK_ATTACK || App->player->state == SUPER_ATTACK)) {
 				(*observer)->onNotify(ENEMY_DAMAGE);
 			}
 		}
