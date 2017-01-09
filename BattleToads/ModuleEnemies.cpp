@@ -319,3 +319,14 @@ Enemy* ModuleEnemies::AddEnemy(int x , int y)
 	enemies.push_back(enemie);
 	return enemie;
 }
+
+bool ModuleEnemies::EnemiesAlive() {
+	
+	for (list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); ++it) {
+		if ((*it)->state != DIE_ENEMY) {
+			return true;
+		}
+	}
+	return false;
+
+}

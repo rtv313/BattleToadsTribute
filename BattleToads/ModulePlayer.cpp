@@ -8,6 +8,7 @@
 #include "ModuleFadeToBlack.h"
 #include "ModulePlayer.h"
 #include "ModuleAudio.h"
+#include "ModuleEnemies.h"
 #include <stdlib.h>  
 #include "SDL/include/SDL.h"
 
@@ -184,8 +185,9 @@ update_status ModulePlayer::Update()
 		break;
 	}
 	//178
-	if(position.x > 178)
-		App->renderer->camera.x = -(position.x *3 - 500)  ;
+   
+	LockAttackZone();
+
 	App->renderer->camera.y = -position.y ; 
 	SetCollidersPosition();
 	return UPDATE_CONTINUE;
@@ -470,4 +472,30 @@ void ModulePlayer::SetCollidersPosition() {
 		collider->SetPos(position.x + 5, position.y);
 		colliderAttack->SetPos(position.x + 20, position.y);
 	}
+}
+
+void ModulePlayer::LockAttackZone() {
+	bool enemiesActive= App->enemies->EnemiesAlive();
+	int blockRight;
+	int blockLeft;
+
+	
+	if (enemiesActive == true) {
+		blockLeft = App->renderer->camera.x;
+		blockRight = App->renderer->camera.x + App->renderer->camera.w;
+		if (flipHorinzontal == true && position.x <= blockLeft) {
+			position.x += speed;
+		}
+		else if (flipHorinzontal == false && position.x >= blockRight) {
+			position.x -= speed;
+		}
+	}
+	else {
+		if (position.x > 178) {
+			App->renderer->camera.x = -(position.x * 3 - 500);
+		}
+
+	
+	}
+	
 }

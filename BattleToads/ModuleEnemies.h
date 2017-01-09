@@ -71,7 +71,7 @@ public:
 	bool CleanUp();
 	void DebugDraw();
 	bool Start();
-
+	bool EnemiesAlive();
 
 };
 

@@ -88,6 +88,7 @@ private:
 	int punchCounter = 0;
 	bool flipHorinzontal = false;
 	AnimationAttacksState attackState;
+	void LockAttackZone();
 	
 
 
