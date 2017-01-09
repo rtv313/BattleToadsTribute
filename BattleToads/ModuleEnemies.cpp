@@ -9,7 +9,7 @@ Enemy::Enemy(int x, int y)
 {
 	position.x = x;
 	position.y = y;
-	
+	life = 1000;
 	state = WALK_ENEMY;
 
 	animationWalk.frames.push_back({ 13, 55, 36, 31 });
@@ -197,7 +197,7 @@ void Enemy::onNotify(GameEvent event) {
 			break;
 
 		case ENEMY_DAMAGE:
-			life -= 50;
+			life -= 10;
 			break;
 
 		default:

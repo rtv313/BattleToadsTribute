@@ -18,7 +18,7 @@ class Enemy :Observer
 {
 public:
 	bool to_delete;
-	int life = 100;
+	int life = 20000;
 	int attack = 10;
 	bool go_down = false;
 	int go_down_offset = 0;
