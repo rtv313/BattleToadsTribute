@@ -8,6 +8,11 @@
 #include "ModuleCollision.h"
 #include "Temporizer.h"
 #include "AnimationRender.h"
+
+#define CAMERA_SPEED_WALK 3
+#define CAMERA_SPEED_RUN 5
+#define STOP_CAMERA_BEGGINING 178
+
 struct SDL_Texture;
 
 enum AnimationState { IDLE,WALK,JUMP,RUN,ATTACK,SUPER_ATTACK,KICK_ATTACK,RECEIVE_HEAVY_ATTACK }; // Desirable have dragon , stick
@@ -88,7 +93,6 @@ private:
 
 	int  blockRight = 0;
 	int  blockLeft = 0;
-	int	 initialLockPosition =178;
 	bool cameraLocking = false;
 	int punchCounter = 0;
 	bool flipHorinzontal = false;

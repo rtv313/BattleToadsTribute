@@ -12,8 +12,7 @@
 #include <stdlib.h>  
 #include "SDL/include/SDL.h"
 
-#define CAMERA_SPEED_WALK 3;
-#define CAMERA_SPEED_RUN 5;
+
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
 
 ModulePlayer::ModulePlayer(bool active) : Module(active)
@@ -481,7 +480,6 @@ void ModulePlayer::LockAttackZone() {
 	{
 		blockRight = position.x + 190;
 		blockLeft = position.x - 180;
-		initialLockPosition = blockRight;
 		flagLockAttackZone = true;
 	}
 
@@ -495,7 +493,7 @@ void ModulePlayer::LockAttackZone() {
 	}
 	else {
 		flagLockAttackZone = false;
-		if (position.x > 178) 
+		if (position.x > STOP_CAMERA_BEGGINING)
 		{
 			if (App->renderer->camera.x > -(position.x * SCREEN_SIZE - 500)) 
 			{
