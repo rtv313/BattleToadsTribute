@@ -481,6 +481,7 @@ void ModulePlayer::LockAttackZone() {
 	{
 		blockRight = position.x + 190;
 		blockLeft = position.x - 180;
+		initialLockPosition = blockRight;
 		flagLockAttackZone = true;
 	}
 
@@ -494,13 +495,32 @@ void ModulePlayer::LockAttackZone() {
 	}
 	else {
 		flagLockAttackZone = false;
-		if (position.x > 178) {
-			App->renderer->camera.x = -(position.x * SCREEN_SIZE - 500);
+		if (position.x > 178) 
+		{
+			if (App->renderer->camera.x > -(position.x * SCREEN_SIZE - 500)) 
+			{
+				App->renderer->camera.x -= speed*3;
+
+				if (App->renderer->camera.x >= -(position.x * SCREEN_SIZE - 500)) {
+					App->renderer->camera.x = -(position.x * SCREEN_SIZE - 500);
+					return;
+				}
+				
+			}
+
+			else if (App->renderer->camera.x < -(position.x * SCREEN_SIZE - 500))
+			{
+				App->renderer->camera.x += speed * 3;
+
+				if (App->renderer->camera.x <= -(position.x * SCREEN_SIZE - 500)) 
+				{
+					App->renderer->camera.x = -(position.x * SCREEN_SIZE - 500);
+					return;
+				}
+			}
 		}
 	}
 	
 }
 
-//if (position.x >= 470) {
-//	position.x -= speed;
-//}
+//App->renderer->camera.x = -(position.x * SCREEN_SIZE - 500);
