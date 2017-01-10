@@ -501,9 +501,9 @@ void ModulePlayer::LockAttackZone() {
 			{
 				App->renderer->camera.x -= speed*3;
 
-				if (App->renderer->camera.x >= -(position.x * SCREEN_SIZE - 500)) {
+				if (App->renderer->camera.x < -(position.x * SCREEN_SIZE - 500)) {
 					App->renderer->camera.x = -(position.x * SCREEN_SIZE - 500);
-					return;
+					
 				}
 				
 			}
@@ -512,10 +512,10 @@ void ModulePlayer::LockAttackZone() {
 			{
 				App->renderer->camera.x += speed * 3;
 
-				if (App->renderer->camera.x <= -(position.x * SCREEN_SIZE - 500)) 
+				if (App->renderer->camera.x > -(position.x * SCREEN_SIZE - 500)) 
 				{
 					App->renderer->camera.x = -(position.x * SCREEN_SIZE - 500);
-					return;
+					
 				}
 			}
 		}
