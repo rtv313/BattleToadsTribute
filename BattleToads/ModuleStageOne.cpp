@@ -34,7 +34,8 @@ bool ModuleStageOne::Start() {
 	App->spawnTriggers->Enable();
 	App->spawnZones->Enable();
 	
-	//App->audio->PlayMusic("rtype/stage1.ogg", 1.0f);
+	App->audio->PlayMusic("rtype/Music/firstBackgroundMusic.ogg", 1.0f);
+
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	background.frames.push_back({ 518, 7, 1404, 357 });
