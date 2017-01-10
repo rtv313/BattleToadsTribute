@@ -98,8 +98,9 @@ private:
 	bool flipHorinzontal = false;
 	AnimationAttacksState attackState;
 	void LockAttackZone();
-	
-
+	int audioIDpunch;
+	int audioIDdamage;
+	bool flagAudio = true;
 
 };
 

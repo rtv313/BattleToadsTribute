@@ -104,6 +104,9 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
+	audioIDpunch = App->audio->LoadFx("rtype/Music/SoundsFX/stickHit.ogg");
+	audioIDdamage = App->audio->LoadFx("rtype/Music/SoundsFX/toadFall.ogg");
+
 	graphics = App->textures->Load("rtype/BattletoadSprites/rash.gif");
 
 	destroyed = false;
@@ -408,6 +411,12 @@ void ModulePlayer::Attack()
 		}
 	}
 
+	if (flagAudio==true)
+	{
+		App->audio->PlayFx(audioIDpunch);
+		flagAudio = false;
+	}
+
 	if(current_animation == &rightPunch)
 		renderWithOffset.Update(App, graphics, current_animation, flipHorinzontal, position, offsetLeftAttackRight, offsetRightAttackRight);
 	else
@@ -420,8 +429,8 @@ void ModulePlayer::Attack()
 			rightPunch.Reset();
 			leftPunch.Reset();
 			++punchCounter;
+			flagAudio = true;
 			return;
-		
 	}
 }
 
@@ -429,10 +438,18 @@ void ModulePlayer::Attack()
 void ModulePlayer::SuperAttack() {
 	current_animation = &finalPunch;
 	offsetLeftFinalPunch; 
+
+	if (flagAudio == true)
+	{
+		App->audio->PlayFx(audioIDpunch);
+		flagAudio = false;
+	}
+
 	renderWithOffset.Update(App, graphics, current_animation, flipHorinzontal, position, offsetLeftFinalPunch, offsetRighFinalPunch);
 	if (current_animation->Finished()) {
 		finalPunch.Reset();
 		state = IDLE;
+		flagAudio = true;
 	}
 }
 
@@ -442,9 +459,16 @@ void ModulePlayer::KickAttack() {
 	current_animation = &kickAttack;
 	renderWithOffset.Update(App,graphics,current_animation,flipHorinzontal,position, offsetLeftKick, offsetRighKick);
 	
+	if (flagAudio == true)
+	{
+		App->audio->PlayFx(audioIDpunch);
+		flagAudio = false;
+	}
+
 	if (current_animation->Finished()) {
 		kickAttack.Reset();
 		state = IDLE;
+		flagAudio = true;
 	}
 }
 
@@ -453,11 +477,19 @@ void ModulePlayer::ReceiveHeavyAttack() {
 	
 	renderWithOffset.Update(App, graphics, current_animation, flipHorinzontal, position, offsetLeftReceiveHeavyAttack, offsetRighReceiveHeavyAttack);
 	
+	if (flagAudio == true)
+	{
+		App->audio->PlayFx(audioIDdamage);
+		flagAudio = false;
+	}
+
+
 	if (current_animation->Finished() && timeDown.Update()) {
 		receiveHeavyAttack.Reset();
 		state = IDLE;
 		timeDown.Reset();
 		life = 2000;
+		flagAudio = true;
 	}
 
 }

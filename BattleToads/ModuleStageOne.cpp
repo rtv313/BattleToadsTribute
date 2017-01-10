@@ -33,9 +33,7 @@ bool ModuleStageOne::Start() {
 	App->enemies->Enable();
 	App->spawnTriggers->Enable();
 	App->spawnZones->Enable();
-	
 	App->audio->PlayMusic("rtype/Music/firstBackgroundMusic.ogg", 1.0f);
-
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	background.frames.push_back({ 518, 7, 1404, 357 });
@@ -73,10 +71,10 @@ bool ModuleStageOne::Start() {
 	///////////////////////////////////////////
 	
 	
-	trigger->AddSpawnZone(210, 180, 30, 30);
+	/*trigger->AddSpawnZone(210, 180, 30, 30);
 	trigger->AddSpawnZone(260, 230, 30, 30);
 
-	triggerTwo->AddSpawnZone(300, 230, 30, 30);
+	triggerTwo->AddSpawnZone(300, 230, 30, 30);*/
 	triggerTwo->AddSpawnZone(400, 230, 30, 30);
 
 

@@ -53,6 +53,8 @@ private:
 	void Die();
 	void CheckLife();
 	void UpdateCollidersPosition();
+	bool flagAudio =true;
+
 };
 
 class ModuleEnemies :
@@ -72,6 +74,8 @@ public:
 	void DebugDraw();
 	bool Start();
 	bool EnemiesAlive();
+	int audioIDpunch;
+	int audioIDdamage;
 
 };
 

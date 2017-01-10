@@ -1,5 +1,6 @@
 #include "ModuleEnemies.h"
 #include "ModulePlayer.h"
+#include "ModuleAudio.h"
 Enemy::Enemy() 
 {
 	
@@ -21,6 +22,7 @@ Enemy::Enemy(int x, int y)
 	animationAttack.frames.push_back({ 90, 17, 41, 28 });
 	animationAttack.frames.push_back({ 50, 15, 41, 28 });
 	animationAttack.speed = 0.1;
+	animationAttack.loop = false;
 
 	animationDead.frames.push_back({145,64,33,35});
 	animationDead.frames.push_back({ 14,100,33,25 });
@@ -67,6 +69,7 @@ void Enemy::Update() {
 	default:
 		break;
 	}
+	App->renderer->Blit(App->enemies->graphics, position.x, position.y, &(currentAnimation->GetCurrentFrame()), 1.0f,flipHorizontal);
 	UpdateCollidersPosition();
 }
 
@@ -141,9 +144,17 @@ void Enemy::Attack() {
 
 	currentAnimation = &animationAttack;
 
+	if (flagAudio == true)
+	{
+		App->audio->PlayFx(App->enemies->audioIDpunch);
+		flagAudio = false;
+	}
+	App->player->life -= 10;
 	if (currentAnimation->Finished()) {
 		state = WALK_ENEMY;
-		App->player->life-=10;
+		
+		flagAudio = true;
+		animationAttack.Reset();
 	}
 }
 
@@ -164,6 +175,13 @@ void Enemy::UnderAttack() {
 
 void Enemy::Die() {
 	currentAnimation = &animationDead;
+	if (flagAudio == true)
+	{
+		App->audio->PlayFx(App->enemies->audioIDdamage);
+		flagAudio = false;
+	}
+
+
 }
 
 void Enemy::CheckLife() {
@@ -275,7 +293,7 @@ update_status ModuleEnemies::Update()
 	{
 		(*it)->Update();
 	
-		App->renderer->Blit(graphics,(*it)->position.x, (*it)->position.y, &((*it)->currentAnimation->GetCurrentFrame()), 1.0f, (*it)->flipHorizontal);
+	
 
 	}
 
@@ -310,6 +328,8 @@ void ModuleEnemies::DebugDraw()
 bool ModuleEnemies::Start() 
 {	
 	graphics = App->textures->Load("rtype/BattletoadSprites/BT_PsykoPig.gif");
+	audioIDpunch = App->audio->LoadFx("rtype/Music/SoundsFX/stickHit.ogg");
+	audioIDdamage = App->audio->LoadFx("rtype/Music/SoundsFX/toadFall.ogg");
 	return true;
 }
 
