@@ -82,6 +82,9 @@ public:
 	Animation receiveHeavyAttack;
 	Temporizer timeDown;
 	AnimationState state;
+	bool flagLockAttackZone = false;
+	int  blockRight = 0;
+	int  blockLeft = 0;
 private:
 
 

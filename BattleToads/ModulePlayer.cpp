@@ -476,26 +476,31 @@ void ModulePlayer::SetCollidersPosition() {
 
 void ModulePlayer::LockAttackZone() {
 	bool enemiesActive= App->enemies->EnemiesAlive();
-	int blockRight;
-	int blockLeft;
-
 	
+	if (enemiesActive == true && flagLockAttackZone ==false)
+	{
+		blockRight = position.x + 190;
+		blockLeft = position.x - 180;
+		flagLockAttackZone = true;
+	}
+
 	if (enemiesActive == true) {
-		blockLeft = App->renderer->camera.x;
-		blockRight = App->renderer->camera.x + App->renderer->camera.w;
-		if (flipHorinzontal == true && position.x <= blockLeft) {
-			position.x += speed;
-		}
-		else if (flipHorinzontal == false && position.x >= blockRight) {
+		
+		if (position.x >= blockRight)
 			position.x -= speed;
-		}
+		if (position.x <= blockLeft)
+			position.x += speed;
+	
 	}
 	else {
+		flagLockAttackZone = false;
 		if (position.x > 178) {
-			App->renderer->camera.x = -(position.x * 3 - 500);
+			App->renderer->camera.x = -(position.x * SCREEN_SIZE - 500);
 		}
-
-	
 	}
 	
 }
+
+//if (position.x >= 470) {
+//	position.x -= speed;
+//}
