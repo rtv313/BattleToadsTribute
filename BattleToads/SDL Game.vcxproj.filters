@@ -64,9 +64,6 @@
     <ClInclude Include="ModuleSceneIntro.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ModuleSceneSpace.h">
-      <Filter>Game Modules</Filter>
-    </ClInclude>
     <ClInclude Include="Observer.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
@@ -87,6 +84,9 @@
     </ClInclude>
     <ClInclude Include="ModuleFont.h">
       <Filter>Core Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModuleLevelIntro.h">
+      <Filter>Game Modules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -129,9 +129,6 @@
     <ClCompile Include="ModuleSceneIntro.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ModuleSceneSpace.cpp">
-      <Filter>Game Modules</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleStageOne.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
@@ -143,6 +140,9 @@
     </ClCompile>
     <ClCompile Include="ModuleFont.cpp">
       <Filter>Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModuleLevelIntro.cpp">
+      <Filter>Game Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

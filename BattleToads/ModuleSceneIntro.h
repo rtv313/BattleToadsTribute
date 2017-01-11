@@ -19,7 +19,7 @@ public:
 	
 	SDL_Texture* background = nullptr;
 	Animation  backSelection;
-	uint fx = 0;
+	
 };
 
 #endif // __MODULESCENEINTRO_H__

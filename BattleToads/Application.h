@@ -19,6 +19,7 @@ class ModuleEnemies;
 // Game modules ---
 class ModulePlayer;
 class ModuleSceneIntro;
+class ModuleLevelIntro;
 class ModuleStageOne;
 
 class Application
@@ -47,7 +48,9 @@ public:
 	// Game modules ---
 	ModulePlayer* player;
 	ModuleSceneIntro* scene_intro;
+	ModuleLevelIntro * levelIntro;
 	ModuleStageOne * stageOne;
+	
 
 private:
 

@@ -10,6 +10,7 @@
 #include "ModuleSpawnEnemies.h"
 #include "ModuleSceneIntro.h"
 #include "ModulePlayer.h"
+#include "ModuleLevelIntro.h"
 #include "ModuleStageOne.h"
 #include "ModuleEnemies.h"
 
@@ -27,6 +28,7 @@ Application::Application()
 
 	// Game Modules
 	modules.push_back(scene_intro = new ModuleSceneIntro(false));
+	modules.push_back(levelIntro = new ModuleLevelIntro(false));
 	modules.push_back(stageOne = new ModuleStageOne(false));
 	modules.push_back(enemies = new ModuleEnemies(false));
 	modules.push_back(spawnZones = new ModuleSpawnZones(false));
