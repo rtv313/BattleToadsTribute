@@ -1,10 +1,13 @@
 # BattleToads Tribute
 Master 2nd Project
-###Author
+<br>
+Author
 Raul Rodolfo Trevino Vazquez
-###About:
-This is a tribute for the game BattleToads
-###Link Github
+<br>
+About:
+This is a tribute for the game BattleToads , for mi master program in UPC.
+<br>
+Link Github
 https://github.com/rtv313/BattleToadsTribute - automatic!
 [GitHub](https://github.com/rtv313/BattleToadsTribute)
 
@@ -12,7 +15,7 @@ https://github.com/rtv313/BattleToadsTribute - automatic!
 https://github.com/rtv313/BattleToadsTribute/blob/master/LICENSE - automatic!
 [License](https://github.com/rtv313/BattleToadsTribute/blob/master/LICENSE)
 
-###Instructions:
+###Instrucctions:
 
 * "Objective" = Reach the end of the level
 * "WASD" = Move
