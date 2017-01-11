@@ -24,6 +24,10 @@ Releases https://github.com/rtv313/BattleToadsTribute/releases
 <li> "M" = Normal hit</li>
 <li> "N" = Kick</li>
 <li> "B" = Super hit</li>
+<li> "F1" = Debug Mode </li>
 </ul>
 
+<br>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_G7BSwTtMhA" frameborder="0" allowfullscreen></iframe>
 
