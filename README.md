@@ -9,8 +9,8 @@ https://github.com/rtv313/BattleToadsTribute - automatic!
 [GitHub](https://github.com/rtv313/BattleToadsTribute)
 
 ###Link Licence
-https://github.com/rtv313/ZorkGame/blob/master/LICENSE - automatic!
-[License](https://github.com/rtv313/ZorkGame/blob/master/LICENSE)
+https://github.com/rtv313/BattleToadsTribute/blob/master/LICENSE - automatic!
+[License](https://github.com/rtv313/BattleToadsTribute/blob/master/LICENSE)
 
 ###Instructions:
 
