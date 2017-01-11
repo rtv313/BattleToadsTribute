@@ -3,7 +3,7 @@
 #include "Application.h"
 #include "ModulePlayer.h"
 #include "ModuleEnemies.h"
-
+#include "ModuleInput.h"
 
 ModuleSpawnTriggers::ModuleSpawnTriggers(){}
 ModuleSpawnTriggers::ModuleSpawnTriggers(bool active):Module(active){}
@@ -36,6 +36,9 @@ update_status ModuleSpawnTriggers::Update()
 			(*it)->to_delete = true;
 		}
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		debug = !debug;
 
 	if (debug == true)
 		DebugDraw();
@@ -117,6 +120,9 @@ update_status ModuleSpawnZones::Update()
 		}
 			
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		debug = !debug;
 
 	if (debug == true)
 		DebugDraw();

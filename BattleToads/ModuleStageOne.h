@@ -20,6 +20,7 @@ public :
 	SDL_Texture* levelOne = nullptr;
 	Animation  background; 
 	Animation  waterfall;
+	Animation  bridge;
 private:
 	list<Collider *> colliders;
 	

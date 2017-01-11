@@ -67,7 +67,7 @@ class SpawnTrigger
 class ModuleSpawnTriggers : public Module
 {
 public:
-	bool debug = true;
+	bool debug = false;
 	std::list<SpawnTrigger*> spawnTriggers;
 	ModuleSpawnTriggers();
 	ModuleSpawnTriggers(bool active);

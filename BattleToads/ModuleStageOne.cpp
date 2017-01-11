@@ -27,6 +27,8 @@ bool ModuleStageOne::Start() {
 	levelOne = App->textures->Load("rtype/BattletoadSprites/level1.png");
 	background = Animation();
 	waterfall =  Animation();
+	bridge = Animation();
+
 	App->player->Enable();
 	App->particles->Enable();
 	App->collision->Enable();
@@ -38,6 +40,8 @@ bool ModuleStageOne::Start() {
 
 	background.frames.push_back({ 518, 7, 1404, 357 });
 	background.speed = 0.08f;
+
+	bridge.frames.push_back({583,288,114,23});
 
 	waterfall.frames.push_back({1703,380,32,112});
 	waterfall.frames.push_back({1736,380,32,112});
@@ -84,7 +88,7 @@ bool ModuleStageOne::Start() {
 	/*colliders.push_back(CreateCollider(740, 200, 100, 29, GRAVITY));
 	colliders.push_back(CreateCollider(740, 300, 30, 29, NO_GRAVITY));*/
 	////////////////////////////////////////
-	App->spawnTriggers->debug = true;
+	
 	SpawnTrigger *trigger = App->spawnTriggers->AddSpawnTrigger(180,180,30,30);
 	SpawnTrigger *triggerTwo = App->spawnTriggers->AddSpawnTrigger(230, 220, 30, 30);
 	
@@ -106,7 +110,7 @@ update_status ModuleStageOne::Update()
 	App->renderer->Blit(levelOne, 0, 0, &(background.GetCurrentFrame()),1.0f);
 	App->renderer->Blit(levelOne, 986,115, &(waterfall.GetCurrentFrame()), 1.0f);
 	App->renderer->Blit(levelOne, 986,227, &(waterfall.GetCurrentFrame()), 1.0f);
-
+	App->renderer->Blit(levelOne, 950,225, &(bridge.GetCurrentFrame()),1.0f);
 	return UPDATE_CONTINUE;
 }
 
