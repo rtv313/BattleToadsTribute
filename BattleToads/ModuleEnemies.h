@@ -35,6 +35,13 @@ public:
 	int tiempoIdle = 0;
 	Collider * body;
 	Collider * sensor;
+	AnimationRender animationRender;
+	vector<iPoint> offsetLeftWalk;
+	vector<iPoint> offsetRightWalk;
+	vector<iPoint> offsetLeftAttack;
+	vector<iPoint> offsetRightAttack;
+	vector<iPoint> offsetLeftDead;
+	vector<iPoint> offsetRightDead;
 
 	void Update();
 	void onNotify(GameEvent event);
@@ -64,7 +71,7 @@ public:
 	bool debug = true;
 	list<Enemy *> enemies;
 	SDL_Texture* graphics;
-	AnimationRender animationRender;
+
 	ModuleEnemies(bool active);
 	~ModuleEnemies();
 	update_status PreUpdate();
@@ -76,6 +83,7 @@ public:
 	bool EnemiesAlive();
 	int audioIDpunch;
 	int audioIDdamage;
+	
 
 };
 

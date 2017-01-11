@@ -17,17 +17,23 @@ Enemy::Enemy(int x, int y)
 	animationWalk.frames.push_back({ 54, 56, 36, 31 });
 	animationWalk.frames.push_back({ 94, 60, 36, 31 });
 	animationWalk.speed = 0.1;
+	offsetLeftWalk = { {0,0},{0,0},{0,0} };
+	offsetRightWalk = { {0,0},{0,0},{0,0} };
 
 	animationAttack.frames.push_back({ 50, 15, 36, 31 });
 	animationAttack.frames.push_back({ 90, 17, 41, 28 });
 	animationAttack.frames.push_back({ 50, 15, 41, 28 });
 	animationAttack.speed = 0.1;
 	animationAttack.loop = false;
+	offsetLeftAttack = { {0,0},{0,0},{0,0} };
+	offsetRightAttack = { {0,0},{0,0},{0,0} };
 
 	animationDead.frames.push_back({145,64,33,35});
 	animationDead.frames.push_back({ 14,100,33,25 });
 	animationDead.speed = 0.1;
 	animationDead.loop = false;
+	offsetLeftDead = { {0,0},{0,0,},{0,0} };
+	offsetRightDead = { { 0,0 },{ 0,0, },{ 0,0 } };
 
 	SDL_Rect bodyRect = { x,y,30,30 };
 	body = App->collision->AddCollider(bodyRect);

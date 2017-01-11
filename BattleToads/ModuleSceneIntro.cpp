@@ -41,13 +41,11 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
-	
 	App->renderer->Blit(background, SCREEN_WIDTH/2-120, 15, &(backSelection.GetCurrentFrame()), 1.0f);
 
 	if(App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && App->fade->isFading() == false)
 	{
 		App->fade->FadeToBlack((Module*)App->levelIntro, this);
-	
 	}
 
 	return UPDATE_CONTINUE;
