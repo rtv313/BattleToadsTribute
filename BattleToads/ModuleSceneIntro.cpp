@@ -20,12 +20,9 @@ bool ModuleSceneIntro::Start()
 {
 	LOG("Loading space intro");
 	
-	background = App->textures->Load("rtype/intro.png");
-
-	App->audio->PlayMusic("rtype/intro.ogg", 1.0f);
-	if(fx == 0)
-		fx = App->audio->LoadFx("rtype/starting.wav");
-
+	background = App->textures->Load("rtype/BattletoadSprites/level1.png");
+	backSelection.frames.push_back({8,8,242,218});
+	App->audio->PlayMusic("rtype/Music/firstBackgroundMusic.ogg", 1.0f);
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 	
 	return true;
@@ -44,12 +41,13 @@ bool ModuleSceneIntro::CleanUp()
 // Update: draw background
 update_status ModuleSceneIntro::Update()
 {
-	App->renderer->Blit(background, 0, 0, NULL);
+	//App->renderer->Blit(background, -50, 10, NULL);
+	App->renderer->Blit(background, SCREEN_WIDTH/2-120, 15, &(backSelection.GetCurrentFrame()), 1.0f);
 
-	if(App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && App->fade->isFading() == false)
+	if(App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && App->fade->isFading() == false)
 	{
-		App->fade->FadeToBlack((Module*)App->scene_space, this);
-		App->audio->PlayFx(fx);
+		App->fade->FadeToBlack((Module*)App->stageOne, this);
+	
 	}
 
 	return UPDATE_CONTINUE;

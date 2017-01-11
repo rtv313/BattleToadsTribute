@@ -2,7 +2,7 @@
 #define __MODULESCENEINTRO_H__
 
 #include "Module.h"
-
+#include "Animation.h";
 struct SDL_Texture;
 
 class ModuleSceneIntro : public Module
@@ -18,6 +18,7 @@ public:
 public:
 	
 	SDL_Texture* background = nullptr;
+	Animation  backSelection;
 	uint fx = 0;
 };
 

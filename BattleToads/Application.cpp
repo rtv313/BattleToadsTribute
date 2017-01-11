@@ -9,7 +9,6 @@
 #include "ModuleParticles.h"
 #include "ModuleSpawnEnemies.h"
 #include "ModuleSceneIntro.h"
-#include "ModuleSceneSpace.h"
 #include "ModulePlayer.h"
 #include "ModuleStageOne.h"
 #include "ModuleEnemies.h"
@@ -29,7 +28,6 @@ Application::Application()
 	// Game Modules
 	modules.push_back(scene_intro = new ModuleSceneIntro(false));
 	modules.push_back(stageOne = new ModuleStageOne(false));
-	modules.push_back(scene_space = new ModuleSceneSpace(false));
 	modules.push_back(enemies = new ModuleEnemies(false));
 	modules.push_back(spawnZones = new ModuleSpawnZones(false));
 	modules.push_back(player = new ModulePlayer(false));
@@ -61,7 +59,7 @@ bool Application::Init()
 	}
 
 	// Start the first scene --
-	fade->FadeToBlack(stageOne, nullptr, 3.0f);
+	fade->FadeToBlack(scene_intro, nullptr, 3.0f);
 
 	return ret;
 }
