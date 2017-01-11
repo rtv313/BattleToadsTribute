@@ -101,6 +101,11 @@ void ModuleCollision::DebugDraw()
 		case SENSOR:
 			App->renderer->DrawQuad((*it)->rect, 255, 204, 51, 80);
 			break;
+		case GRAVITY:
+			App->renderer->DrawQuad((*it)->rect, 255, 51, 204, 80);
+		case NO_GRAVITY:
+			App->renderer->DrawQuad((*it)->rect, 204, 102, 51, 80);
+		
 		default:
 			App->renderer->DrawQuad((*it)->rect, 0, 255, 0, 80);
 			break;
@@ -172,39 +177,59 @@ bool Collider::CheckCollision(const SDL_Rect& r) const
 
 
 void Collider::ValidCollision(Collider * collider) {
-	
+
+	if (colliderType == GRAVITY && collider->colliderType == PLAYER) {
+		to_delete = true;
 		
-		for (list<Observer*>::iterator observer = observers_.begin(); observer != observers_.end(); ++observer)
+		Collider* Wall = App->collision->AddCollider({rect.x-50,rect.y,rect.w,rect.h});
+		Wall->colliderType = WALL;
+	}
+
+	if (colliderType == NO_GRAVITY && collider->colliderType == PLAYER) {
+		to_delete = true;
+	}
+
+
+	for (list<Observer*>::iterator observer = observers_.begin(); observer != observers_.end(); ++observer)
+	{
+		if (colliderType == PLAYER && collider->colliderType == GRAVITY)
 		{
-			if (colliderType == PLAYER && collider->colliderType == WALL)
-			{
-				(*observer)->onNotify(WALL_COLLISION);
-			}
+			(*observer)->onNotify(GRAVITY_ZONE);
 
-			if (colliderType == SENSOR && collider->colliderType == WALL) 
-			{
-				(*observer)->onNotify(WALL_COLLISION,collider->rect.y + collider->rect.h);
-			}
-
-			if (colliderType == SENSOR && collider->colliderType == PLAYER) {
-				(*observer)->onNotify(PLAYER_COLLISION);
-			}
-
-			if (colliderType == ENEMY && collider->colliderType == PLAYER) {
-				(*observer)->onNotify(PLAYER_COLLISION);
-			}
-
-			if (colliderType == ENEMY && collider->colliderType == ENEMY) {
-				(*observer)->onNotify(ENEMY_COLLISION, collider->rect.x);
-			}
-
-			if (colliderType == ENEMY && collider->colliderType == PLAYER_HIT &&( App->player->state ==ATTACK || App->player->state==KICK_ATTACK || App->player->state == SUPER_ATTACK)) {
-				(*observer)->onNotify(ENEMY_DAMAGE);
-			}
 		}
 
-	
- }
+		if (colliderType == PLAYER && collider->colliderType == NO_GRAVITY)
+		{
+			(*observer)->onNotify(FINISH_GRAVITY);
+		}
+
+		if (colliderType == PLAYER && collider->colliderType == WALL)
+		{
+			(*observer)->onNotify(WALL_COLLISION);
+		}
+
+		if (colliderType == SENSOR && collider->colliderType == WALL)
+		{
+			(*observer)->onNotify(WALL_COLLISION, collider->rect.y + collider->rect.h);
+		}
+
+		if (colliderType == SENSOR && collider->colliderType == PLAYER) {
+			(*observer)->onNotify(PLAYER_COLLISION);
+		}
+
+		if (colliderType == ENEMY && collider->colliderType == PLAYER) {
+			(*observer)->onNotify(PLAYER_COLLISION);
+		}
+
+		if (colliderType == ENEMY && collider->colliderType == ENEMY) {
+			(*observer)->onNotify(ENEMY_COLLISION, collider->rect.x);
+		}
+
+		if (colliderType == ENEMY && collider->colliderType == PLAYER_HIT && (App->player->state == ATTACK || App->player->state == KICK_ATTACK || App->player->state == SUPER_ATTACK)) {
+			(*observer)->onNotify(ENEMY_DAMAGE);
+		}
+	}
+}
 
 
 void Collider::addObserver(Observer* observer)

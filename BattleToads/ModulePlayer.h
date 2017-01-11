@@ -15,7 +15,7 @@
 
 struct SDL_Texture;
 
-enum AnimationState { IDLE,WALK,JUMP,RUN,ATTACK,SUPER_ATTACK,KICK_ATTACK,RECEIVE_HEAVY_ATTACK }; // Desirable have dragon , stick
+enum AnimationState { IDLE,WALK,JUMP,RUN,ATTACK,SUPER_ATTACK,KICK_ATTACK,RECEIVE_HEAVY_ATTACK,GOING_DOWN }; // Desirable have dragon , stick
 enum AnimationAttacksState { BASIC_PUNCH,SUPER_PUNCH,HEAD_PUNCH, KICK_PUNCH, TONGUE_PUNCH };
 
 class ModulePlayer : public Module ,Observer
@@ -38,6 +38,7 @@ private:
 	void KickAttack();
 	void ReceiveHeavyAttack();
 	void SetCollidersPosition();
+	void GoingDown();
 	
 	
 public:

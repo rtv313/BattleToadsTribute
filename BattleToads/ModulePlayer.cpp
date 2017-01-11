@@ -182,6 +182,9 @@ update_status ModulePlayer::Update()
 	case RECEIVE_HEAVY_ATTACK:
 		ReceiveHeavyAttack();
 		break;
+	case GOING_DOWN:
+		GoingDown();
+		break;
 	default:
 		Idle();
 		break;
@@ -212,6 +215,14 @@ void ModulePlayer::onNotify(GameEvent event)
 			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 				position.x += speed;
 
+			break;
+
+		case GRAVITY_ZONE:
+			state = GOING_DOWN;
+			break;
+
+		case FINISH_GRAVITY:
+			state = IDLE;
 			break;
 	}
 	
@@ -521,7 +532,6 @@ void ModulePlayer::LockAttackZone() {
 			position.x -= speed;
 		if (position.x <= blockLeft)
 			position.x += speed;
-	
 	}
 	else {
 		flagLockAttackZone = false;
@@ -550,7 +560,10 @@ void ModulePlayer::LockAttackZone() {
 			}
 		}
 	}
-	
 }
 
-//App->renderer->camera.x = -(position.x * SCREEN_SIZE - 500);
+void ModulePlayer::GoingDown() 
+{
+	position.y += speed;
+	App->renderer->Blit(graphics, position.x, position.y, &(current_animation->GetCurrentFrame()), 1.0f, flipHorinzontal);
+}

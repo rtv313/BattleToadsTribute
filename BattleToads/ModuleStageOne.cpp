@@ -61,8 +61,28 @@ bool ModuleStageOne::Start() {
 	colliders.push_back(CreateCollider(450, 160, 33, 29, WALL));
 	colliders.push_back(CreateCollider(480, 180, 33, 29, WALL));
 	colliders.push_back(CreateCollider(510, 200, 33, 29, WALL));
-	colliders.push_back(CreateCollider(540, 200, 100, 29, WALL));
+	colliders.push_back(CreateCollider(540, 210, 33, 29, WALL));
+	colliders.push_back(CreateCollider(570, 210, 33, 29, WALL));
+	colliders.push_back(CreateCollider(610, 190, 33, 20, WALL));
+	colliders.push_back(CreateCollider(635, 170, 33, 20, WALL));
+	colliders.push_back(CreateCollider(670, 150, 33, 25, WALL));
+	colliders.push_back(CreateCollider(700, 140, 33, 29, WALL));
+	colliders.push_back(CreateCollider(740, 120, 33, 29, WALL));
+	colliders.push_back(CreateCollider(775, 120, 33, 29, WALL));
+	colliders.push_back(CreateCollider(795, 150, 33, 320, WALL));
+	colliders.push_back(CreateCollider(640, 345, 33, 130, WALL));
+	colliders.push_back(CreateCollider(775, 330, 10, 10, WALL));
+	colliders.push_back(CreateCollider(780, 310, 20, 110, WALL));
+	colliders.push_back(CreateCollider(910, 280, 20, 20, WALL));
+	colliders.push_back(CreateCollider(940, 250, 20, 120, WALL));
+	colliders.push_back(CreateCollider(1050, 280, 20, 120, WALL));
+	colliders.push_back(CreateCollider(1125, 150, 20, 20, WALL));
+	colliders.push_back(CreateCollider(1150, 130, 20, 40, WALL));
+	colliders.push_back(CreateCollider(1200, 150, 90, 20, WALL));
+	colliders.push_back(CreateCollider(1185, 270, 30, 20, WALL));
 
+	/*colliders.push_back(CreateCollider(740, 200, 100, 29, GRAVITY));
+	colliders.push_back(CreateCollider(740, 300, 30, 29, NO_GRAVITY));*/
 	////////////////////////////////////////
 	App->spawnTriggers->debug = true;
 	SpawnTrigger *trigger = App->spawnTriggers->AddSpawnTrigger(180,180,30,30);
