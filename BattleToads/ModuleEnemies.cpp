@@ -34,8 +34,8 @@ Enemy::Enemy(int x, int y)
 	animationDead.frames.push_back({ 14,100,32,24 });
 	animationDead.speed = 0.1;
 	animationDead.loop = false;
-	offsetLeftDead = { {0,0},{0,0,},{0,0} };
-	offsetRightDead = { { 0,0 },{ 0,0, },{ 0,0 } };
+	offsetLeftDead = { {0,4},{0,-8}};
+	offsetRightDead = { {-4,0 },{3,-8}};
 
 	SDL_Rect bodyRect = { x,y,30,30 };
 	body = App->collision->AddCollider(bodyRect);
