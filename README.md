@@ -15,8 +15,6 @@ Link Licence https://github.com/rtv313/BattleToadsTribute/blob/master/LICENSE
 <br>
 Releases https://github.com/rtv313/BattleToadsTribute/releases
 [Release](https://github.com/rtv313/BattleToadsTribute/releases)
-<br>
-<br>
 
 ###Instrucctions:
 * "Objective" = Reach the end of the level
