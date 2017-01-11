@@ -68,23 +68,19 @@ class ModuleEnemies :
 	public Module
 {
 public:
-	bool debug = true;
+	
 	list<Enemy *> enemies;
 	SDL_Texture* graphics;
-
 	ModuleEnemies(bool active);
 	~ModuleEnemies();
 	update_status PreUpdate();
 	update_status Update();
 	Enemy* AddEnemy(int x , int y);
 	bool CleanUp();
-	void DebugDraw();
 	bool Start();
 	bool EnemiesAlive();
 	int audioIDpunch;
 	int audioIDdamage;
-	
-
 };
 
 #endif

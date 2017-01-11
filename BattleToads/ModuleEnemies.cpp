@@ -13,23 +13,25 @@ Enemy::Enemy(int x, int y)
 	life = 1000;
 	state = WALK_ENEMY;
 
-	animationWalk.frames.push_back({ 13, 55, 36, 31 });
-	animationWalk.frames.push_back({ 54, 56, 36, 31 });
-	animationWalk.frames.push_back({ 94, 60, 36, 31 });
+	animationRender = AnimationRender();
+
+	animationWalk.frames.push_back({ 14, 55, 32, 30 });
+	animationWalk.frames.push_back({ 54, 56, 33, 30 });
+	animationWalk.frames.push_back({ 94, 60, 32, 29 });
 	animationWalk.speed = 0.1;
-	offsetLeftWalk = { {0,0},{0,0},{0,0} };
+	offsetLeftWalk = { {1,0},{1,0},{1,0} };
 	offsetRightWalk = { {0,0},{0,0},{0,0} };
 
-	animationAttack.frames.push_back({ 50, 15, 36, 31 });
-	animationAttack.frames.push_back({ 90, 17, 41, 28 });
-	animationAttack.frames.push_back({ 50, 15, 41, 28 });
+	animationAttack.frames.push_back({ 50, 15, 34, 31 });
+	animationAttack.frames.push_back({ 91, 17, 40, 28 });
+	animationAttack.frames.push_back({ 91, 17, 40, 28 });
 	animationAttack.speed = 0.1;
 	animationAttack.loop = false;
-	offsetLeftAttack = { {0,0},{0,0},{0,0} };
-	offsetRightAttack = { {0,0},{0,0},{0,0} };
+	offsetLeftAttack = { {0,0},{16,0},{16,0} };
+	offsetRightAttack = { {3,0},{-2,0},{0,0} };
 
-	animationDead.frames.push_back({145,64,33,35});
-	animationDead.frames.push_back({ 14,100,33,25 });
+	animationDead.frames.push_back({145,64,32,35});
+	animationDead.frames.push_back({ 14,100,32,24 });
 	animationDead.speed = 0.1;
 	animationDead.loop = false;
 	offsetLeftDead = { {0,0},{0,0,},{0,0} };
@@ -75,7 +77,7 @@ void Enemy::Update() {
 	default:
 		break;
 	}
-	App->renderer->Blit(App->enemies->graphics, position.x, position.y, &(currentAnimation->GetCurrentFrame()), 1.0f,flipHorizontal);
+	//App->renderer->Blit(App->enemies->graphics, position.x, position.y, &(currentAnimation->GetCurrentFrame()), 1.0f,flipHorizontal);
 	UpdateCollidersPosition();
 }
 
@@ -101,7 +103,9 @@ void Enemy :: MoveOtherSide()
 			return;
 		}
 	}
-	
+
+	animationRender.Update(App, App->enemies->graphics, currentAnimation, flipHorizontal, position, offsetLeftWalk, offsetRightWalk);
+
 }
 
 void Enemy::Walk() 
@@ -141,9 +145,9 @@ void Enemy::Walk()
 				position.y = wallPositionTarget;
 			}
 		}
-		
-		
 	}
+
+	animationRender.Update(App, App->enemies->graphics, currentAnimation, flipHorizontal, position, offsetLeftWalk, offsetRightWalk);
 }
 
 void Enemy::Attack() {
@@ -156,6 +160,10 @@ void Enemy::Attack() {
 		flagAudio = false;
 	}
 	App->player->life -= 10;
+
+	animationRender.Update(App, App->enemies->graphics, currentAnimation, flipHorizontal, position, offsetLeftAttack, offsetRightAttack);
+
+
 	if (currentAnimation->Finished()) {
 		state = WALK_ENEMY;
 		
@@ -173,6 +181,10 @@ void Enemy::Idle() {
 		state = WALK_ENEMY;
 		tiempoIdle = 0;
 	}
+
+	animationRender.Update(App, App->enemies->graphics, currentAnimation, flipHorizontal, position, offsetLeftAttack, offsetRightAttack);
+
+
 }
 
 void Enemy::UnderAttack() {
@@ -181,13 +193,14 @@ void Enemy::UnderAttack() {
 
 void Enemy::Die() {
 	currentAnimation = &animationDead;
+
 	if (flagAudio == true)
 	{
 		App->audio->PlayFx(App->enemies->audioIDdamage);
 		flagAudio = false;
 	}
 
-
+	animationRender.Update(App, App->enemies->graphics, currentAnimation, flipHorizontal, position, offsetLeftDead, offsetRightDead);
 }
 
 void Enemy::CheckLife() {
@@ -303,13 +316,6 @@ update_status ModuleEnemies::Update()
 
 	}
 
-
-	
-	if (debug == true) 
-	{
-		DebugDraw();
-	}
-
 	return UPDATE_CONTINUE;
 }
 
@@ -323,13 +329,7 @@ bool ModuleEnemies::CleanUp()
 	return true;
 }
 
-void ModuleEnemies::DebugDraw()
-{
-	for (std::list<Enemy*>::iterator it = enemies.begin(); it != enemies.end(); ++it)
-	{
-		//App->renderer->DrawQuad((*it)->rect, 255, 0, 0, 80);
-	}
-}
+
 
 bool ModuleEnemies::Start() 
 {	
