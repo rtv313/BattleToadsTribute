@@ -6,6 +6,7 @@
 #include "ModuleRender.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleLevelIntro.h"
+#include "ModulePlayer.h"
 
 
 
@@ -41,6 +42,7 @@ update_status ModuleLevelIntro::Update()
 
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && App->fade->isFading() == false)
 	{
+		
 		App->fade->FadeToBlack((Module*)App->stageOne, this);
 
 	}

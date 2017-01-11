@@ -1,11 +1,11 @@
 #include "Globals.h"
+#include "ModuleSceneIntro.h"
 #include "Application.h"
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
 #include "ModuleParticles.h"
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
-#include "ModuleFadeToBlack.h"
 #include "ModulePlayer.h"
 #include "ModuleAudio.h"
 #include "ModuleEnemies.h"
@@ -156,6 +156,8 @@ update_status ModulePlayer::Update()
 		timeDown.Start();
 		state = RECEIVE_HEAVY_ATTACK;
 	}
+
+
 	switch (state)
 	{
 	case IDLE:
@@ -189,7 +191,7 @@ update_status ModulePlayer::Update()
 		Idle();
 		break;
 	}
-	//178
+
    
 	LockAttackZone();
 

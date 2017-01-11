@@ -9,7 +9,7 @@
 #include "ModuleParticles.h"
 #include "ModuleStageOne.h"
 #include "ModuleEnemies.h"
-
+#include "ModuleFadeToBlack.h"
 
 ModuleStageOne::ModuleStageOne(bool active):Module(active)
 {
@@ -30,7 +30,6 @@ bool ModuleStageOne::Start() {
 	bridge = Animation();
 
 	App->player->Enable();
-	App->particles->Enable();
 	App->collision->Enable();
 	App->enemies->Enable();
 	App->spawnTriggers->Enable();
@@ -107,6 +106,17 @@ bool ModuleStageOne::Start() {
 
 update_status ModuleStageOne::Update()
 {
+
+	if (App->player->position.x >= 1174 && App->fade->isFading() == false) { // restart game
+		App->player->Disable();
+		App->collision->CleanUp();
+		App->enemies->CleanUp();
+		App->player->CleanUp();
+		App->spawnTriggers->CleanUp();
+		App->spawnZones->CleanUp();
+		App->fade->FadeToBlack((Module*)App->scene_intro, this, 1);
+
+	}
 	App->renderer->Blit(levelOne, 0, 0, &(background.GetCurrentFrame()),1.0f);
 	App->renderer->Blit(levelOne, 986,115, &(waterfall.GetCurrentFrame()), 1.0f);
 	App->renderer->Blit(levelOne, 986,227, &(waterfall.GetCurrentFrame()), 1.0f);
@@ -119,7 +129,7 @@ bool ModuleStageOne::CleanUp()
 	LOG("Unloading battletoad stage one scene");
 
 	
-
+	App->textures->Unload(levelOne);
 
 	return true;
 }
