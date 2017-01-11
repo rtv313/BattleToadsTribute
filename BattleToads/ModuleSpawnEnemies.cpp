@@ -157,7 +157,7 @@ bool ModuleSpawnZones::CleanUp()
 		RELEASE(*it);
 
 	spawnZones.clear();
-	App->textures->Unload(spawnSprite);
+	
 	return true;
 }
 

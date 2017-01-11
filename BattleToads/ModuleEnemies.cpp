@@ -325,7 +325,7 @@ bool ModuleEnemies::CleanUp()
 		RELEASE(*it);
 
 	enemies.clear();
-	App->textures->Unload(graphics);
+	
 	return true;
 }
 

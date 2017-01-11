@@ -10,7 +10,7 @@
 #include "ModuleStageOne.h"
 #include "ModuleEnemies.h"
 #include "ModuleFadeToBlack.h"
-
+#define END_LEVEL 1174
 ModuleStageOne::ModuleStageOne(bool active):Module(active)
 {
 }
@@ -88,18 +88,26 @@ bool ModuleStageOne::Start() {
 	colliders.push_back(CreateCollider(740, 300, 30, 29, NO_GRAVITY));*/
 	////////////////////////////////////////
 	
-	SpawnTrigger *trigger = App->spawnTriggers->AddSpawnTrigger(180,180,30,30);
-	SpawnTrigger *triggerTwo = App->spawnTriggers->AddSpawnTrigger(230, 220, 30, 30);
-	
+	SpawnTrigger *trigger = App->spawnTriggers->AddSpawnTrigger(190,180,200,30);
+	SpawnTrigger *triggerTwo = App->spawnTriggers->AddSpawnTrigger(388, 180, 200, 30);
+	SpawnTrigger *triggerThree = App->spawnTriggers->AddSpawnTrigger(686, 180, 250, 30);
+	SpawnTrigger *triggerFour = App->spawnTriggers->AddSpawnTrigger(986, 220, 200, 30);
+
 	///////////////////////////////////////////
 	
 	
-	/*trigger->AddSpawnZone(210, 180, 30, 30);
-	trigger->AddSpawnZone(260, 230, 30, 30);
+	trigger->AddSpawnZone(32, 206, 30, 30);
+	trigger->AddSpawnZone(200, 248, 30, 30);
 
-	triggerTwo->AddSpawnZone(300, 230, 30, 30);*/
-	triggerTwo->AddSpawnZone(400, 230, 30, 30);
+	triggerTwo->AddSpawnZone(378, 210, 30, 30);
+	triggerTwo->AddSpawnZone(456, 250, 30, 30);
 
+	triggerThree->AddSpawnZone(708, 252, 30, 30);
+	triggerThree->AddSpawnZone(766, 258, 30, 30);
+	triggerThree->AddSpawnZone(866, 210, 30, 30);
+
+	triggerFour->AddSpawnZone(1070, 184, 30, 30);
+	triggerFour->AddSpawnZone(1088, 226, 30, 30);
 
 	return true;
 }
@@ -107,7 +115,7 @@ bool ModuleStageOne::Start() {
 update_status ModuleStageOne::Update()
 {
 
-	if (App->player->position.x >= 1174 && App->fade->isFading() == false) { // restart game
+	if (App->player->position.x >= END_LEVEL && App->fade->isFading() == false) { // restart game
 		App->player->Disable();
 		App->collision->CleanUp();
 		App->enemies->CleanUp();
