@@ -84,8 +84,7 @@ bool ModuleStageOne::Start() {
 	colliders.push_back(CreateCollider(1200, 150, 90, 20, WALL));
 	colliders.push_back(CreateCollider(1185, 270, 30, 20, WALL));
 
-	/*colliders.push_back(CreateCollider(740, 200, 100, 29, GRAVITY));
-	colliders.push_back(CreateCollider(740, 300, 30, 29, NO_GRAVITY));*/
+	
 	////////////////////////////////////////
 	
 	SpawnTrigger *trigger = App->spawnTriggers->AddSpawnTrigger(190,180,200,30);
