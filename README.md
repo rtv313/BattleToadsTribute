@@ -16,13 +16,14 @@ Link Licence https://github.com/rtv313/BattleToadsTribute/blob/master/LICENSE
 Releases https://github.com/rtv313/BattleToadsTribute/releases
 [Release](https://github.com/rtv313/BattleToadsTribute/releases)
 
-###Instrucctions:
-* "Objective" = Reach the end of the level
-* "WASD" = Move
-* "Shift" = RUN
-* "M" = Normal hit
-* "N" = Kick
-* "B" = Super hit
-
+#Instrucctions:
+<ul>
+<li>"Objective" = Reach the end of the level</li>
+<li>"WASD" = Move</li>
+<li> "Shift" = RUN</li>
+<li> "M" = Normal hit</li>
+<li> "N" = Kick</li>
+<li> "B" = Super hit</li>
+</ul>
 
 
