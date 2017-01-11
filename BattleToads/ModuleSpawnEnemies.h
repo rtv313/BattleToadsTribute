@@ -42,6 +42,7 @@ public:
 		spawnAnimationOne.frames.push_back({ 120,152, 28, 18 });
 		spawnAnimationOne.frames.push_back({ 39,158,  24, 12 });
 		spawnAnimationOne.frames.push_back({ 19,160, 20, 9 });
+		spawnAnimationOne.frames.push_back({ 168,125, 32, 10 });
 
 		spawnAnimationOne.loop = false;
 		spawnAnimationOne.speed = 0.3;
