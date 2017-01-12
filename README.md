@@ -7,8 +7,8 @@ About:
 This is a tribute for the game BattleToads , for my master program in UPC.
 <br>
 Link Github
-https://github.com/rtv313/BattleToadsTribute - automatic!
-[GitHub](https://github.com/rtv313/BattleToadsTribute)
+https://rtv313.github.io/BattleToadsTribute/
+[GitHub](https://rtv313.github.io/BattleToadsTribute/)
 <br>
 Link Licence https://github.com/rtv313/BattleToadsTribute/blob/master/LICENSE
 [License](https://github.com/rtv313/BattleToadsTribute/blob/master/LICENSE)
