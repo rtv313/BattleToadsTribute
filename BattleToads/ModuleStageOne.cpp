@@ -6,7 +6,6 @@
 #include "ModulePlayer.h"
 #include "ModuleCollision.h"
 #include "ModuleSpawnEnemies.h"
-#include "ModuleParticles.h"
 #include "ModuleStageOne.h"
 #include "ModuleEnemies.h"
 #include "ModuleFadeToBlack.h"
@@ -24,7 +23,7 @@ bool ModuleStageOne::Start() {
 
 	LOG("Loading space scene");
 
-	levelOne = App->textures->Load("rtype/BattletoadSprites/level1.png");
+	levelOne = App->textures->Load("Assets/BattletoadSprites/level1.png");
 	background = Animation();
 	waterfall =  Animation();
 	bridge = Animation();
@@ -34,7 +33,7 @@ bool ModuleStageOne::Start() {
 	App->enemies->Enable();
 	App->spawnTriggers->Enable();
 	App->spawnZones->Enable();
-	App->audio->PlayMusic("rtype/Music/firstBackgroundMusic.ogg", 1.0f);
+	App->audio->PlayMusic("Assets/Music/firstBackgroundMusic.ogg", 1.0f);
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	background.frames.push_back({ 518, 7, 1404, 357 });

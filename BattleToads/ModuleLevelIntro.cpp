@@ -21,9 +21,9 @@ ModuleLevelIntro::~ModuleLevelIntro()
 
 bool ModuleLevelIntro::Start()
 {
-	background = App->textures->Load("rtype/BattletoadSprites/level1.png");
+	background = App->textures->Load("Assets/BattletoadSprites/level1.png");
 	backSelection.frames.push_back({ 259,8,242,218 });
-	App->audio->PlayMusic("rtype/Music/firstBackgroundMusic.ogg", 1.0f);
+	App->audio->PlayMusic("Assets/Music/firstBackgroundMusic.ogg", 1.0f);
 	App->renderer->camera.x = App->renderer->camera.y = 0;
 
 	return true;

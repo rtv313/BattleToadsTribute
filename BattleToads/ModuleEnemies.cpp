@@ -333,9 +333,9 @@ bool ModuleEnemies::CleanUp()
 
 bool ModuleEnemies::Start() 
 {	
-	graphics = App->textures->Load("rtype/BattletoadSprites/BT_PsykoPig.gif");
-	audioIDpunch = App->audio->LoadFx("rtype/Music/SoundsFX/stickHit.ogg");
-	audioIDdamage = App->audio->LoadFx("rtype/Music/SoundsFX/toadFall.ogg");
+	graphics = App->textures->Load("Assets/BattletoadSprites/BT_PsykoPig.gif");
+	audioIDpunch = App->audio->LoadFx("Assets/Music/SoundsFX/stickHit.ogg");
+	audioIDdamage = App->audio->LoadFx("Assets/Music/SoundsFX/toadFall.ogg");
 	return true;
 }
 

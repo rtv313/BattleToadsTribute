@@ -17,6 +17,7 @@ enum ColliderType {
 	SENSOR,
 	GRAVITY,
 	NO_GRAVITY,
+	PLAYER_LASER
 };
 
 

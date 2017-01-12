@@ -3,7 +3,6 @@
 #include "Application.h"
 #include "ModuleTextures.h"
 #include "ModuleInput.h"
-#include "ModuleParticles.h"
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
 #include "ModulePlayer.h"
@@ -104,10 +103,10 @@ bool ModulePlayer::Start()
 {
 	LOG("Loading player");
 
-	audioIDpunch = App->audio->LoadFx("rtype/Music/SoundsFX/stickHit.ogg");
-	audioIDdamage = App->audio->LoadFx("rtype/Music/SoundsFX/toadFall.ogg");
+	audioIDpunch = App->audio->LoadFx("Assets/Music/SoundsFX/stickHit.ogg");
+	audioIDdamage = App->audio->LoadFx("Assets/Music/SoundsFX/toadFall.ogg");
 
-	graphics = App->textures->Load("rtype/BattletoadSprites/rash.gif");
+	graphics = App->textures->Load("Assets/BattletoadSprites/rash.gif");
 
 	destroyed = false;
 	position.x = 150;

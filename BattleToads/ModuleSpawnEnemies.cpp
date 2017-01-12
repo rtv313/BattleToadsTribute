@@ -163,7 +163,7 @@ bool ModuleSpawnZones::CleanUp()
 
 bool ModuleSpawnZones::Start() 
 {
-	spawnSprite = App->textures->Load("rtype/BattletoadSprites/PsykoPig.png");
+	spawnSprite = App->textures->Load("Assets/BattletoadSprites/PsykoPig.png");
 
 	offsetSpawnOneLeft = { 
 		{ 0,-42 },{ 0,-38 },{ 0,-34 },{ 0,-30 },{ 0,-26 },{ 0,-22 },{ 0,-18 },{ 0,-14 } ,{ 0,-10 },{ 0,-6 },{ 0,0 }

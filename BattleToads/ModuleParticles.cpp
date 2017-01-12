@@ -19,7 +19,7 @@ ModuleParticles::~ModuleParticles()
 bool ModuleParticles::Start()
 {
 	LOG("Loading particles");
-	graphics = App->textures->Load("rtype/particles.png");
+	graphics = App->textures->Load("Assets/particles.png");
 
 
 	// TODO 2: Create a prototype for the laser particle
@@ -29,7 +29,7 @@ bool ModuleParticles::Start()
 	laser.sprite.frames.push_back({ 232, 103, 16, 12 });
 	laser.sprite.frames.push_back({ 249, 103, 16, 12 });
 	laser.sprite.speed = 0.08f;
-	laser.audioID = App->audio->LoadFx("rtype/laser.wav");
+	laser.audioID = App->audio->LoadFx("Assets/laser.wav");
 	laser.ttl = 10;
 	laser.speed = 6;
 	laser.Type = PROJECTILE;
@@ -43,9 +43,9 @@ bool ModuleParticles::Start()
 	collRec.h = 16;
 	collRec.w = 16;
 	laser.collider = App->collision->AddCollider(collRec);
-	laser.collider->colliderType = PLAYER_HIT;
+	laser.collider->colliderType = PLAYER_LASER;
 	laser.optionalCollider = App->collision->AddCollider(collRec);
-	laser.optionalCollider->colliderType = PLAYER_HIT;
+	laser.optionalCollider->colliderType = PLAYER_LASER;
 
 	// TODO 12: Create a new "Explosion" particle 
 	// audio: rtype/explosion.wav
@@ -57,7 +57,7 @@ bool ModuleParticles::Start()
 	explosion.posX = 0;
 	explosion.posY = 0;
 	explosion.frame = 0;
-	explosion.audioID= App->audio->LoadFx("rtype/explosion.wav");
+	explosion.audioID= App->audio->LoadFx("Assets/explosion.wav");
 	explosion.sprite.frames.push_back({ 274, 296, 33, 30 });
 	explosion.sprite.frames.push_back({ 313, 296, 33, 30 });
 	explosion.sprite.frames.push_back({ 346, 296, 33, 30 });
