@@ -52,6 +52,6 @@ typedef unsigned int uint;
 #define SCREEN_HEIGHT 240
 #define FULLSCREEN false
 #define VSYNC true
-#define TITLE "Battletoads"
+#define TITLE "Battletoads Tribute"
 
 #endif //__GLOBALS_H__
