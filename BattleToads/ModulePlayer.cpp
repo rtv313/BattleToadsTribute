@@ -9,7 +9,7 @@
 #include "ModuleAudio.h"
 #include "ModuleEnemies.h"
 #include <stdlib.h>  
-#include "SDL/include/SDL.h"
+#include "SDL.h"
 
 
 // Reference at https://www.youtube.com/watch?v=OEhmUuehGOA
