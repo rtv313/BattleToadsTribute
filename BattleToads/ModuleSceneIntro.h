@@ -2,7 +2,7 @@
 #define __MODULESCENEINTRO_H__
 
 #include "Module.h"
-#include "Animation.h";
+#include "Animation.h"
 struct SDL_Texture;
 
 class ModuleSceneIntro : public Module

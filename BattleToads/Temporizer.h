@@ -1,4 +1,4 @@
-#include "SDL/include/SDL.h" 
+#include "SDL.h" 
 
 class Temporizer {
 

@@ -2,7 +2,7 @@
 #define __MODULE_LEVEL_INTRO_H__
 
 #include "Module.h"
-#include "Animation.h";
+#include "Animation.h"
 
 
 struct SDL_Texture;
