@@ -1,7 +1,7 @@
 #include "Globals.h"
 #include "Application.h"
 #include "ModuleWindow.h"
-#include "SDL/include/SDL.h"
+#include "SDL.h"
 
 ModuleWindow::ModuleWindow()
 {
@@ -45,7 +45,7 @@ bool ModuleWindow::Init()
 		else
 		{
 			//Get window surface
-			screen_surface = SDL_GetWindowSurface(window);
+			// screen_surface = SDL_GetWindowSurface(window);
 		}
 	}
 

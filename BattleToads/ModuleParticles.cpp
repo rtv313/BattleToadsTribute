@@ -5,7 +5,7 @@
 #include "ModuleTextures.h"
 #include "ModuleRender.h"
 #include "ModuleCollision.h"
-#include "SDL/include/SDL_timer.h"
+#include "SDL_timer.h"
 #include "ModulePlayer.h"
 
 
