@@ -32,18 +32,16 @@ Releases https://github.com/rtv313/BattleToadsTribute/releases
 [![Youtube](gameplay.png)](https://www.youtube.com/embed/_G7BSwTtMhA)
 
 
+Tested on Ubuntu 20.04 / MacOS 14.2.1
+
 # Linux
 
-Tested on Ubuntu 20.04
-
-Dependencies
-
-```
+```shell
 make dep compile run
 ```
 
 # Mac
 
-```
+```shell
 make dep-mac compile run
 ```

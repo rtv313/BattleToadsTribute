@@ -16,8 +16,8 @@ endif
 clean:
 	rm -rf .config && \
 	cd BattleToads && \
-	rm -f *.BAK \
-	rm -f *.o *~ Main \
+	rm -f *.BAK && \
+	rm -rf *.o *~ Main Main.dSYM \
 
 compile:
 	cd BattleToads && \
